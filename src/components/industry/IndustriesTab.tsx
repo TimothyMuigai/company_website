@@ -11,13 +11,18 @@ export default function IndustriesTabs() {
 
   const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
+  const hasInteracted = useRef(false);
+
   useEffect(() => {
+    if (!hasInteracted.current) return;
+
     tabRefs.current[activeId]?.scrollIntoView({
       behavior: "smooth",
       inline: "center",
       block: "nearest",
     });
   }, [activeId]);
+
 
   return (
     <section className="max-w-6xl mx-auto px-6 py-10">
@@ -42,7 +47,10 @@ export default function IndustriesTabs() {
               ref={el => {
                 tabRefs.current[industry.id] = el;
               }}
-              onClick={() => setActiveId(industry.id)}
+              onClick={() => {
+                hasInteracted.current = true;
+                setActiveId(industry.id);
+              }}
               className={`relative pb-2 text-sm font-medium transition-colors
                 ${activeId === industry.id
                   ? "text-gray-900"
