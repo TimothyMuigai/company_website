@@ -1,35 +1,4 @@
-// import Image from "next/image";
 
-// export default function Navbar() {
-//   return (
-//     <nav className="flex items-center justify-between px-8 py-6 mx-12 ">
-//       {/* Logo */}
-//       <div className="flex items-center">
-//         <Image
-//           src="/logos/deeptrack-high-resolution-logo-white-transparent.png"
-//           alt="Deeptrack logo"
-//           width={70}
-//           height={32}
-//           priority
-//           className="h-auto w-auto"
-//         />
-//       </div>
-
-//       {/* Links */}
-//       <div className="hidden md:flex gap-8 text-sm text-white/70">
-//         <a href="#" className="hover:text-white transition">Use cases</a>
-//         <a href="#" className="hover:text-white transition">About</a>
-//         <a href="#" className="hover:text-white transition">Careers</a>
-//         <a href="#" className="hover:text-white transition">Contact</a>
-//       </div>
-
-//       {/* CTA */}
-//       <button className="rounded-md border border-white/20 px-4 py-2 text-sm hover:bg-white/10 transition">
-//         Get started
-//       </button>
-//     </nav>
-//   );
-// }
 "use client";
 
 import { useState } from "react";
@@ -49,7 +18,7 @@ export default function Navbar() {
             src="/logos/deeptrack-high-resolution-logo-white-transparent.png"
             alt="Deeptrack logo"
             width={120}
-    height={56}
+            height={56}
             priority
           />
         </div>
@@ -103,7 +72,7 @@ export default function Navbar() {
             src="/logos/deeptrack-high-resolution-logo-white-transparent.png"
             alt="Deeptrack logo"
             width={120}
-    height={56}
+            height={56}
           />
           <button onClick={() => setOpen(false)} aria-label="Close menu">
             ✕

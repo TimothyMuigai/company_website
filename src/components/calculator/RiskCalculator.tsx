@@ -7,30 +7,31 @@ export default function RiskCalculator() {
   const [reviewTime, setReviewTime] = useState(10);
   const [costPerIncident, setCostPerIncident] = useState(40);
 
-  // simple derived calculation (can be refined later)
   const monthlyCost = volume * costPerIncident;
 
   return (
-    <section className="max-w-3xl mx-auto px-6 py-24">
+    <section className="max-w-3xl mx-auto px-6 py-16">
       {/* Header */}
-      <div className="text-center mb-12">
+      <div className="text-center mb-8">
         <p className="text-xs uppercase tracking-wide text-gray-500">
           Calculator
         </p>
-        <h2 className="mt-2 text-4xl font-bold text-gray-900">
+
+        <h2 className="mt-2 text-3xl font-semibold text-gray-900">
           Quantify the cost of not
           <br />
           verifying digital content
         </h2>
-        <p className="mt-4 text-gray-600">
+
+        <p className="mt-3 text-sm text-gray-600 max-w-xl mx-auto">
           Measure the operational, reputational, and financial impact of
           unmanaged synthetic media risk.
         </p>
       </div>
 
       {/* Card */}
-      <div className="bg-white rounded-xl border border-gray-200 px-8 py-10 space-y-10">
-        {/* Slider */}
+      <div className="bg-white rounded-xl border border-gray-200 px-6 py-7 space-y-7">
+        {/* Sliders */}
         {[
           {
             label: "Content volume reviewed per month",
@@ -70,7 +71,9 @@ export default function RiskCalculator() {
               </span>
             </div>
 
-            <p className="text-xs text-gray-500 mt-1">{item.sub}</p>
+            <p className="mt-1 text-xs text-gray-500">
+              {item.sub}
+            </p>
 
             <input
               type="range"
@@ -79,22 +82,20 @@ export default function RiskCalculator() {
               step={item.step || 1}
               value={item.value}
               onChange={(e) => item.setter(Number(e.target.value))}
-              className="mt-4 w-full h-1.5 rounded-full bg-gray-200 accent-gray-900 cursor-pointer"
+              className="mt-3 w-full h-1.5 rounded-full bg-gray-200 accent-gray-900 cursor-pointer"
             />
           </div>
         ))}
 
         {/* Results */}
-        <div className="pt-6 border-t border-gray-200 space-y-4 text-sm text-gray-700">
+        <div className="pt-5 border-t border-gray-200 space-y-3 text-sm text-[#0A1015]">
           <p>
-            Your team is exposed to ~{volume} high-risk content decisions per month.
+            Your team is exposed to ~{volume} high-risk content decisions per
+            month.
           </p>
 
           <p>
-            <span className="font-medium text-gray-900">
-              Secondary result:
-            </span>
-            <br />
+            <b>Secondary result:</b> <br />
             That equates to approximately{" "}
             <span className="font-semibold text-gray-900">
               ${monthlyCost}/month
@@ -102,26 +103,29 @@ export default function RiskCalculator() {
             in operational cost and preventable risk exposure.
           </p>
 
-          <p>
+          <p className="">
             Deeptrack can reduce verification time by up to 70% and significantly
             lower the likelihood of high-impact failures.
           </p>
         </div>
-        <p className="mt-6 text-xs text-black text-center">
-          Most organizations only discover synthetic media risk after damage has
-          already occurred.
-        </p>
 
-        <p className="mt-6 text-xs text-gray-500 text-left">
-          See Your Risk Reduction Potential
-        </p>
+        <p className="text-xs text-[#000000] text-left">
+        Most organizations only discover synthetic media risk after damage has
+        already occurred.
+      </p>
+
         {/* CTA */}
-        <button className="w-full bg-black text-white py-3.5 rounded-md text-sm font-medium hover:bg-gray-900 transition">
-          Get a custom automation plan
-        </button>
-      </div>
+        <div className="pt-4">
+          
+          <p className="mb-2 text-xs text-gray-500">
+            See your risk reduction potential
+          </p>
 
-      
+          <button className="w-full bg-black text-white py-3 rounded-md text-sm font-medium hover:bg-gray-900 transition">
+            Get a custom automation plan
+          </button>
+        </div>
+      </div>
     </section>
   );
 }

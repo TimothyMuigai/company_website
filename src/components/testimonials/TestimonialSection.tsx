@@ -2,9 +2,9 @@ import Image from "next/image";
 
 export default function TestimonialsSection() {
   return (
-    <section className="max-w-6xl mx-auto px-6 py-24">
+    <section className="max-w-4xl mx-auto px-6 py-16">
       {/* Header */}
-      <div className="text-center mb-20">
+      <div className="text-center mb-14">
         <p className="text-xs uppercase tracking-wide text-gray-500">
           Testimonials
         </p>
@@ -13,16 +13,16 @@ export default function TestimonialsSection() {
         </h2>
       </div>
 
-      <div className="space-y-20">
+      <div className="space-y-10">
         {/* Testimonial 1 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
           {/* Image */}
           <div>
             <Image
               src="/testimonial/testimonial_1.png"
               alt="Lauren Meyers"
-              width={320}
-              height={400}
+              width={260}
+              height={200}
               className="rounded-md object-cover"
             />
           </div>
@@ -52,9 +52,9 @@ export default function TestimonialsSection() {
         </div>
 
         {/* Testimonial 2 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
           {/* Logo block */}
-          <div className="flex items-center justify-center bg-black rounded-md h-[320px]">
+          <div className="flex items-center justify-center bg-black rounded-md h-[220px]">
             <Image
               src="/testimonial/coarsa.svg"
               alt="Coursa"

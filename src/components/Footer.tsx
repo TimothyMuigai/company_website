@@ -108,20 +108,6 @@ export default function FinalCTASection() {
 
             {/* Socials */}
             <div className="flex gap-4">
-                <a href="#" aria-label="Facebook" className="opacity-70 hover:opacity-100">
-                <Image src="/social_icons/facebook.svg" alt="" width={16} height={16} 
-                    className="
-                    opacity-90
-                    flex h-8 w-8 items-center justify-center
-                    rounded-full
-                    border border-white/20
-                    bg-white
-                    transition
-                    hover:border-white/40
-                    hover:bg-white
-                    "
-                />
-                </a>
                 <a href="#" aria-label="Twitter" className="opacity-70 hover:opacity-100">
                 <Image src="/social_icons/twitter.svg" alt="" width={16} height={16} 
                     className="
@@ -137,7 +123,7 @@ export default function FinalCTASection() {
                 />
                 </a>
                 <a href="#" aria-label="LinkedIn" className="opacity-70 hover:opacity-100">
-                <Image src="/social_icons/linkedin.svg" alt="" width={16} height={16} 
+                <Image src="/social_icons/linkedIn.svg" alt="" width={16} height={16} 
                     className="
                     opacity-90
                     flex h-8 w-8 items-center justify-center
@@ -155,8 +141,6 @@ export default function FinalCTASection() {
             </div>
         </div>
         </div>
-
-
       </div>
     </section>
   );

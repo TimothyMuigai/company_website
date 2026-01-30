@@ -3,11 +3,10 @@ export const processSteps = [
     id: "assess",
     label: "Assess",
     step: "01",
-    title: "Assess Risk & Readiness",
+    title: "Map Your Trust & Media Risk Surface",
     description:
-      "Evaluate your exposure to synthetic media, fraud, and disinformation across digital channels.",
+      "We evaluate where manipulated media, identity fraud, or misinformation creates exposure across your organization. This includes content workflows, verification gaps, response timelines, and regulatory or reputational risk.",
     image: "/process_photos/image 4.png",
-    cta: "See How It Works",
   },
   {
     id: "deploy",
@@ -15,18 +14,16 @@ export const processSteps = [
     step: "02",
     title: "Deploy Autonomous Verification Agents",
     description:
-      "Deeptrack agents analyze images, video, audio, and identity signals using forensic AI and provenance standards.",
-    image: "/process_photos/image 5.png",
-    cta: "Trusted by leaders",
+      "Deeptrack agents are configured to your workflows—analyzing images, video, audio, and identity signals using forensic AI and provenance standards. Agents operate autonomously while maintaining human oversight where required.",
+    image: "/process_photos/image 3.png",
   },
   {
     id: "monitor",
     label: "Monitor & Respond",
     step: "03",
-    title: "Detect, Escalate, and Act in Real Time",
+    title: "Detect, Escalate and Act in Real Time",
     description:
-      "Agents continuously monitor for new threats, flag high-risk content, and enable rapid response with evidence.",
-    image: "/process_photos/image 3.png",
-    cta: "See How It Works",
+      "Agents continuously monitor for new threats, flag high-risk content, generate alerts, and produce audit-ready reports. Teams respond faster—with confidence and accountability.",
+    image: "/process_photos/image 5.png",
   },
 ];
