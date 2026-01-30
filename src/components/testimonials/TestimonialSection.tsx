@@ -90,7 +90,7 @@ export default function TestimonialsSection() {
 
           <div className="md:col-span-2">
             <TypingText
-              text="Before AI Supply, our operations were bottlenecked by manual processes and fragmented tools. Within the first month, we automated 60% of our most repetitive workflows. What used to take days now takes minutes — and the consistency is night and day. It’s not just faster — it’s sharper, more reliable, and scalable."
+              text="“Before AI Supply, our operations were bottlenecked by manual processes and fragmented tools. Within the first month, we automated 60% of our most repetitive workflows. What used to take days now takes minutes — and the consistency is night and day. It’s not just faster — it’s sharper, more reliable, and scalable.”"
               className="text-lg text-gray-800 leading-relaxed"
             />
 
@@ -121,7 +121,7 @@ export default function TestimonialsSection() {
 
           <div className="md:col-span-2">
             <TypingText
-              text="AI Supply changed how we think about scaling. We didn’t need to hire a massive team — the AI agents filled in the gaps and made us operate like a company twice our size. It gave us leverage where we had none before. Our bottom line grew 4x in under 6 months without increasing headcount."
+              text="“AI Supply changed how we think about scaling. We didn’t need to hire a massive team — the AI agents filled in the gaps and made us operate like a company twice our size. It gave us leverage where we had none before. Our bottom line grew 4x in under 6 months without increasing headcount.”"
               className="text-lg text-gray-800 leading-relaxed"
             />
 
