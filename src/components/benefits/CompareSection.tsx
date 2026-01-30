@@ -36,29 +36,29 @@ export default function CompareSection() {
 
             <ul className="space-y-4 text-sm text-gray-300">
               <li className="flex items-center gap-3">
-                <span className="text-gray-400">✕</span>
+                <span className="text-red-400">✕</span>
                 Manual task delegation
               </li>
               <li className="flex items-center gap-3">
-                <span className="text-gray-400">✕</span>
+                <span className="text-red-400">✕</span>
                 Limited data usage
               </li>
               <li className="flex items-center gap-3">
-                <span className="text-gray-400">✕</span>
+                <span className="text-red-400">✕</span>
                 Human error & delay
               </li>
               <li className="flex items-center gap-3">
-                <span className="text-gray-400">✕</span>
+                <span className="text-red-400">✕</span>
                 Costly scaling
               </li>
             </ul>
           </div>
 
           {/* Deeptrack */}
-          <div className="relative rounded-xl border border-white/10 bg-white/10 backdrop-blur-xl p-8">
+          <div className="relative rounded-xl border border-white/10 bg-white/25 backdrop-blur-xl p-8">
             <div className="mb-6 flex items-center gap-2">
               <Image
-                src="/logos/deeptrack-high-resolution-logo-white-transparent.png"
+                src="/logos/deeptrack-high-resolution-logo-transparent.png"
                 alt="deeptrack"
                 width={110}
                 height={28}
@@ -67,19 +67,19 @@ export default function CompareSection() {
 
             <ul className="space-y-4 text-sm text-gray-200">
               <li className="flex items-center gap-3">
-                <span className="text-white">✓</span>
+                <span className="font-bold text-green-400">✓</span>
                 Built for high-risk, high-impact decisions
               </li>
               <li className="flex items-center gap-3">
-                <span className="text-white">✓</span>
+                <span className="font-bold text-green-400">✓</span>
                 Uses forensic AI + provenance standards (C2PA)
               </li>
               <li className="flex items-center gap-3">
-                <span className="text-white">✓</span>
+                <span className="font-bold text-green-400">✓</span>
                 Designed for real workflows, not demos
               </li>
               <li className="flex items-center gap-3">
-                <span className="text-white">✓</span>
+                <span className="font-bold text-green-400">✓</span>
                 Human-review + AI collaboration (important for trust)
               </li>
             </ul>

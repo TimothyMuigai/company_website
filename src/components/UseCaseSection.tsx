@@ -78,27 +78,27 @@ export default function UseCasesSection() {
 
             {/* Bottom row */}
             <div className="
-  flex flex-col-reverse gap-3
-  sm:flex-row sm:items-center sm:justify-between sm:gap-4
-">
+              flex flex-col-reverse gap-3
+              sm:flex-row sm:items-center sm:justify-between sm:gap-4
+            ">
               {/* CTA */}
               <button className="
-    inline-flex items-center justify-center
-    text-sm font-medium text-white
-    bg-[#0A1015] px-4 py-2 rounded-md
-    hover:bg-black transition
-    whitespace-nowrap
-    w-full sm:w-auto
-  ">
+                inline-flex items-center justify-center
+                text-sm font-medium text-white
+                bg-[#0A1015] px-4 py-2 rounded-md
+                hover:bg-black transition
+                whitespace-nowrap
+                w-full sm:w-auto
+              ">
                 Explore use cases →
               </button>
 
               {/* Verified indicator */}
               <div className="
-    flex items-center gap-2
-    text-sm text-gray-500
-    justify-center sm:justify-start
-  ">
+                flex items-center gap-2
+                text-sm text-gray-500
+                justify-center sm:justify-start
+              ">
                 <Image
                   src="/mdi_verified.svg"
                   alt="Verified"

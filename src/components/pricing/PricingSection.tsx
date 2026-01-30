@@ -1,10 +1,19 @@
+"use client";
+
 import { pricingPlans } from "./pricingData";
+import { motion } from "framer-motion";
 
 export default function PricingSection() {
   return (
     <section className="max-w-7xl mx-auto px-6 py-10">
       {/* Header */}
-      <div className="text-center mb-16">
+      <motion.div
+        className="text-center mb-16"
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
         <p className="text-xs uppercase tracking-wide text-gray-500">
           Pricing
         </p>
@@ -16,14 +25,36 @@ export default function PricingSection() {
         <p className="mt-3 text-sm text-gray-500">
           *Save 20% on yearly plans.
         </p>
-      </div>
+      </motion.div>
 
       {/* Plans */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={{
+          hidden: {},
+          visible: {
+            transition: {
+              staggerChildren: 0.14, // controls card sequence speed
+            },
+          },
+        }}
+      >
         {pricingPlans.map(plan => (
-          <div
+          <motion.div
             key={plan.name}
-            className="rounded-lg border border-gray-200 bg-gray-50 p-6 flex flex-col"
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0 },
+            }}
+            transition={{ duration: 0.55, ease: "easeOut" }}
+            whileHover={{
+              y: -6,
+              boxShadow: "0px 12px 30px rgba(0, 0, 0, 0.08)",
+            }}
+            className="rounded-lg border border-gray-200 bg-gray-50 p-6 flex flex-col transition-shadow"
           >
             <div>
               <h3 className="text-sm font-semibold text-gray-900">
@@ -43,18 +74,23 @@ export default function PricingSection() {
               </div>
             </div>
 
-            <button className="mt-6 w-full bg-black text-white py-2 text-sm rounded-md">
+            {/* CTA */}
+            <motion.button
+              whileTap={{ scale: 0.97 }}
+              transition={{ duration: 0.15 }}
+              className="mt-6 w-full bg-black text-white py-2 text-sm rounded-md"
+            >
               {plan.cta}
-            </button>
+            </motion.button>
 
             <ul className="mt-6 space-y-2 text-sm text-gray-600">
               {plan.features.map(feature => (
                 <li key={feature}>• {feature}</li>
               ))}
             </ul>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 }
