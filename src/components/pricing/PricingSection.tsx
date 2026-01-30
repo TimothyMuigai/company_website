@@ -2,7 +2,7 @@ import { pricingPlans } from "./pricingData";
 
 export default function PricingSection() {
   return (
-    <section className="max-w-7xl mx-auto px-6 py-16">
+    <section className="max-w-7xl mx-auto px-6 py-10">
       {/* Header */}
       <div className="text-center mb-16">
         <p className="text-xs uppercase tracking-wide text-gray-500">

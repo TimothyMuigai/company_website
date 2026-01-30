@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function TestimonialsSection() {
   return (
-    <section className="max-w-4xl mx-auto px-6 py-16">
+    <section className="max-w-4xl mx-auto px-6 py-20">
       {/* Header */}
       <div className="text-center mb-14">
         <p className="text-xs uppercase tracking-wide text-gray-500">

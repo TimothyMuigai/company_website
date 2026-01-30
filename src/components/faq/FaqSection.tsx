@@ -7,7 +7,7 @@ export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="max-w-3xl mx-auto px-6 py-16">
+    <section className="max-w-3xl mx-auto px-6 py-20">
       {/* Header */}
       <div className="text-center mb-12">
         <p className="text-xs uppercase tracking-wide text-gray-500">

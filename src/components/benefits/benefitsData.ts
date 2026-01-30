@@ -33,6 +33,6 @@ export const benefits = [
     title: "Protect reputation and public trust",
     description:
       "Prevent false publications, identity misuse, and synthetic media incidents before impact.",
-    icon: "/benefits_icons/Icon_2.svg",
+    icon: "/benefits_icons/icon_2.svg",
   },
 ];

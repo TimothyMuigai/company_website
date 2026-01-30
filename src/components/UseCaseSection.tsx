@@ -75,27 +75,42 @@ export default function UseCasesSection() {
               verification workflows end-to-end—logging evidence, escalating
               risk, and generating audit-ready reports.
             </p>
-            
-            {/* Bottom row */}
-            <div className="flex items-center justify-between gap-4">
-                {/* CTA */}
-                <button className="inline-flex items-center text-sm font-medium text-white bg-[#0A1015] px-4 py-2 rounded-md hover:bg-black transition whitespace-nowrap">
-                    Explore use cases →
-                </button>
 
-                {/* Verified indicator */}
-                <div className="flex items-center gap-2 text-sm text-gray-500">
-                    <Image
-                        src="/mdi_verified.svg"
-                        alt="Verified"
-                        width={18}
-                        height={18}
-                    />
-                    <span>
-                        <b>Trusted by</b> media, financial institutions, and government teams
-                    </span>
-                </div>              
+            {/* Bottom row */}
+            <div className="
+  flex flex-col-reverse gap-3
+  sm:flex-row sm:items-center sm:justify-between sm:gap-4
+">
+              {/* CTA */}
+              <button className="
+    inline-flex items-center justify-center
+    text-sm font-medium text-white
+    bg-[#0A1015] px-4 py-2 rounded-md
+    hover:bg-black transition
+    whitespace-nowrap
+    w-full sm:w-auto
+  ">
+                Explore use cases →
+              </button>
+
+              {/* Verified indicator */}
+              <div className="
+    flex items-center gap-2
+    text-sm text-gray-500
+    justify-center sm:justify-start
+  ">
+                <Image
+                  src="/mdi_verified.svg"
+                  alt="Verified"
+                  width={18}
+                  height={18}
+                />
+                <span className="leading-snug">
+                  <b>Trusted by</b> media, financial institutions, and government teams
+                </span>
+              </div>
             </div>
+
           </div>
 
           {/* Card 4 */}

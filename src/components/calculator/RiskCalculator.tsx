@@ -10,7 +10,7 @@ export default function RiskCalculator() {
   const monthlyCost = volume * costPerIncident;
 
   return (
-    <section className="max-w-3xl mx-auto px-6 py-16">
+    <section className="max-w-3xl mx-auto px-6 py-24">
       {/* Header */}
       <div className="text-center mb-8">
         <p className="text-xs uppercase tracking-wide text-gray-500">
