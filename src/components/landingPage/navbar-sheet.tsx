@@ -48,9 +48,9 @@ export function NavbarSheet() {
               <DropdownMenuContent>
                 <DropdownMenuLabel>Our Solutions</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem><Link href='/solutions/image-authentication'>Image Authentication</Link></DropdownMenuItem>
-                <DropdownMenuItem><Link href='/solutions/audio-authentication'>Audio Authentication</Link></DropdownMenuItem>
-                <DropdownMenuItem><Link href='/solutions/gotham'>Gotham</Link></DropdownMenuItem>
+                <DropdownMenuItem><Link href='/solution/image-authentication'>Image Authentication</Link></DropdownMenuItem>
+                <DropdownMenuItem><Link href='/solution/audio-authentication'>Audio Authentication</Link></DropdownMenuItem>
+                <DropdownMenuItem><Link href='/solution/gotham'>Gotham</Link></DropdownMenuItem>
                 
               </DropdownMenuContent>
             </DropdownMenu>
