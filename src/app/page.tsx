@@ -1,5 +1,5 @@
 import Hero from "./Hero";
-import Navbar from "./NavBar";
+import { Navbar } from "@/components/landingPage/navBar";
 import UseCasesSection from "../components/UseCaseSection";
 import IndustriesTabs from "@/components/industry/IndustriesTab";
 import ProcessTabs from "@/components/process/ProcessTab";
@@ -10,6 +10,8 @@ import TestimonialsSection from "@/components/testimonials/TestimonialSection";
 import PricingSection from "@/components/pricing/PricingSection";
 import FAQSection from "@/components/faq/FaqSection";
 import FinalCTASection from "@/components/Footer";
+import Image from "next/image";
+// import Navbar from "./NavBar";
 
 export default function Home() {
   return (
@@ -17,12 +19,24 @@ export default function Home() {
       {/* HERO SECTION ONLY */}
       <section className="relative min-h-screen overflow-hidden bg-[#0A1015]">
         {/* Hero background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0a1a2f] via-[#0e2a4a] to-black" />
-        <div className="absolute inset-0 opacity-30 bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:120px_120px]" />
+        {/* <div className="absolute inset-0 bg-gradient-to-br from-[#0a1a2f] via-[#0e2a4a] to-black" />
+        <div className="absolute inset-0 opacity-30 bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:120px_120px]" /> */}
+
+        {/* Background image */}
+        <div className="absolute inset-0">
+          <Image
+            src="/landingPage_deeptrack.png"
+            alt="Background"
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
 
         {/* Hero content */}
         <div className="relative z-10">
           <Navbar />
+          
           <Hero />
         </div>
       </section>

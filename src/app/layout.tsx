@@ -6,11 +6,9 @@ export const metadata = {
   description: "Enterprise deepfake detection",
 };
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
+
+const inter = Inter({ subsets: ["latin"], weight: ["300", "400"] });
+
 
 export default function RootLayout({
   children,
@@ -18,8 +16,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body className="bg-[#0A1015] text-white antialiased">
+    <html lang="en" className={inter.className}>
+      <body className="bg-[#ffffff] text-white antialiased">
         {children}
       </body>
     </html>
