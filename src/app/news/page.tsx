@@ -1,4 +1,4 @@
-import { Navbar } from "@/components/landingPage/navBar";
+import { Navbar } from "@/components/landingPage/navs/navBar";
 
 export default function News() {
   return (

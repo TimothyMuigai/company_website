@@ -71,11 +71,11 @@ export function NavbarSheet() {
             </DropdownMenu>
 
             {/* Support and Blog */}
-            <Link href='#'>Blog & Research</Link>
-            <Link href='/events'>News Center</Link>
-            <Link href='/events'>About</Link>
-            <Link href='/events'>Careers</Link>
-            <Link href='/events'>Contact</Link>
+            <Link href='/blog'>Blog & Research</Link>
+            <Link href='/news'>News Center</Link>
+            <Link href='/about'>About</Link>
+            <Link href='/careers'>Careers</Link>
+            <Link href='/contact'>Contact</Link>
 
             <Button>
               Get started

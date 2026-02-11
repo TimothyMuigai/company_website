@@ -20,8 +20,6 @@ const StatsSection = ({
   return (
     <section className="w-full py-16 md:py-20 lg:py-24">
       <div className="max-w-7xl mx-auto px-6 md:px-8">
-
-        {/* Grid switches to 2 columns on large screens */}
         <div className="grid lg:grid-cols-[1.2fr_0.8fr] gap-12 lg:gap-20 items-center">
 
           {/* LEFT SIDE */}
@@ -34,7 +32,7 @@ const StatsSection = ({
               leading-7 
               md:leading-8 
               lg:text-[18px] 
-              lg:leading-[36px] 
+              lg:leading-9 
               text-gray-800 
               max-w-3xl
             ">

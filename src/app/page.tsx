@@ -1,5 +1,5 @@
 import Hero from "./Hero";
-import { Navbar } from "@/components/landingPage/navBar";
+import { Navbar } from "@/components/landingPage/navs/navBar";
 import UseCasesSection from "../components/UseCaseSection";
 import IndustriesTabs from "@/components/industry/IndustriesTab";
 import ProcessTabs from "@/components/process/ProcessTab";
