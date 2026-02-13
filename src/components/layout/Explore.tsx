@@ -26,7 +26,7 @@ export default function ExploreSection({
                             className={cn(
                                 'inline-flex items-center justify-center rounded-2xl border-2 border-gray-800 px-6 py-3',
                                 'text-base backdrop-blur-sm transition-colors',
-                                'hover:border-cyan-500/50 hover:bg-gray-900/50'
+                                'cursor-pointer'
                             )}
                         >
                             {type}

@@ -21,10 +21,10 @@ export default function FinalCTASection() {
       {/* Vertical grid lines */}
       {/* <div className="absolute inset-0 opacity-25">
         <div className="h-full w-full bg-[linear-gradient(to_right,rgba(255,255,255,0.06)_1px,transparent_1px)] bg-[size:140px_100%]" />
-      </div> */} 
+      </div> */}
 
       {/* Content */}
-      <div className="relative max-w-7xl mx-auto px-6 pt-28 pb-16">
+      <div className="relative max-w-7xl mx-auto px-6 pt-7 pb-10">
         {/* CTA */}
         <div className="max-w-xl">
           <p className="text-xs uppercase tracking-wide text-gray-300">
@@ -61,55 +61,55 @@ export default function FinalCTASection() {
         </div>
 
         {/* Footer */}
-        <div className="mt-32 text-sm text-gray-400">
-        {/* Pages row */}
-        <div className="border-t border-white/10 py-4">
+        <div className="mt-22 text-sm text-gray-400">
+          {/* Pages row */}
+          <div className="border-t border-white/10 py-4">
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-            <span className="text-white">Pages</span>
+              <span className="text-white">Pages</span>
 
-            <div className="flex flex-wrap gap-x-6 gap-y-2">
+              <div className="flex flex-wrap gap-x-6 gap-y-2">
                 <Link href="/">Home</Link>
                 <Link href="/use-cases">Use cases</Link>
                 <Link href="/about">About</Link>
                 <Link href="/careers">Careers</Link>
                 <Link href="/contact">Contact</Link>
+              </div>
             </div>
-            </div>
-        </div>
+          </div>
 
-        {/* Legal row */}
-        <div className="border-t border-white/10 py-4">
+          {/* Legal row */}
+          <div className="border-t border-white/10 py-4">
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-            <span className="text-white">Legal</span>
+              <span className="text-white">Legal</span>
 
-            <div className="flex flex-wrap gap-x-6 gap-y-2">
+              <div className="flex flex-wrap gap-x-6 gap-y-2">
                 <Link href="/privacy">Privacy policy</Link>
                 <Link href="/terms">Terms & conditions</Link>
+              </div>
             </div>
-            </div>
-        </div>
+          </div>
 
-        {/* Bottom row */}
-        <div className="border-t border-white/10 pt-6 mt-6">
+          {/* Bottom row */}
+          <div className="border-t border-white/10 mt-6">
             <div className="flex flex-col-reverse items-center gap-6
                             md:flex-row md:justify-between md:items-center
                             text-xs text-gray-500">
 
-            {/* Brand + copyright */}
-            <div className="flex items-center gap-3">
+              {/* Brand + copyright */}
+              <div className="flex items-center gap-3">
                 <Image
-                src="/logos/deeptrack-high-resolution-logo-white-transparent.png"
-                alt="deeptrack"
-                width={100}
-                height={24}
+                  src="/logos/deeptrack-high-resolution-logo-white-transparent.png"
+                  alt="deeptrack"
+                  width={100}
+                  height={24}
                 />
                 <span>© deeptrack 2025. All Rights Reserved</span>
-            </div>
+              </div>
 
-            {/* Socials */}
-            <div className="flex gap-4">
+              {/* Socials */}
+              <div className="flex gap-4">
                 <a href="#" aria-label="Twitter" className="opacity-70 hover:opacity-100">
-                <Image src="/social_icons/twitter.svg" alt="" width={16} height={16} 
+                  <Image src="/social_icons/twitter.svg" alt="" width={16} height={16}
                     className="
                     opacity-90
                     flex h-8 w-8 items-center justify-center
@@ -120,10 +120,10 @@ export default function FinalCTASection() {
                     hover:border-white/40
                     hover:bg-white
                     "
-                />
+                  />
                 </a>
                 <a href="#" aria-label="LinkedIn" className="opacity-70 hover:opacity-100">
-                <Image src="/social_icons/linkedIn.svg" alt="" width={16} height={16} 
+                  <Image src="/social_icons/linkedIn.svg" alt="" width={16} height={16}
                     className="
                     opacity-90
                     flex h-8 w-8 items-center justify-center
@@ -134,12 +134,12 @@ export default function FinalCTASection() {
                     hover:border-white/40
                     hover:bg-white
                     "
-                />
+                  />
                 </a>
-            </div>
+              </div>
 
             </div>
-        </div>
+          </div>
         </div>
       </div>
     </section>

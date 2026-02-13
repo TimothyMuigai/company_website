@@ -8,7 +8,6 @@ import InfoSection from "@/components/layout/InfoSection"
 import Head from "next/head"
 import ExploreSection from "@/components/layout/Explore"
 import { WaitlistButton } from "@/components/landingPage/waiting-list"
-import Image from "next/image"
 
 const ImageAuthenticationPage = () => {
     return (
@@ -30,7 +29,6 @@ const ImageAuthenticationPage = () => {
             </Head>
 
             <div className="space-y-6 text-black">
-                {/* <WebinarSection /> */}
                 <Navbar />
                 <FeatureSection
                     title="Advanced AI Image Authentication & Deepfake Detection"
@@ -80,7 +78,7 @@ const ImageAuthenticationPage = () => {
                         ]}
                     />
                     
-                    <section className="bg-[#FBFBFB] min-h-[400px] flex items-center w-full py-16 border-y-[1px] border-gray-600">
+                    <section className="bg-[#001D2C78] min-h-[400px] flex items-center w-full py-16 border-y-[1px] border-gray-600">
                         
                         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
                             

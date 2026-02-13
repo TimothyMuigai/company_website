@@ -1,5 +1,6 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
+import { Outfit } from "next/font/google";
 
 export const metadata = {
   title: "Deeptrack",
@@ -8,6 +9,7 @@ export const metadata = {
 
 
 const inter = Inter({ subsets: ["latin"], weight: ["300", "400"] });
+const outfit = Outfit({ subsets: ["latin"], weight: ["300", "400"] });
 
 
 export default function RootLayout({
@@ -16,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.className}>
+    <html lang="en" className={outfit.className}>
       <body className="bg-[#ffffff] text-white antialiased">
         {children}
       </body>
