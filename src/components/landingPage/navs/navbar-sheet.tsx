@@ -71,7 +71,7 @@ export function NavbarSheet() {
             </DropdownMenu>
 
             {/* Support and Blog */}
-            <Link href='/blog'>Blog & Research</Link>
+            <Link href='/events'>Blog & Research</Link>
             <Link href='/news'>News Center</Link>
             <Link href='/about'>About</Link>
             <Link href='/careers'>Careers</Link>
