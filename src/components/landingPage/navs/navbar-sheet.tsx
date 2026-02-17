@@ -73,9 +73,7 @@ export function NavbarSheet() {
             {/* Support and Blog */}
             <Link href='/events'>Blog & Research</Link>
             <Link href='/news'>News Center</Link>
-            <Link href='/about'>About</Link>
-            <Link href='/careers'>Careers</Link>
-            <Link href='/contact'>Contact</Link>
+            <Link href='/investor-relations'>Investor Relations</Link>
 
             <Button>
               Get started

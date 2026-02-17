@@ -165,40 +165,18 @@ export function Navigation({ isHome }: { isHome: boolean }) {
 
 
           {/* News Center link */}
-
           <NavigationMenuLink asChild>
             <NavLink href="/news" isHome={isHome}>
               News Center
             </NavLink>
           </NavigationMenuLink>
 
-
-          {/* About */}
-
+                {/* Investors Relation */}
           <NavigationMenuLink asChild>
-            <NavLink href="/about" isHome={isHome}>
-              About
+            <NavLink href="/news" isHome={isHome}>
+              Investor Relation
             </NavLink>
           </NavigationMenuLink>
-
-
-          {/* Careers */}
-          <NavigationMenuItem>
-            <NavigationMenuLink asChild>
-              <NavLink href="/careers" isHome={isHome}>
-                Careers
-              </NavLink>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
-
-          {/* Contact */}
-          <NavigationMenuItem>
-            <NavigationMenuLink asChild>
-              <NavLink href="/contact" isHome={isHome}>
-                Contact
-              </NavLink>
-            </NavigationMenuLink>
-          </NavigationMenuItem>
 
         </NavigationMenuList>
       </NavigationMenu>
