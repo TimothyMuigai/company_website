@@ -4,6 +4,7 @@ import { useState } from "react";
 import { processSteps } from "./processData";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import { WaitlistButton } from "../landingPage/waiting-list";
 
 export default function ProcessTabs() {
   const [activeId, setActiveId] = useState(processSteps[0].id);
@@ -111,16 +112,7 @@ export default function ProcessTabs() {
           sm:flex-row sm:items-center sm:gap-4
           "
               >
-                <button
-                  className="
-            inline-flex items-center justify-center rounded-md
-              bg-[#0A1015] px-5 py-3 text-sm font-medium text-white
-              hover:bg-gray-700 transition
-              w-full sm:w-auto
-            "
-                >
-                  See How It Works
-                </button>
+                <WaitlistButton/>
 
                 <div
                   className="

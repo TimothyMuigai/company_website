@@ -1,3 +1,6 @@
+"use client";
+import Link from 'next/link';
+
 export default function Hero() {
   return (
     <section className="flex flex-col items-center justify-center text-center px-6 pt-32">
@@ -16,10 +19,17 @@ export default function Hero() {
 
       <div className="mt-10 flex gap-4">
         <button className="rounded-md bg-white text-black px-6 py-3 text-sm font-medium hover:bg-gray-200 transition">
-          Get in touch
+          <Link href="https://gotham.deeptrack.io" 
+                target="_blank" >Get started</Link>
         </button>
 
-        <button className="rounded-md border border-white/30 px-6 py-3 text-sm hover:bg-white/10 transition">
+        <button 
+          className="rounded-md border border-white/30 px-6 py-3 text-sm hover:bg-white/10 transition"
+          onClick={() => {
+            const section = document.getElementById("industries");
+            section?.scrollIntoView({ behavior: "smooth" });
+          }}
+        >
           View use cases
         </button>
       </div>

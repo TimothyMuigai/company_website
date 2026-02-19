@@ -15,14 +15,6 @@ export default function FinalCTASection() {
         />
       </div>
 
-      {/* Dark blue overlay */}
-      {/* <div className="absolute inset-0 bg-gradient-to-br from-black via-[#0b2a45]/90 to-black" />
-
-      {/* Vertical grid lines */}
-      {/* <div className="absolute inset-0 opacity-25">
-        <div className="h-full w-full bg-[linear-gradient(to_right,rgba(255,255,255,0.06)_1px,transparent_1px)] bg-[size:140px_100%]" />
-      </div> */}
-
       {/* Content */}
       <div className="relative max-w-7xl mx-auto px-6 pt-7 pb-10">
         {/* CTA */}
@@ -69,9 +61,9 @@ export default function FinalCTASection() {
 
               <div className="flex flex-wrap gap-x-6 gap-y-2">
                 <Link href="/">Home</Link>
-                <Link href="/use-cases">Use cases</Link>
+                <Link href="/#industries">Use cases</Link>
                 <Link href="/about">About</Link>
-                <Link href="/careers">Careers</Link>
+                <Link href="/career">Careers</Link>
                 <Link href="/contact">Contact</Link>
               </div>
             </div>
@@ -83,7 +75,7 @@ export default function FinalCTASection() {
               <span className="text-white">Legal</span>
 
               <div className="flex flex-wrap gap-x-6 gap-y-2">
-                <Link href="/privacy">Privacy policy</Link>
+                <Link href="/privacy-policy">Privacy policy</Link>
                 <Link href="/terms">Terms & conditions</Link>
               </div>
             </div>

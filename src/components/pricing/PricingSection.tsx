@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { pricingPlans } from "./pricingData";
 import { motion } from "framer-motion";
 
@@ -80,7 +81,7 @@ export default function PricingSection() {
               transition={{ duration: 0.15 }}
               className="mt-6 w-full bg-black text-white py-2 text-sm rounded-md"
             >
-              {plan.cta}
+              <Link href={"/contact"}>{plan.cta}</Link>
             </motion.button>
 
             <ul className="mt-6 space-y-2 text-sm text-gray-600">

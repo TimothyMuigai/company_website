@@ -21,9 +21,28 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { RequestAccessModal } from '@/components/layout/RequestAccessModal'
+import { usePathname } from 'next/navigation'
 
 export function NavbarSheet() {
+  const [showPitchDeckModal, setShowPitchDeckModal] = useState(false)
+  const [showCapTableModal, setShowCapTableModal] = useState(false)
+  const [showCompetitionAnalysisModal, setshowCompetitionAnalysisModal] = useState(false)
   const [isSheetOpen, setIsSheetOpen] = useState(false)
+
+
+  // Handle opening and closing of the sheet and modals
+  const handleInvestorRelationsClick = (modalType: 'pitchDeck' | 'capTable' | 'competition') => {
+    setIsSheetOpen(false) // Close the sheet
+    if (modalType === 'pitchDeck') {
+      setShowPitchDeckModal(true) // Open Pitch Deck Modal
+    } else if (modalType === 'capTable') {
+      setShowCapTableModal(true) // Open Cap Table Modal
+    }
+    else if (modalType === 'competition') {
+      setshowCompetitionAnalysisModal(true) // Open Competition analysis Modal
+    }
+  }
 
   return (
     <>
@@ -51,7 +70,7 @@ export function NavbarSheet() {
                 <DropdownMenuItem><Link href='/solution/image-authentication'>Image Authentication</Link></DropdownMenuItem>
                 <DropdownMenuItem><Link href='/solution/audio-authentication'>Audio Authentication</Link></DropdownMenuItem>
                 <DropdownMenuItem><Link href='/solution/gotham'>Gotham</Link></DropdownMenuItem>
-                
+
               </DropdownMenuContent>
             </DropdownMenu>
 
@@ -63,21 +82,50 @@ export function NavbarSheet() {
               <DropdownMenuContent>
                 <DropdownMenuLabel>Our Use Cases</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem><Link href='/media-use-case'>Media Use Case</Link></DropdownMenuItem>
-                <DropdownMenuItem><Link href='/finance-use-case'>Finance Use Case</Link></DropdownMenuItem>
-                <DropdownMenuItem><Link href='/government-use-case'>Government Use Case</Link></DropdownMenuItem>
-                <DropdownMenuItem><Link href='/executive-identity-shielding'>Executive Identity Shielding</Link></DropdownMenuItem>
+                <DropdownMenuItem><Link href='/use-case/media-use-case'>Media Use Case</Link></DropdownMenuItem>
+                <DropdownMenuItem><Link href='/use-case/finance-use-case'>Finance Use Case</Link></DropdownMenuItem>
+                <DropdownMenuItem><Link href='/use-case/government-use-case'>Government Use Case</Link></DropdownMenuItem>
+                <DropdownMenuItem><Link href='/use-case/executive-identity-shielding'>Executive Identity Shielding</Link></DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
             {/* Support and Blog */}
             <Link href='/events'>Blog & Research</Link>
             <Link href='/news'>News Center</Link>
-            <Link href='/investor-relations'>Investor Relations</Link>
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center space-x-2">
+                <span>Investor Relations</span> <ChevronDown className="h-4 w-4" />
+              </DropdownMenuTrigger>
 
-            <Button>
-              Get started
-            </Button>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>Investor Materials</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+
+                <DropdownMenuItem
+                  onClick={() => handleInvestorRelationsClick("pitchDeck")}
+                >
+                  Request Pitch Deck
+                </DropdownMenuItem>
+
+                <DropdownMenuItem
+                  onClick={() => handleInvestorRelationsClick("capTable")}
+                >
+                  Request Cap Table
+                </DropdownMenuItem>
+
+                <DropdownMenuItem
+                  onClick={() => handleInvestorRelationsClick("competition")}
+                >
+                  Request Competition Analysis
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <Link href="https://gotham.deeptrack.io/signup" target="_blank" >
+              <Button>
+                Get started
+              </Button>
+            </Link>
           </div>
           <SheetFooter>
             <SheetClose asChild>
@@ -88,6 +136,23 @@ export function NavbarSheet() {
           </SheetFooter>
         </SheetContent>
       </Sheet>
+
+      {/* Modals */}
+      <RequestAccessModal
+        isOpen={showPitchDeckModal}
+        onClose={() => setShowPitchDeckModal(false)}
+        title="Request Pitch Deck"
+      />
+      <RequestAccessModal
+        isOpen={showCapTableModal}
+        onClose={() => setShowCapTableModal(false)}
+        title="Request Cap Table"
+      />
+      <RequestAccessModal
+        isOpen={showCompetitionAnalysisModal}
+        onClose={() => setshowCompetitionAnalysisModal(false)}
+        title="Request Competition Analysis"
+      />
     </>
   )
 }

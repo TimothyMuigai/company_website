@@ -12,38 +12,51 @@ import {
 } from '@/components/ui/dialog'
 import { MoveUpRight } from 'lucide-react'
 import { Button } from '../ui/button'
+import WaitlistForm from './waitlist-form';
+import { usePathname } from 'next/navigation';
 
 interface WaitlistButtonProps {
   id?: string;
 }
 
-export function WaitlistButton({id}: WaitlistButtonProps) {
-
-// backdrop-filter: blur(32.400001525878906px)
-
-
+export function WaitlistButton({ id }: WaitlistButtonProps) {
+  const pathname = usePathname();
+  const isHome = pathname === '/';
   return (
     <Dialog>
       <DialogTrigger asChild>
         <div className='flex mt-2'>
-          <Button 
-            id={id} 
+          <Button
+            id={id}
             variant="outline"
-            className="
-              flex items-center gap-2 p-5
-              bg-[#001d2c96] hover:bg-[#001d2c5a]
-              text-white border
-              rounded-lg
-              transition-all duration-200 
-              group
-            "
-            style={{
-              boxShadow:
-                '2px 2px 5px 0px rgba(0,0,0,0.25), -2px -2px 5px 0px rgba(0,0,0,0.25)',
-              backdropFilter: 'blur(32px)',
-            }}
+            className={
+              isHome
+                ? `
+        inline-flex items-center justify-center rounded-md
+              bg-[#0A1015] px-5 py-3 text-sm font-medium text-white
+              hover:bg-gray-700 transition
+              w-full sm:w-auto
+      `
+                : `
+        flex items-center gap-2 p-5
+        bg-[#001d2c96] hover:bg-[#001d2c5a]
+        text-white border
+        rounded-lg
+        transition-all duration-200
+        group
+      `
+            }
+            style={
+              !isHome
+                ? {
+                  boxShadow:
+                    "2px 2px 5px 0px rgba(0,0,0,0.25), -2px -2px 5px 0px rgba(0,0,0,0.25)",
+                  backdropFilter: "blur(32px)",
+                }
+                : undefined
+            }
           >
-            Book a demo
+            {isHome ? "See How it Works" : "Book a demo"}
             {/* <MoveUpRight className="w-4 h-4  text-black transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" /> */}
           </Button>
         </div>
@@ -55,13 +68,13 @@ export function WaitlistButton({id}: WaitlistButtonProps) {
             Click submit when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
-        
+        <WaitlistForm />
         <DialogFooter className='flex'>
           {/* Button to open Privacy Policy modal */}
           <Dialog>
             <DialogTrigger asChild>
-              <Button 
-                variant={'link'} 
+              <Button
+                variant={'link'}
                 className="text-blue-500 underline"
               >
                 View Privacy Policy
@@ -155,12 +168,12 @@ export function WaitlistButton({id}: WaitlistButtonProps) {
                   If you have any questions or concerns about this Privacy Policy or how your information is handled, please contact us at:
                 </p>
                 <div className="mt-4">
-                  deeptrack Solution<br/>
-                    Email: info@deeptrack.io<br/>
-                      Phone: +254-796414653<br/>
-                      </div>
+                  deeptrack Solution<br />
+                  Email: info@deeptrack.io<br />
+                  Phone: +254-796414653<br />
+                </div>
 
-                      <p><strong>Last Updated:</strong> 13/12/2024</p>
+                <p><strong>Last Updated:</strong> 13/12/2024</p>
               </div>
             </DialogContent>
           </Dialog>

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 export default function RiskCalculator() {
@@ -121,9 +122,11 @@ export default function RiskCalculator() {
             See your risk reduction potential
           </p>
 
-          <button className="w-full bg-black text-white py-3 rounded-md text-sm font-medium hover:bg-gray-900 transition">
-            Get a custom automation plan
-          </button>
+          <Link href="/contact">
+            <button className="w-full bg-black text-white py-3 rounded-md text-sm font-medium hover:bg-gray-900 transition">
+                Get a custom automation plan
+            </button>
+          </Link>
         </div>
       </div>
     </section>

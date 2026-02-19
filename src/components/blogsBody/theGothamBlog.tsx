@@ -1,6 +1,5 @@
 import React from 'react';
 import { FaRegClock } from 'react-icons/fa';
-import Image from 'next/image';
 import NameCard from '../ui/nameCard';
 import SocialIcons from '../layout/verticalIcons';
 
@@ -24,8 +23,8 @@ const TheGothamBlog: React.FC = () => {
 
       {/* Placeholder Image */}
       <div className="w-full flex justify-center mb-6">
-        <Image
-          src="/blogs/gotham.jpg" // Add an image in /public/blogs/
+        <img
+          src="/blogs_research/gotham.jpg" // Add an image in /public/blogs/
           alt="deeptrack Gotham Illustration"
           className="w-full h-111 object-cover shadow-md rounded-lg"
         />

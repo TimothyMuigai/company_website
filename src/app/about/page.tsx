@@ -1,11 +1,19 @@
 import { Navbar } from "@/components/landingPage/navs/navBar";
+import CompanyCulture from "@/components/layout/companyCulture";
+import Head from "next/head";
 
 export default function About() {
   return (
     <>
-      <Navbar/>
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <h1 className="text-4xl font-bold text-gray-800">About</h1>
+      <Head>
+        <title>About Us | deeptrack</title>
+        <meta name="description" content="Learn about deeptrack's mission, vision, product stack and leadership team." />
+        <link rel="canonical" href="https://www.deeptrack.io/about-us" />
+      </Head>
+
+      <div className="space-y-6">
+        <Navbar />
+        <CompanyCulture />
       </div>
     </>
   );

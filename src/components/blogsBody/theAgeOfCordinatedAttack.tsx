@@ -1,6 +1,5 @@
 import React from 'react';
 import { FaRegClock } from 'react-icons/fa';
-import Image from 'next/image';
 import NameCard from '../ui/nameCard';
 import SocialIcons from '../layout/verticalIcons';
 
@@ -22,8 +21,8 @@ const TheAgeOfCoordinatedAttacks: React.FC = () => {
       </div>
 
       <div className="w-full flex justify-center mb-6">
-        <Image
-          src="/blogs/cordinated_attacks.jpg"
+        <img
+          src="/blogs_research/cordinated_attacks.jpg"
           alt="AI Fraud Illustration"
           className="w-full h-111 object-cover shadow-md rounded-lg"
         />
@@ -50,8 +49,8 @@ const TheAgeOfCoordinatedAttacks: React.FC = () => {
       </p>
 
       <div className="w-full flex justify-center mt-6">
-        <Image
-          src="/thestateofai.png"
+        <img
+          src="/blogs_research/thestateofai.png"
           className="w-full rounded-lg shadow-md"
           alt="The State of AI Fraud"
         />

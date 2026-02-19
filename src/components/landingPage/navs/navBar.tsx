@@ -49,7 +49,7 @@ export function Navbar() {
           </div>
 
           {/* RIGHT */}
-          <div className="hidden md:flex">
+          <div className={`${isHome ? 'hidden' : 'hidden md:flex'}`}>
             <Button className={`
                 hidden md:inline-flex
                 rounded-md
@@ -57,11 +57,12 @@ export function Navbar() {
                 text-sm
                 backdrop-blur-md
                 transition
-                ${isHome ? 'text-white bg-white/20 hover:bg-white/30': 'text-black bg-[#0191DA66] hover:bg-[#0000000A]'}
+                text-black bg-[#001d2c96] hover:bg-[#001d2c5a]
 
             `}
             >
-              Get started
+              <Link href="https://gotham.deeptrack.io/signup" 
+                target="_blank" >Get started</Link>
             </Button>
           </div>
 

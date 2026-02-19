@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import FinalCTASection from "@/components/Footer";
+
 import { Navbar } from "@/components/landingPage/navs/navBar";
+import Link from "next/link";
 
 export default function News() {
   const [name, setName] = useState("");
@@ -38,7 +39,10 @@ export default function News() {
         setName("");
         setInstitution("");
         setEmail("");
+        
+        window.open(process.env.NEXT_PUBLIC_AIRTABLE_LINK, "_blank");
       } else {
+        setLoading(false);
         setError(data.message || "Submission failed. Try again.");
       }
     } catch (err) {
@@ -135,9 +139,11 @@ export default function News() {
               {/* Privacy Note */}
               <p className="text-sm text-gray-500 max-w-md">
                 Please see our{" "}
-                <span className="underline cursor-pointer">
-                  Privacy Policy
-                </span>{" "}
+                <Link href="/privacy-policy">
+                  <span className="underline cursor-pointer">
+                    Privacy Policy
+                  </span>{" "}
+                </Link>
                 to learn about how we will handle this information.
               </p>
 
@@ -154,8 +160,6 @@ export default function News() {
           </div>
         </div>
       </section>
-
-      <FinalCTASection />
     </>
   );
 }

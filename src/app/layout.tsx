@@ -1,3 +1,4 @@
+import FinalCTASection from "@/components/Footer";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { Outfit } from "next/font/google";
@@ -21,6 +22,7 @@ export default function RootLayout({
     <html lang="en" className={outfit.className}>
       <body className="bg-[#ffffff] text-white antialiased">
         {children}
+        <FinalCTASection />
       </body>
     </html>
   );

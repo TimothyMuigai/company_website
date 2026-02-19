@@ -1,3 +1,5 @@
+"use client";
+
 import Hero from "./Hero";
 import { Navbar } from "@/components/landingPage/navs/navBar";
 import UseCasesSection from "../components/UseCaseSection";
@@ -9,7 +11,6 @@ import CompareSection from "@/components/benefits/CompareSection";
 import TestimonialsSection from "@/components/testimonials/TestimonialSection";
 import PricingSection from "@/components/pricing/PricingSection";
 import FAQSection from "@/components/faq/FaqSection";
-import FinalCTASection from "@/components/Footer";
 import Image from "next/image";
 // import Navbar from "./NavBar";
 
@@ -18,9 +19,6 @@ export default function Home() {
     <>
       {/* HERO SECTION ONLY */}
       <section className="relative min-h-screen overflow-hidden bg-[#0A1015]">
-        {/* Hero background */}
-        {/* <div className="absolute inset-0 bg-gradient-to-br from-[#0a1a2f] via-[#0e2a4a] to-black" />
-        <div className="absolute inset-0 opacity-30 bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:120px_120px]" /> */}
 
         {/* Background image */}
         <div className="absolute inset-0">
@@ -36,7 +34,7 @@ export default function Home() {
         {/* Hero content */}
         <div className="relative z-10">
           <Navbar />
-          
+
           <Hero />
         </div>
       </section>
@@ -49,7 +47,9 @@ export default function Home() {
         {/* NEXT PAGE SECTION */}
         <RiskCalculator />
         {/* NEXT PAGE SECTION */}
-        <IndustriesTabs />
+        <div id="industries" className="scroll-mt-24">
+          <IndustriesTabs />
+        </div>
         {/* NEXT PAGE SECTION */}
         <BenefitsSection />
         {/* NEXT PAGE SECTION */}
@@ -61,7 +61,7 @@ export default function Home() {
         {/* NEXT PAGE SECTION */}
         <FAQSection />
         {/* NEXT PAGE SECTION */}
-        <FinalCTASection />
+        {/* <FinalCTASection /> */}
       </section>
     </>
   );
