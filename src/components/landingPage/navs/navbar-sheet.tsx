@@ -22,7 +22,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { RequestAccessModal } from '@/components/layout/RequestAccessModal'
-import { usePathname } from 'next/navigation'
 
 export function NavbarSheet() {
   const [showPitchDeckModal, setShowPitchDeckModal] = useState(false)
@@ -121,19 +120,12 @@ export function NavbarSheet() {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <Link href="https://gotham.deeptrack.io/signup" target="_blank" >
-              <Button>
-                Get started
-              </Button>
-            </Link>
+            <Button>
+              <Link href="https://gotham.deeptrack.io/signup" target="_blank" >
+                  Get started
+              </Link>
+            </Button>
           </div>
-          <SheetFooter>
-            <SheetClose asChild>
-              <Button className="absolute bottom-4">
-                <X />
-              </Button>
-            </SheetClose>
-          </SheetFooter>
         </SheetContent>
       </Sheet>
 

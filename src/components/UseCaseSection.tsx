@@ -89,7 +89,12 @@ export default function UseCasesSection() {
                 hover:bg-black transition
                 whitespace-nowrap
                 w-full sm:w-auto
-              ">
+              "
+                onClick={() => {
+                  const section = document.getElementById("industries");
+                  section?.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
                 Explore use cases →
               </button>
 

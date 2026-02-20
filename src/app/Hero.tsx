@@ -19,7 +19,7 @@ export default function Hero() {
 
       <div className="mt-10 flex gap-4">
         <button className="rounded-md bg-white text-black px-6 py-3 text-sm font-medium hover:bg-gray-200 transition">
-          <Link href="https://gotham.deeptrack.io" 
+          <Link href="https://gotham.deeptrack.io/signup" 
                 target="_blank" >Get started</Link>
         </button>
 
