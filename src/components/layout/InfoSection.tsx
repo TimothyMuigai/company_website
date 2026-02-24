@@ -20,7 +20,7 @@ const InfoSection = ({ title, description, imageSrc }: InfoSectionProps) => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6, ease: "easeOut" }}
-                        className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-left leading-snug px-2 lg:px-0">
+                        className="text-3xl sm:text-4xl lg:text-5xl font-light text-gray-900 text-left leading-snug px-2 lg:px-0">
                         {title}
                     </motion.h1>
                 </div>
@@ -37,7 +37,7 @@ const InfoSection = ({ title, description, imageSrc }: InfoSectionProps) => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: false }}
                         transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }} 
-                        className="text-base sm:text-md leading-loose max-w-lg">
+                        className="text-base sm:text-md leading-loose max-w-lg text-gray-800">
                         {description}
                     </motion.p>
                 </div>

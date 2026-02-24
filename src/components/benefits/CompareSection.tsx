@@ -30,7 +30,7 @@ export default function CompareSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           {/* Other agencies */}
           <div className="relative rounded-xl border border-white/10 bg-white/5 backdrop-blur-xl p-8">
-            <h4 className="mb-6 text-base font-medium">
+            <h4 className="mb-6 text-base font-light">
               Other agencies
             </h4>
 

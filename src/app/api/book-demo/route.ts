@@ -5,8 +5,8 @@ import sgMail from '@sendgrid/mail';
 sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 const MONGODB_URI = process.env.MONGODB_URI!;
 const MONGODB_DB = process.env.MONGODB_DB!;
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL!;
-const FROM_EMAIL = process.env.SENDGRID_FROM_EMAIL!;
+// const ADMIN_EMAIL = process.env.ADMIN_EMAIL!;
+// const FROM_EMAIL = process.env.SENDGRID_FROM_EMAIL!;
 
 export async function POST(req: NextRequest) {
 	try {
@@ -29,17 +29,17 @@ export async function POST(req: NextRequest) {
 		}
 
 		// Send email with SendGrid
-		try {
-			await sgMail.send({
-				to: ADMIN_EMAIL,
-				from: FROM_EMAIL,
-				subject: 'Demo Request',
-				text: `Full Name: ${fullName}\nEmail: ${email}\nPhone Number: ${phoneNumber}\nCompany: ${company}`,
-			});
-		} catch (error) {
-			 console.error("API ERROR:", error);
-			return new Response(JSON.stringify({ message: 'Error sending email', error }), { status: 500 });
-		}
+		// try {
+		// 	await sgMail.send({
+		// 		to: ADMIN_EMAIL,
+		// 		from: FROM_EMAIL,
+		// 		subject: 'Demo Request',
+		// 		text: `Full Name: ${fullName}\nEmail: ${email}\nPhone Number: ${phoneNumber}\nCompany: ${company}`,
+		// 	});
+		// } catch (error) {
+		// 	 console.error("API ERROR:", error);
+		// 	return new Response(JSON.stringify({ message: 'Error sending email', error }), { status: 500 });
+		// }
 
 		return new Response(JSON.stringify({ message: 'Submission successful' }), { status: 200 });
 	} catch (error) {

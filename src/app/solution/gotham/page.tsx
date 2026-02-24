@@ -1,10 +1,5 @@
 import React from 'react'
 import Image from 'next/image'
-// import FeatureHighlight from '@/components/layout/feature-highlight'
-// import FeatureInformation from '@/components/layout/useCaseFeatureInformation';
-
-// import InformationSection from '@/components/layout/informationSection'
-// import UseCaseFooterBanner from '@/components/layout/useCaseFooterBanner'
 import Head from 'next/head';
 
 import { Navbar } from '@/components/landingPage/navs/navBar';
@@ -20,7 +15,7 @@ const features = [
     },
     {
         title: 'Scalable Bulk Processing',
-        description: 'Upload hundreds of media files simultaneously. Worker-powered background processing ensures asynchronous verification without blocking the user interface, enabling enterprise-grade throughput.'
+        description: 'Upload hundreds of media files simultaneously. Worker powered background processing ensures asynchronous verification without blocking the user interface, enabling enterprise grade throughput.'
     },
     {
         title: 'Comprehensive Enterprise Reporting',
@@ -48,11 +43,11 @@ const GothamPage = () => {
           
           {/* Hero Section */}
           <section className="grid lg:grid-cols-2 gap-6 max-w-7xl mx-auto mt-4 min-h-[50vh] p-4 bg-gray-50">
-              <div className="flex flex-col justify-center items-center text-black text-center lg:items-start lg:text-left m-auto space-y-4">
-                    <p className='font-semibold text-lg'>Solution:</p>
-                  <h1 className="text-4xl sm:text-5xl font-semibold">deeptrack Gotham</h1>
-                  <p className="text-lg leading-relaxed max-w-lg">
-                      A modern SaaS platform for large-scale media verification. Credit-based scanning, bulk processing, worker-powered architecture, and professional reporting.
+              <div className="flex flex-col justify-center items-centertext-center lg:items-start lg:text-left m-auto space-y-4">
+                    <p className='font-light text-lg text-black'>Solution:</p>
+                  <h1 className="text-4xl sm:text-5xl font-light text-gray-900">deeptrack Gotham</h1>
+                  <p className="text-lg leading-relaxed max-w-lg text-gray-800">
+                      A modern SaaS platform for large scale media verification. Credit based scanning, bulk processing, worker powered architecture, and professional reporting.
                   </p>
                   <div className="flex gap-3 flex-col sm:flex-row">
                     <WaitlistButton id='btn-gotham-enterprise'/>
@@ -60,7 +55,7 @@ const GothamPage = () => {
                       href="https://gotham.deeptrack.io"
                       target="_blank"
                       rel="noreferrer"
-                      className="bg-sky-600 text-white px-4 py-3 rounded-lg hover:bg-sky-700 transition font-semibold text-center"
+                      className="bg-sky-600 text-white px-4 py-3 rounded-lg hover:bg-sky-700 transition font-light text-center"
                     >
                       Visit Gotham
                     </a>
@@ -81,9 +76,9 @@ const GothamPage = () => {
 
           {/* Feature Highlight */}
           <FeatureHighlight
-              title="Enterprise-Grade Media Verification at Scale"
-              subtitle='Credit-Based SaaS with Background Processing'
-              description="deeptrack Gotham, delivers a complete verification platform combining modern SaaS architecture with sophisticated media analysis. Users purchase credits that fuel unlimited scans, while a worker-based architecture ensures bulk operations process asynchronously without impacting performance. From payment processing  to audit trail logging, every component is built for enterprise reliability and scalability."
+              title="Enterprise Grade Media Verification at Scale"
+              subtitle='Credit Based SaaS with Background Processing'
+              description="deeptrack Gotham, delivers a complete verification platform combining modern SaaS architecture with sophisticated media analysis. Users purchase credits that fuel unlimited scans, while a worker based architecture ensures bulk operations process asynchronously without impacting performance. From payment processing  to audit trail logging, every component is built for enterprise reliability and scalability."
               imageSrc='/Vector.svg'
               imageAlt='deeptrack Gotham Platform Architecture'
           />
@@ -99,9 +94,6 @@ const GothamPage = () => {
           <UseCaseFeatureInformation
               features={features} title={''} description={''}
           />
-
-          
-          
           <Image
               src="/Vector.svg"
               alt="Decorative"
@@ -118,7 +110,7 @@ const GothamPage = () => {
               content={[
                   {
                       subtitle: 'Seamless Monetization & User Experience',
-                      description: 'Freemium trial accounts let users experience verification immediately. Credit-based purchasing aligns pricing with usage, creating transparent, fair value exchange. Webhook-verified payments ensure credits are reliably credited, and users see immediate confirmation.',
+                      description: 'Freemium trial accounts let users experience verification immediately. Credit based purchasing aligns pricing with usage, creating transparent, fair value exchange. Webhook verified payments ensure credits are reliably credited, and users see immediate confirmation.',
                   },
                   {
                       subtitle: 'Enterprise Compliance & Documentation',
@@ -130,13 +122,13 @@ const GothamPage = () => {
           {/* CTA Section */}
           <section className="py-16 px-4 text-center bg-gray-50">
             <div className="max-w-3xl mx-auto">
-              <h2 className="text-3xl font-semibold mb-4 text-black">Ready to Scale Your Media Verification?</h2>
+              <h2 className="text-3xl font-light mb-4 text-gray-900">Ready to Scale Your Media Verification?</h2>
               <p className="text-lg text-gray-700 mb-6">deeptrack Gotham powers organizations that need to verify media at scale with reliability, compliance, and ease of use.</p>
               <a 
                 href="https://gotham.deeptrack.io" 
                 target="_blank" 
                 rel="noreferrer"
-                className="inline-block bg-sky-600 text-white px-6 py-3 rounded-lg hover:bg-sky-700 transition font-semibold"
+                className="inline-block bg-sky-600 text-white px-6 py-3 rounded-lg hover:bg-sky-700 transition font-light"
               >
                 Launch deeptrack Gotham
               </a>

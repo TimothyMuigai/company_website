@@ -10,13 +10,13 @@ export default function JobDetail({ job }: { job: Job }) {
     return (
         <section className="max-w-7xl mx-auto py-4 px-4 ">
                 <div className="mb-8">
-                    <Button onClick={() => router.back()}>
+                    <Button onClick={() => router.back()} className="cursor-pointer">
                         Back
                     </Button>
                 </div>
             <div className="grid gap-8 lg:grid-cols-2">
                 <div >
-                    <h1 className="text-3xl font-semibold mb-2 text-black">{job.title}</h1>
+                    <h1 className="text-3xl mb-2 text-gray-900">{job.title}</h1>
                     <div className="text-sm text-gray-900 mb-4">
                         <span className="mr-3">{job.department}</span>
                         <span className="mr-3">•</span>
@@ -33,7 +33,7 @@ export default function JobDetail({ job }: { job: Job }) {
                     {job.responsibilities && (
                         <div className="mb-4">
                             <h3 className="font-medium mb-2 text-gray-700 underline">Responsibilities</h3>
-                            <ul className="list-disc pl-5 text-gray-900">
+                            <ul className="list-disc pl-5 text-gray-800">
                                 {job.responsibilities.map((r, i) => (
                                     <li key={i}>{r}</li>
                                 ))}
@@ -43,7 +43,7 @@ export default function JobDetail({ job }: { job: Job }) {
                     {job.requirements && (
                         <div>
                             <h3 className="font-medium mb-2 text-gray-700 underline">Qualifications</h3>
-                            <ul className="list-disc pl-5 text-gray-900">
+                            <ul className="list-disc pl-5 text-gray-800">
                                 {job.requirements.map((r, i) => (
                                     <li key={i}>{r}</li>
                                 ))}
@@ -55,7 +55,7 @@ export default function JobDetail({ job }: { job: Job }) {
             <aside>
                 <div className="sticky top-24">
                     <div className="bg-white border rounded-lg p-6 shadow-sm">
-                        <h4 className="font-medium mb-2">Apply for this role</h4>
+                        <h4 className="font-medium mb-2 text-gray-900">Apply for this role</h4>
                         <ApplicationForm jobSlug={job.slug} jobTitle={job.title} />
                     </div>
                 </div>

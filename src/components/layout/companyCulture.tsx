@@ -112,22 +112,22 @@ const cardVariants: Variants = {
 
 export default function CompanyCulture() {
     return (
-        <main className="text-black px-4 sm:px-6 md:px-10 lg:px-16 py-12 max-w-7xl mx-auto space-y-16">
+        <main className="px-4 sm:px-6 md:px-10 lg:px-16 py-12 max-w-7xl mx-auto space-y-16">
 
             {/* Company & Culture */}
             <section className="flex flex-col md:flex-row lg:flex-row items-center gap-12 pt-6">
 
                 <div className="flex-1 space-y-6">
-                    <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
+                    <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light text-gray-900 leading-tight">
                         Company & Culture
                     </h1>
 
                     <div className="space-y-6">
-                        <p className="text-lg text-gray-800 leading-relaxed">
+                        <p className="text-lg text-gray-700 leading-relaxed">
                             We&apos;re engineers, researchers, and realists securing reality in an AI-shaped world. At deeptrack, we build active defenses against AI threats.
                         </p>
 
-                        <p className="text-lg text-gray-800 leading-relaxed">
+                        <p className="text-lg text-gray-700 leading-relaxed">
                             Founded in 2024 , we&apos;re the first verification-focused AI company with a global mission to establish truth infrastructure across critical sectors.
                         </p>
                     </div>
@@ -154,7 +154,7 @@ export default function CompanyCulture() {
                             <div className="p-3 rounded-full ">
                                 <ShieldCheck className="w-8 h-8" />
                             </div>
-                            <h2 className="text-3xl font-bold bg-clip-text">Our Mission</h2>
+                            <h2 className="text-3xl bg-clip-text">Our Mission</h2>
                         </div>
                         <p className="text-xl italic ">
                             Machine-Verified Truth as Standard
@@ -175,7 +175,7 @@ export default function CompanyCulture() {
                             <div className="p-3 rounded-full">
                                 <EyeOff className="w-8 h-8" />
                             </div>
-                            <h2 className="text-3xl font-bold bg-clip-text">Our Vision</h2>
+                            <h2 className="text-3xl bg-clip-text">Our Vision</h2>
                         </div>
                         <p className="text-xl italic">
                             Deception Has Nowhere to Hide
@@ -195,7 +195,7 @@ export default function CompanyCulture() {
             {/* Product Stack */}
             <section className="py-12 px-4 rounded-2xl bg-[#99a5ab] text-white">
                 <div className="max-w-6xl mx-auto">
-                    <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-center">
+                    <h2 className="text-3xl sm:text-4xl mb-6 text-center">
                         <span className="">
                             When Detection Fell Short
                         </span>
@@ -214,7 +214,7 @@ export default function CompanyCulture() {
 
                                     <div className="flex items-center space-x-3 mb-3">
                                         <Icon className="w-6 h-6 text-whites" />
-                                        <h3 className="text-xl font-bold text-white">{name}</h3>
+                                        <h3 className="text-xl text-white">{name}</h3>
                                     </div>
                                     <p className="text-gray-300 leading-relaxed">{desc}</p>
                                 </div>
@@ -231,7 +231,7 @@ export default function CompanyCulture() {
             {/* Leadership */}
             <section className="py-12">
                 <div className="text-center mb-12">
-                    <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+                    <h2 className="text-3xl sm:text-4xl font-light text-gray-900 mb-4">
                         Company Leadership
                     </h2>
                 </div>
@@ -281,7 +281,7 @@ export default function CompanyCulture() {
 
 
                             {/* TEXT */}
-                            <h3 className="mt-6 text-lg font-semibold text-gray-900">
+                            <h3 className="mt-6 text-lg text-gray-900">
                                 {name}
                             </h3>
 

@@ -2,12 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { MongoClient } from "mongodb";
 import sgMail from "@sendgrid/mail";
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
+// sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 
 const MONGODB_URI = process.env.MONGODB_URI!;
 const MONGODB_DB = process.env.MONGODB_DB!;
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL!;
-const FROM_EMAIL = process.env.SENDGRID_FROM_EMAIL!;
+// const ADMIN_EMAIL = process.env.ADMIN_EMAIL!;
+// const FROM_EMAIL = process.env.SENDGRID_FROM_EMAIL!;
 
 let client: MongoClient;
 
@@ -46,19 +46,19 @@ export async function POST(req: NextRequest) {
     });
 
     // Send Email
-    await sgMail.send({
-      to: ADMIN_EMAIL,
-      from: FROM_EMAIL,
-      subject: "New Contact Submission",
-      text: `
-First Name: ${firstName}
-Last Name: ${lastName}
-Email: ${email}
-Job Title: ${jobTitle || ""}
-Company: ${company || ""}
-Message: ${message}
-      `,
-    });
+//     await sgMail.send({
+//       to: ADMIN_EMAIL,
+//       from: FROM_EMAIL,
+//       subject: "New Contact Submission",
+//       text: `
+// First Name: ${firstName}
+// Last Name: ${lastName}
+// Email: ${email}
+// Job Title: ${jobTitle || ""}
+// Company: ${company || ""}
+// Message: ${message}
+//       `,
+//     });
 
     return NextResponse.json(
       { message: "Submission successful." },

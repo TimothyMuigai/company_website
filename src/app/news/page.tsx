@@ -68,8 +68,6 @@ export default function News() {
               viewport={{ once: true }}
               className="space-y-8"
             >
-              <span className="text-sm text-gray-500">\ Resources</span>
-
               <h1 className="text-4xl lg:text-5xl font-light text-gray-900 leading-tight">
                 Deepfake News <br /> Center
               </h1>
@@ -92,7 +90,7 @@ export default function News() {
             >
               {/* Full Name */}
               <div className="space-y-2">
-                <label className="text-sm text-gray-500">Full name</label>
+                <label className="text-sm text-gray-800">Full name</label>
                 <input
                   type="text"
                   placeholder="John"
@@ -105,7 +103,7 @@ export default function News() {
 
               {/* Institution */}
               <div className="space-y-2">
-                <label className="text-sm text-gray-500">Institution</label>
+                <label className="text-sm text-gray-800">Institution</label>
                 <input
                   type="text"
                   placeholder="University of Example"
@@ -117,7 +115,7 @@ export default function News() {
 
               {/* Email */}
               <div className="space-y-2">
-                <label className="text-sm text-gray-500">Email*</label>
+                <label className="text-sm text-gray-800">Email*</label>
                 <input
                   type="email"
                   placeholder="email@gmail.com"
@@ -137,7 +135,7 @@ export default function News() {
               )}
 
               {/* Privacy Note */}
-              <p className="text-sm text-gray-500 max-w-md">
+              <p className="text-sm text-gray-800 max-w-md">
                 Please see our{" "}
                 <Link href="/privacy-policy">
                   <span className="underline cursor-pointer">

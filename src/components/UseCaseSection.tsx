@@ -10,7 +10,7 @@ export default function UseCasesSection() {
             AI agents securing truth in the age of synthetic media
           </p>
 
-          <h2 className="text-3xl md:text-4xl font-semibold leading-tight">
+          <h2 className="text-3xl md:text-4xl font-light leading-tight">
             Deeptrack deploys autonomous AI agents to detect deepfakes,
             verify digital content, and protect organizations from
             misinformation and identity fraud at scale.
@@ -31,13 +31,13 @@ export default function UseCasesSection() {
               />
             </div>
 
-            <h3 className="font-semibold mb-2">
+            <h3 className="font-light mb-2 text-black text-2xl">
               Verify Digital Media at the Source
             </h3>
 
-            <p className="text-sm text-gray-600 leading-relaxed">
+            <p className="text-sm text-gray-700 leading-relaxed">
               Analyze images, video, and audio using AI forensic models and
-              C2PA-aligned provenance signals to determine authenticity,
+              C2PA aligned provenance signals to determine authenticity,
               manipulation, and origin in real time.
             </p>
           </div>
@@ -53,26 +53,26 @@ export default function UseCasesSection() {
               />
             </div>
 
-            <h3 className="font-semibold mb-2">
+            <h3 className="font-light mb-2 text-black text-2xl">
               Detect Deepfakes Before They Cause Harm
             </h3>
 
-            <p className="text-sm text-gray-600 leading-relaxed">
+            <p className="text-sm text-gray-700 leading-relaxed">
               Autonomous agents continuously scan, analyze, and flag synthetic
-              or manipulated media across platforms—reducing response time
+              or manipulated media across platforms reducing response time
               from days to minutes.
             </p>
           </div>
 
           {/* Card 3 */}
           <div className="border border-gray-200 rounded-xl p-8 shadow-sm bg-gradient-to-br from-blue-50 to-cyan-50">
-            <h3 className="font-semibold mb-3">
+            <h3 className="font-light mb-3 text-black text-2xl">
               Automate Trust Decisions Across Teams
             </h3>
 
-            <p className="text-sm text-gray-600 leading-relaxed mb-6">
+            <p className="text-sm text-gray-700 leading-relaxed mb-6">
               From newsrooms to compliance teams, Deeptrack agents execute
-              verification workflows end-to-end—logging evidence, escalating
+              verification workflows end to end logging evidence, escalating
               risk, and generating audit-ready reports.
             </p>
 
@@ -101,7 +101,7 @@ export default function UseCasesSection() {
               {/* Verified indicator */}
               <div className="
                 flex items-center gap-2
-                text-sm text-gray-500
+                text-sm text-gray-600
                 justify-center sm:justify-start
               ">
                 <Image
@@ -120,17 +120,17 @@ export default function UseCasesSection() {
 
           {/* Card 4 */}
           <div className="rounded-xl p-8 bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-100">
-            <h3 className="font-semibold mb-4">
+            <h3 className="font-light text-black text-2xl mb-4">
               Used by teams who can’t afford to be wrong
             </h3>
 
-            <ul className="space-y-2 text-sm text-gray-700">
-              <li>📰 Media & Fact-Checking</li>
+            <ul className="space-y-2 text-sm text-gray-700 list-disc">
+              <li>📰 Media & Fact Checking</li>
               <li>🏦 Financial Services & KYC</li>
-              <li>🏛 Government & Public Sector</li>
-              <li>👤 Public Figures & High-Risk Individuals</li>
-              <li>🛡 Insurance companies</li>
-              <li>🧠 Talent acquisition companies</li>
+              <li>🛡️ Government & Public Sector</li>
+              <li>👥 Public Figures & High Risk Individuals</li>
+              <li>💼 Insurance Companies</li>
+              <li>🌟 Talent Acquisition Companies</li>
             </ul>
           </div>
         </div>

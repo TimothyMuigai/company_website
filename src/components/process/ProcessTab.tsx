@@ -14,10 +14,10 @@ export default function ProcessTabs() {
     <section className="max-w-7xl mx-auto px-18">
       {/* Header */}
       <div className="text-center mb-14">
-        <p className="text-xs uppercase tracking-wide text-[#0A1015]">
+        <p className="text-xs uppercase tracking-wide text-gray-500">
           Process
         </p>
-        <h2 className="mt-2 text-4xl font-bold text-gray-900">
+        <h2 className="mt-2 text-4xl font-light text-gray-900">
           How Deeptrack Secures
           <br />
           Trust at Scale
@@ -33,8 +33,8 @@ export default function ProcessTabs() {
             className={`relative text-sm font-medium transition-colors
               ${
                 activeId === step.id
-                  ? "text-gray-900"
-                  : "text-gray-400 hover:text-gray-700"
+                  ? "text-gray-800"
+                  : "text-gray-400 hover:text-gray-800"
               }
             `}
           >
@@ -93,15 +93,15 @@ export default function ProcessTabs() {
               transition={{ duration: 0.28, ease: "easeOut", delay: 0.04 }}
               className="flex flex-col"
             >
-              <p className="text-xs font-semibold text-gray-500 uppercase">
+              <p className="text-xs font-light text-gray-600 uppercase">
                 {activeStep.step} – {activeStep.label.toUpperCase()}
               </p>
 
-              <h3 className="mt-3 text-2xl font-semibold text-gray-900">
+              <h3 className="mt-3 text-2xl font-light text-black">
                 {activeStep.title}
               </h3>
 
-              <p className="mt-6 text-gray-600 leading-relaxed">
+              <p className="mt-6 text-gray-700 leading-relaxed">
                 {activeStep.description}
               </p>
 

@@ -62,18 +62,17 @@ export default function EventCard({
           </p>
         </div>
 
-        <div className="text-blue-600 text-lg font-medium">
+        <div className="text-black text-lg font-light">
           {date} | {location}
         </div>
 
         <button className="
-          text-blue-600 
-          font-medium 
+          text-black 
+          font-light 
           flex 
           items-center 
           gap-2 
-          hover:gap-3 
-          transition-all
+          hover:text-gray-600
         ">
           LEARN MORE
           <ArrowUpRight size={18} />

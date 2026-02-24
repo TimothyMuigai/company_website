@@ -1,12 +1,12 @@
 import { MongoClient } from "mongodb";
 import sgMail from "@sendgrid/mail";
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
+// sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
 
 const MONGODB_URI = process.env.MONGODB_URI!;
 const MONGODB_DB = process.env.MONGODB_DB!;
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL!;
-const FROM_EMAIL = process.env.SENDGRID_FROM_EMAIL!;
+// const ADMIN_EMAIL = process.env.ADMIN_EMAIL!;
+// const FROM_EMAIL = process.env.SENDGRID_FROM_EMAIL!;
 
 export async function POST(req: Request) {
   try {
@@ -59,48 +59,48 @@ export async function POST(req: Request) {
     await client.close();
 
     // 🔹 Email Admin (with attachment)
-    await sgMail.send({
-      to: ADMIN_EMAIL,
-      from: FROM_EMAIL,
-      subject: `New Application: ${jobTitle} (${firstName} ${lastName})`,
-      text: `
-New Career Application
+//     await sgMail.send({
+//       to: ADMIN_EMAIL,
+//       from: FROM_EMAIL,
+//       subject: `New Application: ${jobTitle} (${firstName} ${lastName})`,
+//       text: `
+// New Career Application
 
-Job: ${jobTitle}
-Name: ${firstName} ${lastName}
-Email: ${email}
-Phone: ${phone || ""}
-Links: ${links || ""}
-GitHub: ${github || ""}
-Cover Letter:
-${cover}
-      `,
-      attachments: [
-        {
-          content: cvBuffer.toString("base64"),
-          filename: cvFile.name,
-          type: cvFile.type,
-          disposition: "attachment",
-        },
-      ],
-    });
+// Job: ${jobTitle}
+// Name: ${firstName} ${lastName}
+// Email: ${email}
+// Phone: ${phone || ""}
+// Links: ${links || ""}
+// GitHub: ${github || ""}
+// Cover Letter:
+// ${cover}
+//       `,
+//       attachments: [
+//         {
+//           content: cvBuffer.toString("base64"),
+//           filename: cvFile.name,
+//           type: cvFile.type,
+//           disposition: "attachment",
+//         },
+//       ],
+//     });
 
-    // 🔹 Confirmation Email to Applicant
-    await sgMail.send({
-      to: email,
-      from: FROM_EMAIL,
-      subject: `Application Received – ${jobTitle}`,
-      text: `
-Dear ${firstName},
+//     // 🔹 Confirmation Email to Applicant
+//     await sgMail.send({
+//       to: email,
+//       from: FROM_EMAIL,
+//       subject: `Application Received – ${jobTitle}`,
+//       text: `
+// Dear ${firstName},
 
-Thank you for applying for the ${jobTitle} role.
+// Thank you for applying for the ${jobTitle} role.
 
-We have received your application and will review it shortly.
+// We have received your application and will review it shortly.
 
-Best regards,
-The Team
-      `,
-    });
+// Best regards,
+// The Team
+//       `,
+//     });
 
     return new Response(
       JSON.stringify({ message: "Application submitted successfully" }),

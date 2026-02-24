@@ -60,7 +60,7 @@ const StatsSection = ({
                     lg:text-[72px] 
                     font-light 
                     tracking-tight 
-                    text-black
+                    text-gray-900
                   ">
                     {stat.value}
                   </div>

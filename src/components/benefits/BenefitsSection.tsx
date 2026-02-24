@@ -36,7 +36,7 @@ export default function BenefitsSection() {
         <p className="text-xs uppercase tracking-wide text-gray-500">
           Benefits
         </p>
-        <h2 className="mt-2 text-4xl font-bold text-gray-900">
+        <h2 className="mt-2 text-4xl font-light text-gray-900">
           Let your team focus
           <br />
           on what matters most
@@ -75,11 +75,11 @@ export default function BenefitsSection() {
               />
             </motion.div>
 
-            <h3 className="text-sm font-semibold text-gray-900">
+            <h3 className="text-sm font-medium text-black">
               {item.title}
             </h3>
 
-            <p className="mt-2 text-sm text-gray-600 leading-relaxed">
+            <p className="mt-2 text-sm text-gray-700 leading-relaxed">
               {item.description}
             </p>
           </motion.div>

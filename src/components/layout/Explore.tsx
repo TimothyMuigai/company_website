@@ -12,8 +12,7 @@ export default function ExploreSection({
             <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 flex flex-col items-center text-center">
                 {/* Title */}
                 <h1
-                    data-aos="fade-up"
-                    className="mb-12 max-w-xl text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl"
+                    className="mb-12 max-w-xl text-3xl font-light text-gray-900 tracking-tight sm:text-4xl md:text-5xl"
                 >
                     Stay up-to-date with new types of AI manipulation
                 </h1>
@@ -25,7 +24,7 @@ export default function ExploreSection({
                             key={type}
                             className={cn(
                                 'inline-flex items-center justify-center rounded-2xl border-2 border-gray-800 px-6 py-3',
-                                'text-base backdrop-blur-sm transition-colors',
+                                'text-gray-800 backdrop-blur-sm transition-colors',
                                 'cursor-pointer'
                             )}
                         >

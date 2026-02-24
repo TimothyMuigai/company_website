@@ -13,12 +13,12 @@ interface FeatureProps extends Feature {
 
 function Feature({ title, description, subtitle, children }: FeatureProps) {
     return (
-        <div data-aos="fade-up" className="text-center mb-16 last:mb-0">
-            <h2 className="text-3xl font-semibold mb-4 tracking-tight">{title}</h2>
+        <div className="text-center mb-16 last:mb-0">
+            <h2 className="text-3xl font-light text-gray-900 mb-4 tracking-tight">{title}</h2>
             {subtitle && (
-                <h3 className="font-semibold mb-2">{subtitle}</h3>
+                <h3 className="font-light text-gray-800 mb-2">{subtitle}</h3>
             )}
-            <p className="max-w-3xl mx-auto text-lg text-gray-600 ">
+            <p className="max-w-3xl mx-auto text-lg text-gray-700 ">
                 {description}
             </p>
             {children}

@@ -1,13 +1,13 @@
 import { WaitlistButton } from '../landingPage/waiting-list'
 import AudioFeatureSvg from './AudioFeatureSvg'
 
-interface FeatureSectionProps {
+interface AudioFeatureSectionProps {
   title: string
   description: string
   imageSrc?: string
 }
 
-const AudioFeatureSection = ({  title, description, imageSrc=''}: FeatureSectionProps) => {
+const AudioFeatureSection = ({  title, description, imageSrc=''}: AudioFeatureSectionProps) => {
   return (
     <section className="max-w-7xl mx-auto px-4 mt-6">
       
@@ -32,11 +32,11 @@ const AudioFeatureSection = ({  title, description, imageSrc=''}: FeatureSection
 
             {/* LEFT */}
             <div className="flex flex-col justify-center space-y-6 text-center lg:text-left">
-              <h1 className="text-4xl sm:text-5xl font-semibold leading-tight text-black">
+              <h1 className="text-4xl sm:text-5xl font-light leading-tight text-gray-900">
                 {title}
               </h1>
 
-              <p className="text-lg text-black max-w-xl">
+              <p className="text-lg text-gray-800 max-w-xl">
                 {description}
               </p>
 

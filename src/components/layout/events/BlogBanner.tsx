@@ -33,8 +33,8 @@ const BlogBanner: React.FC = () => {
                             <button
                                 onClick={() => setSelectedCategory(category)}
                                 className={`px-3 py-1 rounded-lg transition-colors ${selectedCategory === category
-                                        ? 'bg-gray-600 text-gray-700'
-                                        : 'text-gray-600 hover:text-customTeal'
+                                        ? 'bg-white text-gray-700'
+                                        : 'text-gray-600 hover:text-gray-700'
                                     }`}
                             >
                                 {category}
@@ -61,10 +61,10 @@ const BlogBanner: React.FC = () => {
                                 />
                             </div>
                             <div className="p-6 flex flex-col">
-                                <span className="text-xs text-customTeal font-semibold mb-1">
+                                <span className="text-xs text-gray-200 font-light mb-1">
                                     {feature.category}
                                 </span>
-                                <h3 className="text-lg font-semibold mb-2 text-gray-200 line-clamp-2">
+                                <h3 className="text-lg font-light mb-2 text-white line-clamp-2">
                                     {feature.title}
                                 </h3>
                                 <p className="text-sm text-gray-500 mb-4 line-clamp-3">
@@ -74,7 +74,7 @@ const BlogBanner: React.FC = () => {
                                 {/* Use Next.js <Link> to pass the blog ID */}
                                 <Link
                                     href={`/blog/${feature.id}`}
-                                    className="text-customTeal flex items-center mt-auto font-medium hover:underline"
+                                    className="text-white flex items-center mt-auto font-light hover:underline hover:text-gray-300"
                                 >
                                     Read <ArrowUpRight size={20} className="ml-1" />
                                 </Link>

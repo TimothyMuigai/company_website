@@ -23,7 +23,7 @@ export default function FinalCTASection() {
             Get started
           </p>
 
-          <h2 className="mt-4 text-4xl font-semibold leading-tight">
+          <h2 className="mt-4 text-4xl font-light leading-tight">
             Scale verification, not
             <br />
             headcount.
@@ -31,7 +31,7 @@ export default function FinalCTASection() {
 
           <p className="mt-6 text-sm text-gray-300 leading-relaxed">
             Deeptrack is an AI-powered deepfake detection platform for finance,
-            media, government, HR, and insurance—helping organizations verify
+            media, government, HR, and insurance helping organizations verify
             digital content, prevent fraud, and protect trust.
           </p>
 
@@ -55,10 +55,11 @@ export default function FinalCTASection() {
         {/* Footer */}
         <div className="mt-22 text-sm text-gray-400">
           {/* Pages row */}
-          <div className="border-t border-white/10 py-4">
+          <div className="py-4">
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
               <span className="text-white">Pages</span>
-
+              {/* Trailing line */}
+              <div className="flex-1 h-px bg-white/10" />
               <div className="flex flex-wrap gap-x-6 gap-y-2">
                 <Link href="/">Home</Link>
                 <Link href="/#industries">Use cases</Link>
@@ -70,11 +71,13 @@ export default function FinalCTASection() {
           </div>
 
           {/* Legal row */}
-          <div className="border-t border-white/10 py-4">
+          <div className="py-4">
             <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
               <span className="text-white">Legal</span>
-
+              {/* Trailing line */}
+              <div className="flex-1 h-px bg-white/10" />
               <div className="flex flex-wrap gap-x-6 gap-y-2">
+                <Link href="/trust-center">Deeptrack&apos;s Trust Center</Link>
                 <Link href="/privacy-policy">Privacy policy</Link>
                 <Link href="/terms">Terms & conditions</Link>
               </div>
@@ -82,7 +85,7 @@ export default function FinalCTASection() {
           </div>
 
           {/* Bottom row */}
-          <div className="border-t border-white/10 mt-6">
+          <div className="mt-6">
             <div className="flex flex-col-reverse items-center gap-6
                             md:flex-row md:justify-between md:items-center
                             text-xs text-gray-500">
@@ -95,39 +98,41 @@ export default function FinalCTASection() {
                   width={100}
                   height={24}
                 />
-                <span>© deeptrack 2025. All Rights Reserved</span>
+                <span className="text-sm">© deeptrack 2025. All Rights Reserved</span>
               </div>
 
               {/* Socials */}
-              <div className="flex gap-4">
-                <a href="#" aria-label="Twitter" className="opacity-70 hover:opacity-100">
-                  <Image src="/social_icons/twitter.svg" alt="" width={16} height={16}
-                    className="
-                    opacity-90
-                    flex h-8 w-8 items-center justify-center
-                    rounded-full
-                    border border-white/20
-                    bg-white
-                    transition
-                    hover:border-white/40
-                    hover:bg-white
-                    "
+              <div className="flex items-center gap-4 pt-3">
+                {/* Twitter */}
+                <a
+                  target='_blank' href="https://x.com/deeptrck"
+                  aria-label="Twitter"
+                  className="flex items-center justify-center w-9 h-9 rounded-full border border-white/20 hover:border-white/40 hover:text-white transition"
+                >
+                  <Image
+                    src="/social_icons/twitter.svg"
+                    alt="Twitter"
+                    width={16}
+                    height={16}
+                    className="opacity-80 invert brightness-0"
                   />
                 </a>
-                <a href="#" aria-label="LinkedIn" className="opacity-70 hover:opacity-100">
-                  <Image src="/social_icons/linkedIn.svg" alt="" width={16} height={16}
-                    className="
-                    opacity-90
-                    flex h-8 w-8 items-center justify-center
-                    rounded-full
-                    border border-white/20
-                    bg-white
-                    transition
-                    hover:border-white/40
-                    hover:bg-white
-                    "
+
+                {/* LinkedIn */}
+                <a
+                  target='_blank' href="https://www.linkedin.com/company/deeptrck/"
+                  aria-label="LinkedIn"
+                  className="flex items-center justify-center w-9 h-9 rounded-full border border-white/20 hover:border-white/40 hover:text-white transition"
+                >
+                  <Image
+                    src="/social_icons/linkedIn.svg"
+                    alt="LinkedIn"
+                    width={16}
+                    height={16}
+                    className="opacity-80 invert brightness-0"
                   />
                 </a>
+
               </div>
 
             </div>

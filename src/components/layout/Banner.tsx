@@ -18,7 +18,7 @@ const Banner = ({
         <>
             <div className='bg-teal-600 max-w-7xl mx-auto lg:mt-6' style={{ height: '1px' }} />
             <section className="max-w-7xl mx-auto px-6">                
-                <h2 className="text-center font-semibold text-3xl lg:text-5xl mb-16">
+                <h2 className="text-center font-light text-3xl lg:text-5xl mb-16 text-gray-900">
                     See what’s real
                 </h2>
 

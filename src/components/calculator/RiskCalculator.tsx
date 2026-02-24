@@ -18,7 +18,7 @@ export default function RiskCalculator() {
           Calculator
         </p>
 
-        <h2 className="mt-2 text-3xl font-semibold text-gray-900">
+        <h2 className="mt-2 text-3xl font-light text-gray-900">
           Quantify the cost of not
           <br />
           verifying digital content

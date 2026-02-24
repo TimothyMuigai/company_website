@@ -47,7 +47,7 @@ export const jobs: Job[] = [
     description:
       'Join Deeptrack to monitor and verify deepfake incidents worldwide, draft briefs and summaries, and help publish findings.',
     responsibilities: [
-      'Monitor global news, social platforms, and research for deepfake-related incidents',
+      'Monitor global news, social platforms, and research for deepfake related incidents',
       'Log and summarize cases in a structured database',
       'Assist with media verification using Deeptrack tools',
       'Draft short news briefs, weekly summaries, or reports',
@@ -73,7 +73,7 @@ export const jobs: Job[] = [
     employmentType: 'Full-time',
     summary: 'Lead product design across web and embedded experiences.',
     description:
-      'Shape product experiences, run research, and produce high-fidelity designs and prototypes.',
+      'Shape product experiences, run research, and produce high fidelity designs and prototypes.',
     responsibilities: [
       'Lead UX research and design sprints',
       'Produce prototypes and design systems',

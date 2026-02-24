@@ -22,7 +22,7 @@ export default function FAQSection() {
         <p className="text-xs uppercase tracking-wide text-gray-500">
           FAQ
         </p>
-        <h2 className="mt-2 text-3xl font-semibold text-gray-900">
+        <h2 className="mt-2 text-3xl font-light text-gray-900">
           Frequently asked questions
         </h2>
       </motion.div>
@@ -40,7 +40,7 @@ export default function FAQSection() {
                 setOpenIndex(isOpen ? null : index)
               }
               className="
-                group w-full text-left py-5 rounded-md
+                group w-full text-left p-5 rounded-md
                 transition-colors
                 hover:bg-gray-50
               "
@@ -64,7 +64,7 @@ export default function FAQSection() {
               <div className="flex items-center justify-between">
                 <span
                   className="
-                    text-sm font-medium text-gray-900
+                    text-sm font-light text-black
                     transition-colors
                     group-hover:text-gray-700
                   "

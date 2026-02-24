@@ -31,7 +31,7 @@ export default function IndustriesTabs() {
         <p className="text-xs uppercase tracking-wide text-gray-500">
           Industries
         </p>
-        <h2 className="mt-2 text-4xl font-bold text-gray-900">
+        <h2 className="mt-2 text-4xl font-light text-gray-900">
           Built for the real world.
           <br />
           Across every industry.
@@ -53,8 +53,8 @@ export default function IndustriesTabs() {
               }}
               className={`relative pb-2 text-sm font-medium transition-colors
                 ${activeId === industry.id
-                  ? "text-gray-900"
-                  : "text-gray-400 hover:text-gray-700"}
+                  ? "text-gray-800"
+                  : "text-gray-400 hover:text-gray-800"}
               `}
             >
               {industry.label}
@@ -113,25 +113,25 @@ export default function IndustriesTabs() {
               }}
               className="max-w-xl"
             >
-              <h3 className="text-2xl font-semibold text-gray-900">
+              <h3 className="text-2xl font-light text-black">
                 {activeIndustry.title}
               </h3>
 
               {activeIndustry.problem1?.trim() && (
-                <p className="mt-3 text-gray-600 leading-relaxed">
+                <p className="mt-3 text-gray-700 leading-relaxed">
                   {activeIndustry.problem1}
                 </p>
               )}
 
               {activeIndustry.problem2?.trim() && (
-                <p className="mt-4 text-gray-600 leading-relaxed">
+                <p className="mt-4 text-gray-700 leading-relaxed">
                   {activeIndustry.problem2}
                 </p>
               )}
 
               {activeIndustry.verifies?.length > 0 && (
                 <div className="mt-3">
-                  <p className="text-sm font-medium text-gray-900 mb-3">
+                  <p className="text-sm font-medium text-gray-800 mb-3">
                     Verifies
                   </p>
 
@@ -148,7 +148,7 @@ export default function IndustriesTabs() {
 
               {activeIndustry.features?.length > 0 && (
                 <div className="mt-4">
-                  <p className="text-sm font-medium text-gray-900 mb-3">
+                  <p className="text-sm font-medium text-gray-800 mb-3">
                     Value
                   </p>
 
@@ -165,7 +165,7 @@ export default function IndustriesTabs() {
 
               {activeIndustry.uses?.length > 0 && (
                 <p className="mt-4 text-[16px] text-gray-700">
-                  <span className="text-gray-900">Used by:</span>{" "}
+                  <span className="text-gray-800">Used by:</span>{" "}
                   {activeIndustry.uses.join(", ")}
                 </p>
               )}

@@ -18,7 +18,7 @@ export default function PricingSection() {
         <p className="text-xs uppercase tracking-wide text-gray-500">
           Pricing
         </p>
-        <h2 className="mt-2 text-4xl font-semibold text-gray-900">
+        <h2 className="mt-2 text-4xl font-light text-gray-900">
           Plans built for
           <br />
           speed and scale

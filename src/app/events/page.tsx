@@ -12,7 +12,7 @@ export default function BlogsAndResearch() {
         <>
             <Navbar />
             <section className="w-full space-y-16 flex flex-col items-center justify-center pt-6">
-                <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-black">
+                <h1 className="text-3xl md:text-4xl font-light tracking-tight text-gray-900">
                     Deepfake Detection Blog & Industry Events
                 </h1>
                 <div className="px-4">
@@ -31,12 +31,15 @@ export default function BlogsAndResearch() {
                             'Face Re-enactment',
                         ]}
                     />
-                    <section className="bg-[#99a5ab] min-h-[400px] flex items-center w-full border-y-[1px] border-gray-600">
+                    
+                    <section className="bg-[#001D2C78] min-h-[400px] flex items-center w-full py-16 border-y-[1px] border-gray-600">
+                        
                         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
+                            
                             <div className="grid md:grid-cols-2 gap-8 items-center">
                                 {/* Left column */}
                                 <div className="space-y-4">
-                                    <h2 data-aos="fade-up" className="text-5xl md:text-5xl font-bold leading-tight">
+                                    <h2 data-aos="fade-up" className="text-5xl md:text-5xl font-light text-gray-900 leading-tight">
                                         A Global Holistic
                                         <br />
                                         Authenticity
@@ -47,9 +50,9 @@ export default function BlogsAndResearch() {
 
                                 {/* Right column */}
                                 <div className="flex flex-col space-y-8">
-
-                                    <p className="text-2xl text-shadow-gray-100 leading-relaxed">
-                                        The deeptrack AI application is not just a tool—it is a global fraud prevention and audio authenticity command center serving businesses worldwide
+                                    
+                                    <p className="text-2xl text-gray-800 leading-relaxed">
+                                        The deeptrack AI application is not just a tool it is a global fraud prevention and audio authenticity command center serving businesses worldwide
                                     </p>
 
                                     <div className="w-full max-w-md">
@@ -58,6 +61,7 @@ export default function BlogsAndResearch() {
                                 </div>
                             </div>
                         </div>
+                        
                     </section>
                 </div>
             </section>

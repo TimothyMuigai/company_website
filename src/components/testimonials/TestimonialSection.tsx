@@ -70,7 +70,7 @@ export default function TestimonialsSection() {
         <p className="text-xs uppercase tracking-wide text-gray-500">
           Testimonials
         </p>
-        <h2 className="mt-2 text-4xl font-semibold text-gray-900">
+        <h2 className="mt-2 text-4xl font-light text-black">
           Real results. Real teams. Powered by AI.
         </h2>
       </motion.div>
@@ -91,7 +91,7 @@ export default function TestimonialsSection() {
           <div className="md:col-span-2">
             <TypingText
               text="“Before AI Supply, our operations were bottlenecked by manual processes and fragmented tools. Within the first month, we automated 60% of our most repetitive workflows. What used to take days now takes minutes — and the consistency is night and day. It’s not just faster — it’s sharper, more reliable, and scalable.”"
-              className="text-lg text-gray-800 leading-relaxed"
+              className="text-lg text-gray-700 leading-relaxed"
             />
 
             <div className="mt-6 flex items-end justify-between gap-6 flex-wrap">
