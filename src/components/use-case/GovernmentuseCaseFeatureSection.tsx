@@ -30,13 +30,13 @@ const GovernmentUseCaseFeatureSection = ({
                     }}
                 >
                     {/* INNER CARD */}
-                    <div className="rounded-[20px] bg-[#001D2C66] ">
+                    <div className="rounded-[20px] bg-[#F9FAFB] ">
                         <div className="grid lg:grid-cols-2 gap-10 p-8 lg:p-12 min-h-[420px]">
                             {/* Left Section */}
                             <div className="flex flex-col justify-center items-center text-center lg:items-start lg:text-left m-auto space-y-4">
-                                <p className='font-semibold text-lg'>{useCase}:</p>
-                                <h1 className="text-4xl sm:text-5xl font-semibold">{title}</h1>
-                                <p className="text-lg leading-relaxed max-w-lg">
+                                <p className='font-light text-lg'>{useCase}:</p>
+                                <h1 className="text-4xl sm:text-5xl font-light text-gray-900">{title}</h1>
+                                <p className="text-lg leading-relaxed max-w-lg text-gray-700">
                                     {description}
                                 </p>
                                 <WaitlistButton id='btn-media-usecase' />

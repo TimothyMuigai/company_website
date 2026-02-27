@@ -137,7 +137,7 @@ export default function News() {
               {/* Privacy Note */}
               <p className="text-sm text-gray-800 max-w-md">
                 Please see our{" "}
-                <Link href="/privacy-policy">
+                <Link href="/legal/privacy-policy">
                   <span className="underline cursor-pointer">
                     Privacy Policy
                   </span>{" "}

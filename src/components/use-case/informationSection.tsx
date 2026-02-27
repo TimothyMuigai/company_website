@@ -20,13 +20,13 @@ const InformationSection = ({
     return (
         <>
             <section className="text-black max-w-7xl mx-auto mt-4 min-h-[50vh] p-4">
-                <h2 data-aos="fade-up" className="text-3xl font-bold text-center mb-8">{title}</h2>
+                <h2 className="text-3xl font-light text-center mb-8">{title}</h2>
                 <div className="grid lg:grid-cols-2 gap-6 justify-center">
                     {/* Left Section */}
-                    <div data-aos="fade-up" className="flex flex-col justify-center items-center text-center lg:items-start lg:text-left m-auto space-y-6">
+                    <div className="flex flex-col justify-center items-center text-center lg:items-start lg:text-left m-auto space-y-6">
                         <div>
-                            <h1 className="text-5xl font-bold mb-6">{subtitle}</h1>
-                            <p className="leading-relaxed max-w-lg">
+                            <h1 className="text-4xl font-light mb-6 text-gray-900">{subtitle}</h1>
+                            <p className="leading-relaxed max-w-lg text-gray-800">
                                 {description}
                             </p>
                         </div>

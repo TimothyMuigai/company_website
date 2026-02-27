@@ -22,7 +22,7 @@ const UseCaseInfoSection = ({
     return (
         <>
             <section className="max-w-7xl mx-auto mt-4 min-h-[50vh] p-4 text-black">
-                <h2 className="text-3xl font-bold text-center mb-2">{title}</h2>
+                <h2 className="text-4xl font-light text-center mb-2">{title}</h2>
                 <div className="grid lg:grid-cols-2 gap-6justify-center">
                     {/* Left Section */}
                     <div
@@ -30,8 +30,8 @@ const UseCaseInfoSection = ({
                     >
                         {content.map((item, index) => (
                             <div key={index}>
-                                <h2 className="text-xl sm:text-xl font-bold m-0">{item.subtitle}:</h2>
-                                <p className="leading-relaxed max-w-lg">{item.description}</p>
+                                <h2 className="text-xl sm:text-xl text-gray-900 m-0">{item.subtitle}:</h2>
+                                <p className="leading-relaxed max-w-lg text-gray-700">{item.description}</p>
                             </div>
                         ))}
                     </div>
@@ -45,7 +45,7 @@ const UseCaseInfoSection = ({
                 </div>
             </section>
             <div className='bg-black max-w-7xl mx-auto mt-4' style={{ height: '1px' }} />
-            <div className='max-w-7xl mx-auto text-5xl leading-relaxed p-4 justify-center mt-6 pb-6 font-bold text-center text-black'>
+            <div className='max-w-7xl mx-auto text-5xl leading-relaxed p-4 justify-center mt-6 pb-6 font-light text-center text-black'>
                 <h1>deeptrack.io is not just a tool—it’s an authenticity command center</h1>
             </div>
         </>

@@ -77,9 +77,11 @@ export default function FinalCTASection() {
               {/* Trailing line */}
               <div className="flex-1 h-px bg-white/10" />
               <div className="flex flex-wrap gap-x-6 gap-y-2">
-                <Link href="/trust-center">Deeptrack&apos;s Trust Center</Link>
-                <Link href="/privacy-policy">Privacy policy</Link>
-                <Link href="/terms">Terms & conditions</Link>
+                <Link href="https://app.eu.vanta.com/deeptrack.io/trust/ykzpe8x33wwv9mki8rjv61">Deeptrack&apos;s Trust Center</Link>
+                {/* <Link href="/legal/privacy-policy">Privacy Policy</Link>
+                <Link href="/legal/terms-of-use">Terms of Use</Link>
+                <Link href="/legal/service-level-agreement">Service Level Agreement</Link> */}
+                <Link href="https://docs.google.com/document/d/1jSyNPxKrabOBlZxi8kf0eRsjsAyo6G5vFCLDhY6ockE/edit?pli=1&tab=t.0" target="_blank" rel="noopener noreferrer">Legal Center</Link>
               </div>
             </div>
           </div>

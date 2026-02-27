@@ -27,7 +27,7 @@ const AudioFeatureSection = ({  title, description, imageSrc=''}: AudioFeatureSe
       >
         
         {/* INNER CARD */}
-        <div className="rounded-[20px] bg-[#001D2C66] ">
+        <div className="rounded-[20px] bg-[#F9FAFB] ">
           <div className="grid lg:grid-cols-2 gap-10 p-8 lg:p-12 min-h-[420px]">
 
             {/* LEFT */}
