@@ -14,7 +14,7 @@ import MediaUseCaseExtraSection from '@/components/use-case/MediaUseCaseExtraSec
 const features = [
     {
         title: 'Increased Efficiency in Fraud Detection',
-        description: 'Eliminate manual bottlenecks in KYC workflows with advanced deepfake fraud detection. deeptrack automates document analysis and synthetic media fraud detection, significantly reducing onboarding times and allowing teams to focus on high-value security tasks while preventing deepfake wire fraud.'
+        description: 'Eliminate manual bottlenecks in KYC workflows with advanced deepfake fraud detection. deeptrack automates document analysis and synthetic media fraud detection, significantly reducing onboarding times and allowing teams to focus on high value security tasks while preventing deepfake wire fraud.'
     },
     {
         title: 'Single Source of Truth for Financial Security',
@@ -53,23 +53,17 @@ const FinanceUseCase = () => {
           <FeatureHighlight
               title="Enterprise Deepfake Fraud Detection for Financial Security"
               subtitle='AI-Powered Synthetic Media Detection'
-              description="deeptrack's advanced deepfake detection AI technology verifies identities with unparalleled precision by detecting forged documents, manipulated images, synthetic audio, and voice deepfake fraud in real time. From passports to bank statements, every KYC submission is analyzed at a granular level to ensure authenticity and prevent deepfake wire fraud. Our enterprise-grade deepfake detection in fintech provides comprehensive protection against evolving synthetic media threats."
+              description="Deeptrack's advanced deepfake detection AI technology verifies identities with unparalleled precision by detecting forged documents, manipulated images, synthetic audio, and voice deepfake fraud in real time. From passports to bank statements, every KYC submission is analyzed at a granular level to ensure authenticity and prevent deepfake wire fraud. Our enterprise grade deepfake detection in fintech provides comprehensive protection against evolving synthetic media threats."
               imageSrc='/use-cases/deeptrackrevenue-feature-highlight.svg'
               imageAlt='AI Deepfake Fraud Detection for Financial Security'
           />
-            <Image
-                src="/Vector.svg"
-                alt="Blue Lines"
-                width={300}
-                height={300}
-                className="absolute teal-200 -z-10 -right-[1px]"
-            />
+          
           <UseCaseFeatureInformation
               features={features} title={''} description={''}
           />
           <InformationSection
               subtitle='AI-Powered KYC Verification with Deepfake Protection'
-              description="Customizable Verification Models with Business Deepfake Protection - Start with AI templates tailored for KYC processes and adjust them to your compliance needs, including regional regulations and industry-specific standards. Our deepfake corporate security solutions integrate seamlessly with your existing fraud detection systems to provide comprehensive enterprise media security."
+              description="Customizable Verification Models with Business Deepfake Protection - Start with AI templates tailored for KYC processes and adjust them to your compliance needs, including regional regulations and industry specific standards. Our deepfake corporate security solutions integrate seamlessly with your existing fraud detection systems to provide comprehensive enterprise media security."
               imageSrc='/use-cases/deeptrack-revenue-usecase-info.svg'
               imageAlt='AI Fraud Detection Tools for KYC Verification'
           />

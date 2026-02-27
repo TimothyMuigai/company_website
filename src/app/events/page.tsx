@@ -32,7 +32,7 @@ export default function BlogsAndResearch() {
                         ]}
                     />
                     
-                    <section className="bg-[#001D2C78] min-h-[400px] flex items-center w-full py-16 border-y-[1px] border-gray-600">
+                    <section className="bg-[#F9FAFB] min-h-[400px] flex items-center w-full py-16 border-y-[1px] border-gray-600">
                         
                         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
                             

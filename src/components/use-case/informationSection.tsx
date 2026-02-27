@@ -23,7 +23,7 @@ const InformationSection = ({
                 <h2 className="text-3xl font-light text-center mb-8">{title}</h2>
                 <div className="grid lg:grid-cols-2 gap-6 justify-center">
                     {/* Left Section */}
-                    <div className="flex flex-col justify-center items-center text-center lg:items-start lg:text-left m-auto space-y-6">
+                    <div className="flex flex-col justify-center items-center text-center lg:items-start lg:text-left m-auto space-y-6 px-3">
                         <div>
                             <h1 className="text-4xl font-light mb-6 text-gray-900">{subtitle}</h1>
                             <p className="leading-relaxed max-w-lg text-gray-800">

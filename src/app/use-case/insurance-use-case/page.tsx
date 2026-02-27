@@ -65,15 +65,6 @@ export default function InsuranceUseCasePage() {
                     imageAlt="AI insurance fraud detection analyzing vehicle damage"
                 />
 
-                {/* Decorative vector (same placement as Finance) */}
-                <Image
-                    src="/Vector.svg"
-                    alt="Blue Lines"
-                    width={300}
-                    height={300}
-                    className="absolute teal-200 -z-10 -right-[1px]"
-                />
-
                 {/* Feature Information (list of benefits) */}
                 <UseCaseFeatureInformation features={features} title={""} description={""} />
 

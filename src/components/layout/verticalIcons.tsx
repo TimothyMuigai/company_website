@@ -1,6 +1,13 @@
+'use client';
+
 import { FaLink, FaFacebook, FaInstagram, FaTimes } from 'react-icons/fa'; // Importing React Icons
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 const SocialIcons = () => {
+  const router = useRouter();
+  const [showCloseText, setShowCloseText] = useState(false);
+
   // Function to copy URL to clipboard
   const copyLink = () => {
     navigator.clipboard.writeText(window.location.href)
@@ -41,10 +48,24 @@ const SocialIcons = () => {
         <FaInstagram className="w-5 h-5 text-white" /> {/* Reduced icon size */}
       </button>
 
-      {/* X (Close) Button */}
-      <button className="p-1.5 bg-gray-200 rounded-full">
-        <FaTimes className="w-5 h-5 text-black" /> {/* Reduced icon size */}
-      </button>
+      <div
+        className="relative flex items-center"
+        onMouseEnter={() => setShowCloseText(true)}
+        onMouseLeave={() => setShowCloseText(false)}
+      >
+        {showCloseText && (
+          <span className="absolute right-10 bg-black text-white text-xs px-2 py-1 rounded-md whitespace-nowrap transition-opacity duration-200">
+            Close button
+          </span>
+        )}
+
+        <button
+          className="p-1.5 bg-gray-200 rounded-full hover:bg-gray-300 transition"
+          onClick={() => router.back()}
+        >
+          <FaTimes className="w-5 h-5 text-black" />
+        </button>
+      </div>
     </div>
   );
 };

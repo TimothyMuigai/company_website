@@ -17,15 +17,15 @@ const UseCaseDetailedInformation = ({
                     {/* Left Section */}
                     <div className="flex flex-col justify-center items-center text-center lg:items-start lg:text-left m-auto space-y-6">
                         <div>
-                            <h1 className="text-5xl font-bold mb-6">{title}</h1>
+                            <h1 className="text-4xl font-light mb-6">{title}</h1>
                         </div>
                     </div>
 
                     {/* Right Section */}
                     <div className="flex justify-center lg:justify-end p-6 mt-2">
                         <div>
-                            <h2 className="text-xl sm:text-xl font-bold m-0">{subtitle}:</h2>
-                            <p className="leading-relaxed max-w-lg">
+                            <h2 className="text-xl sm:text-xl text-gray-900 m-0">{subtitle}:</h2>
+                            <p className="leading-relaxed max-w-lg text-gray-700">
                                 {description}
                             </p>
                         </div>

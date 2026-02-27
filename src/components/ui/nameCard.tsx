@@ -17,10 +17,10 @@ const NameCard: React.FC<NameCardProps> = ({ firstName, lastName, date }) => {
 
       {/* First Name, Last Name and Date on the right */}
       <div className="flex flex-col">
-        <span className="text-lg font-semibold text-white-800">
+        <span className="text-lg font-light text-black">
           {firstName} {lastName}
         </span> {/* First Name and Last Name on the same line */}
-        <span className="text-sm text-gray-400 mt-1">{date}</span> {/* Date */}
+        <span className="text-sm text-gray-600 mt-1">{date}</span> {/* Date */}
       </div>
     </div>
   );

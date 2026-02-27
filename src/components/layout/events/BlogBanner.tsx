@@ -23,7 +23,7 @@ const BlogBanner: React.FC = () => {
         : features.filter((feature) => feature.category === selectedCategory);
 
     return (
-        <div className="py-10 bg-black">
+        <div className="py-10 bg-[#111721]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
                 {/* Category Navigation */}
@@ -34,7 +34,7 @@ const BlogBanner: React.FC = () => {
                                 onClick={() => setSelectedCategory(category)}
                                 className={`px-3 py-1 rounded-lg transition-colors ${selectedCategory === category
                                         ? 'bg-white text-gray-700'
-                                        : 'text-gray-600 hover:text-gray-700'
+                                        : 'text-gray-400 hover:text-white'
                                     }`}
                             >
                                 {category}
@@ -45,14 +45,13 @@ const BlogBanner: React.FC = () => {
                 </nav>
 
                 {/* Blog Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 ">
                     {filteredFeatures.map((feature, id) => (
                         <div
-                            data-aos="fade-in"
                             key={id}
-                            className="bg-primary rounded-2xl shadow-md overflow-hidden transition-transform transform hover:-translate-y-1 hover:shadow-lg"
+                            className="bg-[#192332] rounded-2xl shadow-md overflow-hidden transition-transform transform hover:-translate-y-1 hover:shadow-lg "
                         >
-                            <div className="relative w-full h-56">
+                            <div className="relative w-full h-56 ">
                                 <Image
                                     src={feature.image}
                                     alt={feature.title}
@@ -74,7 +73,7 @@ const BlogBanner: React.FC = () => {
                                 {/* Use Next.js <Link> to pass the blog ID */}
                                 <Link
                                     href={`/blog/${feature.id}`}
-                                    className="text-white flex items-center mt-auto font-light hover:underline hover:text-gray-300"
+                                    className="text-white flex items-center mt-auto font-light hover:underline"
                                 >
                                     Read <ArrowUpRight size={20} className="ml-1" />
                                 </Link>

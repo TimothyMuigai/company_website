@@ -68,14 +68,14 @@ const AudioAuthenticationPage = () => {
                         ]}
                     />
                     
-                    <section className="bg-[#F9FAFB] min-h-[400px] flex items-center w-full py-16 border-y-[1px] border-gray-600">
+                    <section className="bg-[#F9FAFB] min-h-100 flex items-center w-full py-16 border-y border-gray-600">
                         
                         <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
                             
                             <div className="grid md:grid-cols-2 gap-8 items-center">
                                 {/* Left column */}
                                 <div className="space-y-4">
-                                    <h2 data-aos="fade-up" className="text-5xl md:text-5xl font-light text-gray-900 leading-tight">
+                                    <h2 className="text-5xl md:text-5xl font-light text-gray-900 leading-tight">
                                         A Global Holistic
                                         <br />
                                         Audio Authenticity

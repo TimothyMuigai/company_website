@@ -58,7 +58,7 @@ export function Navbar() {
                 backdrop-blur-md
                 transition
                 border border-gray-700
-                text-black bg-gray-300 hover:bg-white
+                bg-gray-900 text-white hover:bg-gray-700
 
             `}
             >

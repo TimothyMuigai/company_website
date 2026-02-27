@@ -44,10 +44,10 @@ const UseCaseInfoSection = ({
                     </div>
                 </div>
             </section>
-            <div className='bg-black max-w-7xl mx-auto mt-4' style={{ height: '1px' }} />
-            <div className='max-w-7xl mx-auto text-5xl leading-relaxed p-4 justify-center mt-6 pb-6 font-light text-center text-black'>
+            {/* <div className='bg-black max-w-7xl mx-auto mt-4' style={{ height: '1px' }} /> */}
+            {/* <div className='max-w-7xl mx-auto text-5xl leading-relaxed p-4 justify-center mt-6 pb-6 font-light text-center text-black'>
                 <h1>deeptrack.io is not just a tool—it’s an authenticity command center</h1>
-            </div>
+            </div> */}
         </>
     )
 }

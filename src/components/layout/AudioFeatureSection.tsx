@@ -14,9 +14,9 @@ const AudioFeatureSection = ({  title, description, imageSrc=''}: AudioFeatureSe
       {/* OUTER FRAME */}
       <div
         className="
-          rounded-[20px]
+          rounded-4xl
           bg-white
-          p-[1px]
+          p-px
           backdrop-blur-[50px]
         "
         style={{
@@ -27,8 +27,8 @@ const AudioFeatureSection = ({  title, description, imageSrc=''}: AudioFeatureSe
       >
         
         {/* INNER CARD */}
-        <div className="rounded-[20px] bg-[#F9FAFB] ">
-          <div className="grid lg:grid-cols-2 gap-10 p-8 lg:p-12 min-h-[420px]">
+        <div className="rounded-4xl bg-[#F9FAFB] ">
+          <div className="grid lg:grid-cols-2 gap-10 p-8 lg:p-12 min-h-105">
 
             {/* LEFT */}
             <div className="flex flex-col justify-center space-y-6 text-center lg:text-left">

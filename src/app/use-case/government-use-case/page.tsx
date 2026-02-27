@@ -58,14 +58,7 @@ const GovernmentUseCase = () => {
                     imageSrc='/use-cases/deeptrack-use-case.svg'
                     imageAlt='Government Deepfake Detection for Election Security'
                 />
-                <Image
-                    src="/Vector.svg"
-                    alt="Blue Lines"
-                    width={300}
-                    height={300}
-                    className="absolute teal-200 -z-10 -right-[1px]"
-                />
-
+                
                 <UseCaseFeatureInformation
                     features={features} title={''} description={''}
                 />

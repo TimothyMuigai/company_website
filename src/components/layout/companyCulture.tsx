@@ -149,7 +149,7 @@ export default function CompanyCulture() {
             <section className="py-8 px-4 text-white">
                 <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
                     {/* Mission */}
-                    <div className="space-y-6 rounded-2xl p-8 bg-[#99a5ab]">
+                    <div className="space-y-6 rounded-2xl p-8 bg-[#192332]">
                         <div className="flex items-center gap-4">
                             <div className="p-3 rounded-full ">
                                 <ShieldCheck className="w-8 h-8" />
@@ -170,7 +170,7 @@ export default function CompanyCulture() {
                     </div>
 
                     {/* Vision */}
-                    <div className="space-y-6 bg-[#99a5ab] rounded-2xl p-8">
+                    <div className="space-y-6 bg-[#192332] rounded-2xl p-8">
                         <div className="flex items-center gap-4">
                             <div className="p-3 rounded-full">
                                 <EyeOff className="w-8 h-8" />
@@ -193,7 +193,7 @@ export default function CompanyCulture() {
             </section>
 
             {/* Product Stack */}
-            <section className="py-12 px-4 rounded-2xl bg-[#99a5ab] text-white">
+            <section className="py-12 px-4 rounded-2xl bg-[#192332] text-white">
                 <div className="max-w-6xl mx-auto">
                     <h2 className="text-3xl sm:text-4xl mb-6 text-center">
                         <span className="">
@@ -208,7 +208,7 @@ export default function CompanyCulture() {
                         {productStack.map(({ name, icon: Icon, desc, }) => (
                             <div
                                 key={name}
-                                className="bg-[#00000078] border border-gray-700 rounded-2xl p-6 group"
+                                className="bg-[#253041] border border-gray-700 rounded-2xl p-6 group"
                             >
                                 <div className="flex flex-col items-center text-center">
 
@@ -222,7 +222,7 @@ export default function CompanyCulture() {
                         ))}
                     </div>
 
-                    <p className="text-base mt-12 max-w-2xl mx-auto text-center border-t border-black pt-6 leading-relaxed">
+                    <p className="text-base mt-12 max-w-2xl mx-auto text-center border-t border-white pt-6 leading-relaxed">
                         Each product is purpose-built, regulator-aware, and battle-tested in African and global environments where truth is under pressure.
                     </p>
                 </div>

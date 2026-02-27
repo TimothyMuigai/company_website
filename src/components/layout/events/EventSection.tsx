@@ -95,7 +95,7 @@ export default function EventsSection() {
 
             <Link
               href="/contact"
-              className="px-5 py-2 w-fit bg-gray-900 text-white text-sm rounded-md hover:bg-gray-800 transition"
+              className="px-5 py-2 w-fit bg-gray-900 text-white text-sm rounded-md hover:bg-gray-700 transition"
             >
               Contact Us
             </Link>

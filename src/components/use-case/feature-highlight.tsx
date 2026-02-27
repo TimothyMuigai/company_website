@@ -29,7 +29,7 @@ const FeatureHighlight = ({
 
                     {/* Right Section */}
                     <div className="flex flex-col justify-center items-center text-center lg:items-start lg:text-left m-auto space-y-4">
-                        <h1 className="text-3xl text-gray-800 sm:text-3xl font-light mb-4">{subtitle}</h1>
+                        <h1 className="text-2xl text-gray-800 sm:text-3xl font-light mb-4">{subtitle}</h1>
                         <p className="text-lg text-gray-700 leading-relaxed max-w-lg">
                             {description}
                         </p>

@@ -39,21 +39,13 @@ export function WaitlistButton({ id }: WaitlistButtonProps) {
       `
                 : `
         flex items-center gap-2 p-5
-        bg-[#001d2c96] hover:bg-[#001d2c5a]
+        bg-gray-900 hover:bg-gray-700
+        hover:text-white
         text-white border
         rounded-lg
         transition-all duration-200
         group
       `
-            }
-            style={
-              !isHome
-                ? {
-                  boxShadow:
-                    "2px 2px 5px 0px rgba(0,0,0,0.25), -2px -2px 5px 0px rgba(0,0,0,0.25)",
-                  backdropFilter: "blur(32px)",
-                }
-                : undefined
             }
           >
             {isHome ? "See How it Works" : "Book a demo"}
