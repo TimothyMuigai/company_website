@@ -79,7 +79,7 @@ export default function PricingSection() {
             <motion.button
               whileTap={{ scale: 0.97 }}
               transition={{ duration: 0.15 }}
-              className="mt-6 w-full bg-black text-white py-2 text-sm rounded-md"
+              className="mt-6 w-full bg-gray-900 text-white py-2 text-sm rounded-md hover:bg-gray-700"
             >
               <Link href={"/contact"}>{plan.cta}</Link>
             </motion.button>

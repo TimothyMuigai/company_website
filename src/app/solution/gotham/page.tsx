@@ -1,12 +1,9 @@
 import React from 'react'
-import Image from 'next/image'
 import Head from 'next/head';
 
 import { Navbar } from '@/components/landingPage/navs/navBar';
 import { WaitlistButton } from '@/components/landingPage/waiting-list';
-import FeatureHighlight from '@/components/use-case/feature-highlight';
 import UseCaseFeatureInformation from '@/components/use-case/useCaseFeatureInformation';
-import UseCaseFooterBanner from '@/components/use-case/useCaseFooterBanner';
 import UseCaseFooterGothamBanner from '@/components/layout/UseCaseFooterGothamBanner';
 import FeatureHighlightGotham from '@/components/layout/FeatureHighlightGotham';
 
@@ -42,38 +39,39 @@ const GothamPage = () => {
 
       <div className='space-y-6'>
         <Navbar />
-
         {/* Hero Section */}
-        <section className="grid lg:grid-cols-2 gap-6 max-w-7xl mx-auto mt-4 min-h-[50vh] p-4 bg-[#F9FAFB]">
-          <div className="flex flex-col justify-center items-centertext-center lg:items-start lg:text-left m-auto space-y-4">
-            <p className='font-light text-lg text-black'>Solution:</p>
-            <h1 className="text-4xl sm:text-5xl font-light text-gray-900">deeptrack Gotham</h1>
-            <p className="text-lg leading-relaxed max-w-lg text-gray-800">
-              A modern SaaS platform for large scale media verification. Credit based scanning, bulk processing, worker powered architecture, and professional reporting.
+        <section className="max-w-7xl mx-auto px-6 py-20">
+          <div className="max-w-3xl space-y-8 text-center mx-auto">
+
+            <p className="uppercase tracking-[0.2em] text-xs text-gray-500">
+              Enterprise Solution
             </p>
-            <div className="flex gap-3 flex-col sm:flex-row">
-              <WaitlistButton id='btn-gotham-enterprise' />
+
+            <h1 className="text-5xl lg:text-6xl font-light text-gray-900 leading-[1.1]">
+              deeptrack Gotham
+            </h1>
+
+            <p className="text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
+              A modern SaaS platform built for large-scale media verification.
+              Credit-based scanning, bulk processing, worker driven architecture,
+              and compliance-ready reporting engineered for institutional environments.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 pt-2 items-center justify-center">
+              <WaitlistButton id="btn-gotham-enterprise" />
+
               <a
                 href="https://gotham.deeptrack.io"
                 target="_blank"
                 rel="noreferrer"
-                className="bg-sky-600 text-white px-4 py-3 rounded-lg hover:bg-sky-700 transition font-light text-center"
+                className="px-6 py-3 border border-gray-700 text-white rounded-lg bg-[#1E88C8] hover:bg-[#166DA3] transition text-center"
               >
-                Visit Gotham
+                Visit Platform
               </a>
             </div>
           </div>
-
-          {/* <div className="flex justify-center lg:justify-end p-6 mt-6">
-                  <Image 
-                    src="/Vector.svg"
-                    alt="Gotham Enterprise Media Verification"
-                    width={400}
-                    height={300}
-                    className="customTeal opacity-60"
-                  />
-              </div> */}
         </section>
+
         <div className='bg-customTeal max-w-7xl mx-auto mt-4' style={{ height: '1px' }} />
 
         {/* Feature Highlight */}
@@ -81,17 +79,7 @@ const GothamPage = () => {
           title="Enterprise Grade Media Verification at Scale"
           subtitle='Credit Based SaaS with Background Processing'
           description="deeptrack Gotham, delivers a complete verification platform combining modern SaaS architecture with sophisticated media analysis. Users purchase credits that fuel unlimited scans, while a worker based architecture ensures bulk operations process asynchronously without impacting performance. From payment processing  to audit trail logging, every component is built for enterprise reliability and scalability."
-          // imageSrc='/Vector.svg'
-          // imageAlt='deeptrack Gotham Platform Architecture'
         />
-        {/* <Image
-          src="/Vector.svg"
-          alt="Decorative"
-          width={400}
-          height={300}
-          className="absolute -right-72 md:-right-20 -z-10 customTeal"
-        /> */}
-
         {/* Key Features */}
         <UseCaseFeatureInformation
           features={features} title={''} description={''}

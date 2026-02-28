@@ -66,6 +66,7 @@ export default function FinalCTASection() {
                 <Link href="/about">About</Link>
                 <Link href="/career">Careers</Link>
                 <Link href="/contact">Contact</Link>
+                <Link href="/test-files/fileAbout">Test about</Link>
               </div>
             </div>
           </div>

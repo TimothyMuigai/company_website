@@ -85,8 +85,8 @@ export default function UseCasesSection() {
               <button className="
                 inline-flex items-center justify-center
                 text-sm font-medium text-white
-                bg-[#0A1015] px-4 py-2 rounded-md
-                hover:bg-black transition
+                bg-gray-900 px-4 py-2 rounded-md
+                hover:bg-gray-700 transition
                 whitespace-nowrap
                 w-full sm:w-auto
               "

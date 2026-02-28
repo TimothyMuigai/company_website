@@ -108,17 +108,17 @@ export default function ProcessTabs() {
               {/* CTA — fixed position under text, NOT animated */}
               <div
                 className="
-          mt-10 flex flex-col-reverse gap-2
-          sm:flex-row sm:items-center sm:gap-4
-          "
+                mt-10 flex flex-col-reverse gap-2
+                sm:flex-row sm:items-center sm:gap-4
+                "
               >
                 <WaitlistButton/>
 
                 <div
                   className="
-            flex items-center gap-2 text-xs text-gray-500
-            justify-center sm:justify-start
-            "
+                  flex items-center gap-2 text-xs text-gray-500
+                  justify-center sm:justify-start
+                  "
                 >
                   <Image
                     src="/mdi_verified.svg"

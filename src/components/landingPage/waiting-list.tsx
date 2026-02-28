@@ -33,8 +33,8 @@ export function WaitlistButton({ id }: WaitlistButtonProps) {
               isHome
                 ? `
         inline-flex items-center justify-center rounded-md
-              bg-[#0A1015] px-5 py-3 text-sm font-medium text-white
-              hover:bg-gray-700 transition
+              bg-gray-900 px-5 py-3 text-sm font-medium text-white
+              hover:bg-gray-700 hover:text-white transition
               w-full sm:w-auto
       `
                 : `

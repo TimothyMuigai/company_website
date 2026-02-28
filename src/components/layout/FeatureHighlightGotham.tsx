@@ -1,41 +1,35 @@
 "use client";
-import FeatureSvg from "../layout/FeatureSvg"
-
 
 interface FeatureHighlightGothamProps {
-    title: string
-    subtitle: string
-    description: string
+  title: string;
+  subtitle: string;
+  description: string;
 }
 
 const FeatureHighlightGotham = ({
-    title,
-    subtitle,
-    description,
+  title,
+  subtitle,
+  description,
 }: FeatureHighlightGothamProps) => {
-    return (
-        <>
-            <section className="text-black max-w-7xl mx-auto mt-4 min-h-[50vh] p-4">
-                <h2 className="text-4xl font-light text-gray-900 text-center mb-8">{title}</h2>
-                {/* <div className="grid lg:grid-cols-2 gap-6"> */}
-                <div className="flex flex-col justify-center items-center text-center lg:items-start lg:text-left m-auto space-y-4">
-                    {/* Left Section */}
-                    {/* <div className="flex justify-center lg:justify-end p-6 mt-6">
-                        <FeatureSvg imageSrc={imageSrc} altText={imageAlt} />
-                    </div> */}
+  return (
+    <section className="max-w-7xl mx-auto px-6 py-12">
+      <div className="max-w-4xl mx-auto text-center space-y-8">
 
-                    {/* Right Section */}
-                    <div className="flex flex-col justify-center items-center text-center lg:items-start lg:text-left m-auto space-y-4">
-                        <h1 className="text-4xl text-gray-800 sm:text-3xl font-light mb-4">{subtitle}</h1>
-                        <p className="text-lg text-gray-700 leading-relaxed max-w-lg">
-                            {description}
-                        </p>
-                    </div>
-                </div>
-            </section>
-        </>
-    )
-}
+        <h2 className="text-4xl lg:text-5xl font-light text-gray-900 leading-tight">
+          {title}
+        </h2>
+
+        <p className="text-lg uppercase tracking-wide text-gray-500">
+          {subtitle}
+        </p>
+
+        <p className="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
+          {description}
+        </p>
+
+      </div>
+    </section>
+  );
+};
 
 export default FeatureHighlightGotham;
-

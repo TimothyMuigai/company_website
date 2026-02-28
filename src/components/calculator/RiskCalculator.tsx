@@ -123,7 +123,7 @@ export default function RiskCalculator() {
           </p>
 
           <Link href="/contact">
-            <button className="w-full bg-black text-white py-3 rounded-md text-sm font-medium hover:bg-gray-900 transition">
+            <button className="w-full bg-gray-900 text-white py-3 rounded-md text-sm font-medium hover:bg-gray-700 transition">
                 Get a custom automation plan
             </button>
           </Link>
