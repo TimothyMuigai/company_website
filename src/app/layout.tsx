@@ -4,6 +4,9 @@ import { Inter } from "next/font/google";
 import { Outfit } from "next/font/google";
 
 export const metadata = {
+  icons: {
+    icon: '/deeptrack-favicon.ico',
+  },
   title: "Deeptrack",
   description: "Enterprise deepfake detection",
 };

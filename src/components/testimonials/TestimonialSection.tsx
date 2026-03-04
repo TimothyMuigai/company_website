@@ -101,7 +101,7 @@ export default function TestimonialsSection() {
               </div>
 
               <div className="text-right">
-                <p className="text-3xl font-semibold text-gray-900">97%</p>
+                <p className="text-3xl font-semibold text-gray-900">83%</p>
                 <p className="text-sm text-gray-500">Boost in efficiency</p>
               </div>
             </div>
