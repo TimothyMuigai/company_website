@@ -44,7 +44,7 @@ export default function FinalCTASection() {
             </Link>
 
             <Link
-              href="/test-files/fileAbout"
+              href="/about"
               className="rounded-md bg-white/10 px-4 py-2 text-sm text-white hover:bg-white/20"
             >
               About us
@@ -78,7 +78,7 @@ export default function FinalCTASection() {
               <div className="flex flex-wrap gap-x-6 gap-y-2">
                 <Link href="/">Home</Link>
                 <Link href="/#industries">Use cases</Link>
-                <Link href="/test-files/fileAbout">About Us</Link>
+                <Link href="/about">About Us</Link>
                 <Link href="/career">Careers</Link>
                 <Link href="/contact">Contact</Link>
               </div>

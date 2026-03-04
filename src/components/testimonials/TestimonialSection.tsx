@@ -90,19 +90,19 @@ export default function TestimonialsSection() {
 
           <div className="md:col-span-2">
             <TypingText
-              text="“Before AI Supply, our operations were bottlenecked by manual processes and fragmented tools. Within the first month, we automated 60% of our most repetitive workflows. What used to take days now takes minutes — and the consistency is night and day. It’s not just faster — it’s sharper, more reliable, and scalable.”"
+              text="“Before Deeptrack, verifying digital media and identity signals required multiple vendors and manual review queues. Our fraud team was overwhelmed — and response times were hurting customer trust. Within weeks of deploying Deeptrack, we automated over 70% of our high-risk media verification workflows. What used to take hours of forensic review now happens in seconds — with audit-ready reports. It’s not just detection — it’s defensible, enterprise-grade verification we can trust.”"
               className="text-lg text-gray-700 leading-relaxed"
             />
 
             <div className="mt-6 flex items-end justify-between gap-6 flex-wrap">
               <div>
                 <p className="font-medium text-gray-900">Lauren Meyers</p>
-                <p className="text-sm text-gray-500">Growth Strategist</p>
+                <p className="text-sm text-gray-500">Head of Risk & Compliance</p>
               </div>
 
               <div className="text-right">
                 <p className="text-3xl font-semibold text-gray-900">83%</p>
-                <p className="text-sm text-gray-500">Boost in efficiency</p>
+                <p className="text-sm text-gray-500">Reduction in manual review time</p>
               </div>
             </div>
           </div>
@@ -135,6 +135,39 @@ export default function TestimonialsSection() {
                 <p className="text-3xl font-semibold text-gray-900">4x</p>
                 <p className="text-sm text-gray-500">
                   Increase in bottom line
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {/* Testimonial 3 */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
+          {/* <div className="flex items-center justify-center bg-black rounded-md h-40">
+            <Image
+              src="/testimonial/coarsa.svg"
+              alt="Coursa"
+              width={120}
+              height={40}
+            />
+          </div> */}
+
+          <div className="md:col-span-2">
+            <TypingText
+              text="“Before Deeptrack Foundry, our claims investigation process relied heavily on manual document review and external forensic vendors. Fraud detection was reactive, slow, and expensive. Within months of deploying Foundry, we automated media authentication, document verification, and anomaly flagging directly into our claims workflow. We didn’t need to expand our investigation team — the AI handled first-level screening at scale. It gave us leverage where we had none before, and improved both speed and accuracy.”"
+              className="text-lg text-gray-800 leading-relaxed"
+            />
+
+            <div className="mt-6 flex items-end justify-between gap-6 flex-wrap">
+              <div>
+                <p className="font-medium text-gray-900">Jenkins Nickman</p>
+                <p className="text-sm text-gray-500">Chief Claims Officer</p>
+              </div>
+
+              <div className="text-right">
+                <p className="text-3xl font-semibold text-gray-900">62%</p>
+                <p className="text-sm text-gray-500">
+                  Reduction in fraudulent payout exposure
                 </p>
               </div>
             </div>
