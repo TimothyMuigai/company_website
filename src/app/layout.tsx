@@ -2,6 +2,7 @@ import FinalCTASection from "@/components/Footer";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { Outfit } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata = {
   title: "Deeptrack",
@@ -23,6 +24,7 @@ export default function RootLayout({
       <body className="bg-[#ffffff] text-white antialiased">
         {children}
         <FinalCTASection />
+        <Analytics />
       </body>
     </html>
   );
