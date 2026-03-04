@@ -90,7 +90,7 @@ export default function TestimonialsSection() {
 
           <div className="md:col-span-2">
             <TypingText
-              text="“Before Deeptrack, verifying digital media and identity signals required multiple vendors and manual review queues. Our fraud team was overwhelmed — and response times were hurting customer trust. Within weeks of deploying Deeptrack, we automated over 70% of our high-risk media verification workflows. What used to take hours of forensic review now happens in seconds — with audit-ready reports. It’s not just detection — it’s defensible, enterprise-grade verification we can trust.”"
+              text="“Before Deeptrack, verifying digital media and identity signals required multiple vendors and manual review queues. Our fraud team was overwhelmed and response times were hurting customer trust. Within weeks of deploying Deeptrack, we automated over 70% of our high risk media verification workflows. What used to take hours of forensic review now happens in seconds with audit-ready reports. It’s not just detection it’s defensible, enterprise-grade verification we can trust.”"
               className="text-lg text-gray-700 leading-relaxed"
             />
 
@@ -109,7 +109,7 @@ export default function TestimonialsSection() {
         </div>
 
         {/* Testimonial 2 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
+        {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
           <div className="flex items-center justify-center bg-black rounded-md h-40">
             <Image
               src="/testimonial/coarsa.svg"
@@ -139,7 +139,7 @@ export default function TestimonialsSection() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         
         {/* Testimonial 3 */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
@@ -151,17 +151,21 @@ export default function TestimonialsSection() {
               height={40}
             />
           </div> */}
+          <div className="flex flex-col items-center justify-center h-40 gap-2 3">
+              <p className="font-medium text-gray-900">Jenkins Nickman</p>
+              <p className="text-sm text-gray-500">Chief Claims Officer</p>
+            </div>
 
           <div className="md:col-span-2">
             <TypingText
-              text="“Before Deeptrack Foundry, our claims investigation process relied heavily on manual document review and external forensic vendors. Fraud detection was reactive, slow, and expensive. Within months of deploying Foundry, we automated media authentication, document verification, and anomaly flagging directly into our claims workflow. We didn’t need to expand our investigation team — the AI handled first-level screening at scale. It gave us leverage where we had none before, and improved both speed and accuracy.”"
+              text="“Before Deeptrack Foundry, our claims investigation process relied heavily on manual document review and external forensic vendors. Fraud detection was reactive, slow, and expensive. Within months of deploying Foundry, we automated media authentication, document verification, and anomaly flagging directly into our claims workflow. We didn’t need to expand our investigation team the AI handled first level screening at scale. It gave us leverage where we had none before, and improved both speed and accuracy.”"
               className="text-lg text-gray-800 leading-relaxed"
             />
 
             <div className="mt-6 flex items-end justify-between gap-6 flex-wrap">
               <div>
-                <p className="font-medium text-gray-900">Jenkins Nickman</p>
-                <p className="text-sm text-gray-500">Chief Claims Officer</p>
+                <p className="font-medium text-gray-900"></p>
+                <p className="text-sm text-gray-500"></p>
               </div>
 
               <div className="text-right">
