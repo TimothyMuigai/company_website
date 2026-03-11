@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 const executive = {
   name: 'Bryan Koyundi',
-  title: 'Founder & Chief Executive Officer',
+  title: 'Founder & Head of Technology',
   img: '/people/bryan.jpg',
   link: 'https://www.linkedin.com/in/bryane-fundraising-to-build-deeptrack-6a215a282',
   bio: 'Bryan founded Deeptrack to build verification infrastructure for high trust systems. His work focuses on AI risk mitigation, financial integrity, and long term digital governance in emerging and global markets.',
