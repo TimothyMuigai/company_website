@@ -1,6 +1,10 @@
 "use client";
 
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 export default function TryApiSection() {
+    const router = useRouter();
     return (
         <section className="pt-18">
             <div className="max-w-5xl mx-auto px-6">
@@ -17,12 +21,14 @@ export default function TryApiSection() {
                     </p>
 
                     <div className="mt-8">
-                        <button
-                            className="px-6 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-700"
-                            onClick={() => window.open('https://www.realitydefender.com/product/realapi')}
-                        >
-                            Test the API
-                        </button>
+                        <Link href="/productApi">
+                            <button
+                                className="px-6 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-700"
+                                onClick={() => router.push('/productApi')}
+                            >
+                                Test the API
+                            </button>
+                        </Link>
                     </div>
 
                 </div>

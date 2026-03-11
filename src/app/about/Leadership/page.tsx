@@ -109,7 +109,7 @@ export default function LeadershipPage() {
                 Executive Leadership
               </h2>
               <p className="text-gray-600 max-w-2xl">
-                The core operators responsible for Deeptrack’s strategic direction,
+                The core operator responsible for Deeptrack’s strategic direction,
                 technical execution, and institutional growth.
               </p>
             </div>
