@@ -12,9 +12,9 @@ import FinanceUseCaseExtraSection from "@/components/use-case/FinanaceUseCaseExt
 
 const features = [
     {
-        title: "Real-Time Fraud Detection",
+        title: "Real Time Fraud Detection",
         description:
-            "Our AI neural authenticity engine analyzes images, video and documents instantly — detecting deepfakes, manipulated photos, and synthetic claims at submission time.",
+            "Our AI neural authenticity engine analyzes images, video and documents instantly detecting deepfakes, manipulated photos, and synthetic claims at submission time.",
     },
     {
         title: "Multimodal Verification",
@@ -30,7 +30,7 @@ export default function InsuranceUseCasePage() {
                 <title>AI-Powered Insurance Fraud Detection & Deepfake Prevention | deeptrack</title>
                 <meta
                     name="description"
-                    content="deeptrack provides AI-powered insurance fraud prevention: real-time deepfake detection, multimodal verification, and automated claim risk scoring to protect insurers and reinsurers."
+                    content="deeptrack provides AI-powered insurance fraud prevention: real time deepfake detection, multimodal verification, and automated claim risk scoring to protect insurers and reinsurers."
                 />
                 <meta
                     name="keywords"
@@ -60,7 +60,9 @@ export default function InsuranceUseCasePage() {
                 <FeatureHighlight
                     title="Combat $80B+ in Annual Insurance Fraud with AI Precision"
                     subtitle="AI-Powered Insurance Fraud Detection"
-                    description="deeptrack's advanced neural authenticity engine detects sophisticated fraud attempts including deepfake damage photos, synthetic claims, rebroadcast attacks, and object reuse schemes. Our insurance fraud detection AI analyzes vehicle images, documents, and metadata in real-time, providing confidence scores and authenticity reports to prevent fraudulent payouts."
+                    
+                    description="deeptrack's advanced neural authenticity engine detects sophisticated fraud attempts including deepfake damage photos, synthetic claims, rebroadcast attacks, and object reuse schemes. Our insurance fraud detection AI analyzes vehicle images, documents, and metadata in real time, providing confidence scores and authenticity reports to prevent fraudulent payouts."
+
                     imageSrc="/use-cases/insurance2.jpg"
                     imageAlt="AI insurance fraud detection analyzing vehicle damage"
                 />
@@ -88,7 +90,7 @@ export default function InsuranceUseCasePage() {
                                 "Replace expensive onsite inspections with trusted virtual verifications using deeptrack's AI-powered platform. Customers and repair shops can submit claims instantly while our system ensures photo and video integrity.",
                         },
                         {
-                            subtitle: "Enterprise-Grade Security & Compliance",
+                            subtitle: "Enterprise Grade Security & Compliance",
                             description:
                                 "deeptrack meets GDPR and ISO standards while integrating seamlessly into existing claims processing workflows via API, providing detailed audit trails and authenticity reports for reinsurance and compliance.",
                         },

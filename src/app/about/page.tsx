@@ -141,14 +141,14 @@ export default function AboutDeeptrack() {
         </div>
 
         <p className="text-gray-700 leading-relaxed">
-          Deeptrack operates with privacy-first architecture,
-          regulator-aware design, and institutional discipline.
+          Deeptrack operates with privacy first architecture,
+          regulator aware design, and institutional discipline.
         </p>
 
         <p className="text-gray-600 leading-relaxed">
           Our advisory leadership spans cybersecurity,
           enterprise systems, legal governance,
-          and venture capital — ensuring technical rigor
+          and venture capital ensuring technical rigor
           and compliance alignment from inception.
         </p>
       </section>

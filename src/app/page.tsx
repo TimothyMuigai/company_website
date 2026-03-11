@@ -12,6 +12,7 @@ import TestimonialsSection from "@/components/testimonials/TestimonialSection";
 import PricingSection from "@/components/pricing/PricingSection";
 import FAQSection from "@/components/faq/FaqSection";
 import Image from "next/image";
+import TryApiSection from "@/components/ApiSection";
 // import Navbar from "./NavBar";
 
 export default function Home() {
@@ -44,6 +45,8 @@ export default function Home() {
         <UseCasesSection />
         {/* NEXT PAGE SECTION */}
         <ProcessTabs />
+        {/* NEXT PAGE SECTION */}
+        <TryApiSection/>
         {/* NEXT PAGE SECTION */}
         <RiskCalculator />
         {/* NEXT PAGE SECTION */}

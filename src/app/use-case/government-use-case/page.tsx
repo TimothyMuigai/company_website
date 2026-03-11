@@ -15,7 +15,7 @@ const features = [
     },
     {
         title: 'Single Source of Truth for Democratic Integrity',
-        description: 'deeptrack centralizes election data and deepfake threat insights into a single platform, enabling secure monitoring and cohesive decision-making across election committees and regulatory bodies. Our government synthetic media defense ensures election integrity deepfake detection at scale.'
+        description: 'deeptrack centralizes election data and deepfake threat insights into a single platform, enabling secure monitoring and cohesive decision making across election committees and regulatory bodies. Our government synthetic media defense ensures election integrity deepfake detection at scale.'
     },
     {
         title: 'Real-Time Election Monitoring & Deepfake Detection',

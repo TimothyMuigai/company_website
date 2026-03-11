@@ -6,7 +6,7 @@ export const benefits = [
     icon: "/benefits_icons/Icon_5.svg",
   },
   {
-    title: "Escalate only high-risk cases",
+    title: "Escalate only high risk cases",
     description:
       "Human attention is reserved for content that truly requires judgment and context.",
     icon: "/benefits_icons/healthicons_risk-analysis.svg",

@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import EventCard from "./EventCard"
+import { useMemo, useState } from "react"
 type Event = {
   id: number
   title: string
@@ -51,6 +52,19 @@ const events: Event[] = [
 ]
 
 export default function EventsSection() {
+  const [sortOption, setSortOption] = useState<"newest" | "oldest">("newest")
+
+  const sortedEvents = useMemo(() => {
+    return [...events].sort((a, b) => {
+      const dateA = new Date(a.date).getTime()
+      const dateB = new Date(b.date).getTime()
+
+      return sortOption === "newest"
+        ? dateB - dateA
+        : dateA - dateB
+    })
+  }, [sortOption])
+
   return (
     <div className="max-w-6xl m-auto">
       {/* Header */}
@@ -65,6 +79,10 @@ export default function EventsSection() {
             `${events.length > 3 ? "relative" : "hidden"}`
           }>
           <select
+            value={sortOption}
+            onChange={(e) =>
+              setSortOption(e.target.value as "newest" | "oldest")
+            }
             className="
               text-sm
               text-gray-700
@@ -73,9 +91,9 @@ export default function EventsSection() {
               cursor-pointer
             "
           >
-            <option>Sort by</option>
-            <option>Newest</option>
-            <option>Oldest</option>
+            <option value="">Sort by</option>
+            <option value="newest">Newest</option>
+            <option value="oldest">Oldest</option>
           </select>
         </div>
 
@@ -83,8 +101,8 @@ export default function EventsSection() {
 
       {/* Scrollable container */}
       <div className="max-h-[520px] overflow-y-auto pr-4 pt-2 space-y-6 border-r">
-        {events.length > 0 ? (
-          events.map((event) => (
+        {sortedEvents.length > 0 ? (
+          sortedEvents.map((event) => (
             <EventCard key={event.id} {...event} />
           ))
         ) : (

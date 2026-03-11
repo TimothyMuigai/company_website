@@ -81,7 +81,7 @@ export const industries = [
     label:"Insurance",
     title:"Insurance Fraud Detection (Deeptrack Foundry)",
     image:"/industry_photos/Rectangle 6.png",
-    problem1:"Insurance fraud surges with manipulated images, staged videos, and AI-generated claim evidence.Deeptrack Foundry analyzes submitted media for manipulation, reuse, or synthetic generation, spotting suspicious claims early.",
+    problem1:"Insurance fraud surges with manipulated images, staged videos, and AI-generated claim evidence. Deeptrack Foundry analyzes submitted media for manipulation, reuse, or synthetic generation, spotting suspicious claims early.",
     problem2:"",
     verifies:[],
     features:[
@@ -100,7 +100,7 @@ export const industries = [
     label:"Talent Acquisition",
     title:"Talent Acquisition & Hiring Integrity",
     image:"/industry_photos/Rectangle 2.png",
-    problem1:"Remote hiring speeds recruitment but invites fraud like AI-generated resumes, deepfake interviews, and impersonation—especially in tech/exec roles. Deeptrack verifies candidate media authenticity, detecting deepfakes in video interviews, voice cloning, manipulated docs, and inconsistencies across stages.",
+    problem1:"Remote hiring speeds recruitment but invites fraud like AI-generated resumes, deepfake interviews, and impersonation especially in tech/exec roles. Deeptrack verifies candidate media authenticity, detecting deepfakes in video interviews, voice cloning, manipulated docs, and inconsistencies across stages.",
     problem2:"",
     verifies:[
       "Live/recorded video interviews", 
@@ -115,7 +115,7 @@ export const industries = [
       "Builds trust in remote processes"
     ],
     uses:[
-      "Remote-hiring enterprises", 
+      "Remote hiring enterprises", 
       "tech cos", 
       "financial institutions", 
       "recruitment firms"

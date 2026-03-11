@@ -8,7 +8,7 @@ import UseCaseInfoSection from './useCaseInfoSection';
 const features = [
     {
         title: 'Signal-Level Precision',
-        description: 'Detect audio, video, and image-based impersonations of your leadership team using deeptrack’s multimodal AI engine, fine-tuned to surface even subtle manipulations.'
+        description: 'Detect audio, video, and image based impersonations of your leadership team using deeptrack’s multimodal AI engine, fine-tuned to surface even subtle manipulations.'
     },
     {
         title: 'Seamless Integration',
@@ -35,8 +35,8 @@ const ExecutiveIdentityShielding = () => {
 
             <FeatureHighlight
                 title="Combating Executive Impersonation with AI"
-                subtitle='Real-Time Defense'
-                description="Executives and public figures are increasingly targeted by synthetic impersonations — from deepfake audio scams to synthetic videos aimed at reputational damage. deeptrack detects and mitigates these threats before they escalate."
+                subtitle='Real Time Defense'
+                description="Executives and public figures are increasingly targeted by synthetic impersonations from deepfake audio scams to synthetic videos aimed at reputational damage. deeptrack detects and mitigates these threats before they escalate."
                 imageSrc='/use-cases/realtime-defense.jpg'
                 imageAlt='Detect Impersonations'
             />
@@ -54,7 +54,7 @@ const ExecutiveIdentityShielding = () => {
                         description: '$243,000 lost by a UK energy firm due to audio deepfake fraud. 6 in 10 executives report no preparedness for deepfakes. 82% of phishing kits now reference deepfake capabilities.',
                     },
                     {
-                        subtitle: 'Real-Time Alerts & Incident Reports',
+                        subtitle: 'Real Time Alerts & Incident Reports',
                         description: 'Receive instant alerts and forensic reports that empower your security team to respond quickly and mitigate operational and reputational damage.',
                     },
                 ]}

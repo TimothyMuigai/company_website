@@ -70,7 +70,7 @@ const FinanceUseCase = () => {
           <UseCaseDetailedInformation
               title='Real-Time Identity Verification with Deepfake Detection'
               subtitle='Instant Document and Audio Analysis for Fraud Prevention'
-              description="deeptrack applies advanced AI models to validate customer-submitted documents and voice-based verifications instantly while detecting deepfake scams. Detecting fraudulent documents, mismatched audio, synthetic identities, and voice deepfake fraud in real time ensures a smooth and secure onboarding experience. Our corporate deepfake defense system provides continuous monitoring against emerging threats in the financial sector."
+              description="deeptrack applies advanced AI models to validate customer submitted documents and voice-based verifications instantly while detecting deepfake scams. Detecting fraudulent documents, mismatched audio, synthetic identities, and voice deepfake fraud in real time ensures a smooth and secure onboarding experience. Our corporate deepfake defense system provides continuous monitoring against emerging threats in the financial sector."
           />
 
           <UseCaseFooterBanner

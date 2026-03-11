@@ -147,7 +147,7 @@ export default function CompanyCulture() {
           <h2 className="text-2xl font-light">Institutional Accountability</h2>
           <p className="text-gray-600">
             Trust is earned through auditability,
-            transparency, and privacy-first infrastructure.
+            transparency, and privacy first infrastructure.
           </p>
         </motion.div>
 

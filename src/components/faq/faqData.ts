@@ -17,12 +17,12 @@ export const faqItems = [
   {
     question: "Does Deeptrack replace human reviewers?",
     answer:
-      "No. It augments human judgment by automating first-pass analysis and escalating high-risk cases.",
+      "No. It augments human judgment by automating first pass analysis and escalating high-risk cases.",
   },
   {
     question: "How is Deeptrack different from other AI tools?",
     answer:
-      "Deeptrack is built for real workflows, compliance, and auditability — not demos.",
+      "Deeptrack is built for real workflows, compliance, and auditability not demos.",
   },
   {
     question: "Can Deeptrack integrate with our systems?",

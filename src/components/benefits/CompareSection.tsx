@@ -68,7 +68,7 @@ export default function CompareSection() {
             <ul className="space-y-4 text-sm text-gray-200">
               <li className="flex items-center gap-3">
                 <span className="font-bold text-green-400">✓</span>
-                Built for high-risk, high-impact decisions
+                Built for high risk, high impact decisions
               </li>
               <li className="flex items-center gap-3">
                 <span className="font-bold text-green-400">✓</span>

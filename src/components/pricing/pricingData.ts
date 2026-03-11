@@ -33,9 +33,9 @@ export const pricingPlans = [
     cta: "Get in touch",
     features: [
       "10,000+ credits",
-      "Real-time monitoring and alerts",
+      "Real time monitoring and alerts",
       "Dedicated support & compliance tools",
-      "Multi-team access and audit logs",
+      "Multi team access and audit logs",
     ],
   },
 ];

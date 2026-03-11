@@ -47,14 +47,14 @@ const GothamPage = () => {
               Enterprise Solution
             </p>
 
-            <h1 className="text-5xl lg:text-6xl font-light text-gray-900 leading-[1.1]">
+            <h1 className="text-5xl lg:text-6xl font-light text-gray-800 leading-[1.1]">
               deeptrack Gotham
             </h1>
 
             <p className="text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
-              A modern SaaS platform built for large-scale media verification.
-              Credit-based scanning, bulk processing, worker driven architecture,
-              and compliance-ready reporting engineered for institutional environments.
+              A modern SaaS platform built for large scale media verification.
+              Credit based scanning, bulk processing, worker driven architecture,
+              and compliance ready reporting engineered for institutional environments.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-2 items-center justify-center">
