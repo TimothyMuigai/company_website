@@ -4,16 +4,13 @@ import { Navbar } from '@/components/landingPage/navs/navBar';
 import { motion, Variants } from 'framer-motion';
 import Image from 'next/image';
 
-const executives = [
-  {
-    name: 'Bryan Koyundi',
-    title: 'Founder & Chief Executive Officer',
-    img: '/people/bryan.jpg',
-    link: 'https://www.linkedin.com/in/bryane-fundraising-to-build-deeptrack-6a215a282',
-    bio: 'Bryan founded Deeptrack to build verification infrastructure for high trust systems. His work focuses on AI risk mitigation, financial integrity, and long term digital governance in emerging and global markets.',
-  },
-  
-];
+const executive = {
+  name: 'Bryan Koyundi',
+  title: 'Founder & Chief Executive Officer',
+  img: '/people/bryan.jpg',
+  link: 'https://www.linkedin.com/in/bryane-fundraising-to-build-deeptrack-6a215a282',
+  bio: 'Bryan founded Deeptrack to build verification infrastructure for high trust systems. His work focuses on AI risk mitigation, financial integrity, and long term digital governance in emerging and global markets.',
+}
 
 const advisors = [
   {
@@ -104,7 +101,7 @@ export default function LeadershipPage() {
 
 
         {/* Executive Leadership */}
-        <section className="px-6 md:px-12 lg:px-24 py-24">
+        <section className="px-6 md:px-12 lg:px-24 py-14">
           <div className="max-w-6xl mx-auto space-y-16">
 
             <div>
@@ -122,74 +119,70 @@ export default function LeadershipPage() {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, amount: 0.2 }}
-              className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2"
+              className="flex justify-center"
             >
-              {executives.map((person) => (
-                <motion.div
-                  key={person.name}
-                  variants={cardVariants}
-                  whileHover={{ y: -6 }}
-                  transition={{ type: "spring", stiffness: 200, damping: 15 }}
-                  className="rounded-2xl p-6 flex flex-col items-center text-center"
+              <motion.div
+                variants={cardVariants}
+                whileHover={{ y: -6 }}
+                transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                className="flex flex-col md:flex-row items-center gap-10 max-w-4xl"
+              >
+                {/* IMAGE */}
+                <motion.a
+                  href={executive.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative w-64 h-64 rounded-2xl overflow-hidden group shrink-0"
+                  whileHover="hover"
+                  initial="rest"
+                  animate="rest"
                 >
-                  <motion.a
-                    href={person.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="relative w-full aspect-square rounded-2xl overflow-hidden group"
-                    whileHover="hover"
-                    initial="rest"
-                    animate="rest"
+                  <motion.div
+                    className="absolute inset-0"
+                    variants={{
+                      rest: { scale: 1 },
+                      hover: { scale: 1.05 },
+                    }}
+                    transition={{ duration: 0.4 }}
                   >
-                    {/* IMAGE ZOOM */}
-                    <motion.div
-                      className="absolute inset-0"
-                      variants={{
-                        rest: { scale: 1 },
-                        hover: { scale: 1.05 },
-                      }}
-                      transition={{ duration: 0.4 }}
-                    >
-                      <Image
-                        src={person.img}
-                        alt={person.name}
-                        fill
-                        className="object-contain"
-                      />
-                    </motion.div>
-                    {/* GLASS TOOLTIP */}
-                    <motion.div
-                      variants={{
-                        rest: { opacity: 0, y: 10, scale: 0.95 },
-                        hover: { opacity: 1, y: 0, scale: 1 },
-                      }}
-                      transition={{ duration: 0.3, ease: "easeOut" }}
-                      className="absolute bottom-10 left-1/2 -translate-x-1/2 pointer-events-none"
-                    >
-                      <div className="relative px-4 py-2 rounded-xl 
-                        backdrop-blur-md bg-gray-900/50 
-                        border border-white/30 
-                        text-white text-xs font-medium 
-                        shadow-lg whitespace-nowrap">
-                        View LinkedIn profile
-                      </div>
-                    </motion.div>
-                  </motion.a>
+                    <Image
+                      src={executive.img}
+                      alt={executive.name}
+                      fill
+                      className="object-contain"
+                    />
+                  </motion.div>
 
+                  {/* TOOLTIP */}
+                  <motion.div
+                    variants={{
+                      rest: { opacity: 0, y: 10, scale: 0.95 },
+                      hover: { opacity: 1, y: 0, scale: 1 },
+                    }}
+                    transition={{ duration: 0.3 }}
+                    className="absolute bottom-6 left-1/2 -translate-x-1/2 pointer-events-none"
+                  >
+                    <div className="px-3 py-1.5 rounded-lg backdrop-blur-md bg-gray-900/60 text-white text-xs">
+                      View LinkedIn
+                    </div>
+                  </motion.div>
+                </motion.a>
 
-                  {/* TEXT */}
-                  <h3 className="mt-6 text-lg text-gray-900">
-                    {person.name}
+                {/* TEXT */}
+                <div className="text-center md:text-left max-w-xl">
+                  <h3 className="text-2xl text-gray-900">
+                    {executive.name}
                   </h3>
 
-                  <p className="text-gray-600 text-sm mt-1 leading-relaxed">
-                    {person.title}
+                  <p className="text-gray-600 text-sm mt-1">
+                    {executive.title}
                   </p>
-                  <p className="text-gray-700 text-sm leading-relaxed">
-                    {person.bio}
+
+                  <p className="text-gray-700 text-sm mt-4 leading-relaxed">
+                    {executive.bio}
                   </p>
-                </motion.div>
-              ))}
+                </div>
+              </motion.div>
             </motion.div>
           </div>
         </section>
