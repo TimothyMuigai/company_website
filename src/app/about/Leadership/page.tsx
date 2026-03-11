@@ -3,7 +3,6 @@
 import { Navbar } from '@/components/landingPage/navs/navBar';
 import { motion, Variants } from 'framer-motion';
 import Image from 'next/image';
-import Link from 'next/link';
 
 const executives = [
   {
@@ -13,16 +12,16 @@ const executives = [
     link: 'https://www.linkedin.com/in/bryane-fundraising-to-build-deeptrack-6a215a282',
     bio: 'Bryan founded Deeptrack to build verification infrastructure for high trust systems. His work focuses on AI risk mitigation, financial integrity, and long term digital governance in emerging and global markets.',
   },
+  
+];
+
+const advisors = [
   {
     name: 'Isaak Hayes',
     title: 'Head of Product Strategy & User Experience',
     img: '/people/hayes.jpg',
     link: 'https://www.linkedin.com/in/isaakhayes/',
-    bio: 'Isaak leads product architecture and user systems design, ensuring Deeptrack platforms meet enterprise grade usability and regulator aware standards.',
   },
-];
-
-const advisors = [
   {
     name: 'Russel Okoth',
     title: 'Principal Cybersecurity & Privacy Advisor',
