@@ -1,15 +1,15 @@
-import Image from "next/image";
+// import Image from "next/image";
 
 interface ApiFeatureSectionProps {
   title: string;
   description: string;
-  imageSrc: string;
+  // imageSrc?: string;
 }
 
 const ApiFeatureSection = ({
   title,
   description,
-  imageSrc,
+  // imageSrc,
 }: ApiFeatureSectionProps) => {
   return (
     <section className="max-w-7xl mx-auto px-10 py-20">
@@ -18,13 +18,13 @@ const ApiFeatureSection = ({
 
         {/* LEFT IMAGE (single image) */}
         <div className="flex justify-center lg:justify-start">
-          <Image
+          {/* <Image
             src={imageSrc}
             alt="Deepfake detection preview"
             width={520}
             height={520}
             className="rounded-lg object-contain"
-          />
+          /> */}
         </div>
 
         {/* RIGHT CONTENT */}

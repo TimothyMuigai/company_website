@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+// import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ProductApiSteps } from "./productsApiData";
 
@@ -96,14 +96,14 @@ export default function ApiStepsTab() {
                             transition={{ duration: 0.25, ease: "easeOut" }}
                             className="flex justify-center"
                         >
-                            <div className="relative w-full max-w-lg aspect-[4/3]">
-                                <Image
+                            <div className="relative w-full max-w-lg aspect-4/3">
+                                {/* <Image
                                     src={activeStep.image}
                                     alt={activeStep.title}
                                     fill
                                     className="object-contain"
                                     priority
-                                />
+                                /> */}
                             </div>
                         </motion.div>
                     </motion.div>

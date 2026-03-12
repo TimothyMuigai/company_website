@@ -6,7 +6,7 @@ export const ProductApiSteps = [
     title: "Generate your API Key",
     description:
       "Create a RealAPI account on the Reality Defender Platform to generate your API key. You’ll need a key to authenticate all RealAPI requests.",
-    image: "/api_images/test_images/generate-your-api-key.avif",
+    // image: "",
   },
   {
     id: "2",
@@ -15,7 +15,7 @@ export const ProductApiSteps = [
     title: "Add Detection to Your App",
     description:
       "Install the RealAPI SDK for your preferred language (Python, TypeScript, Go, Rust, or Java) or connect directly through HTTPS requests.",
-    image: "/api_images/test_images/add-detection-to-your-app.avif",
+    // image: "",
   },
   {
     id: "3",
@@ -24,7 +24,7 @@ export const ProductApiSteps = [
     title: "Upload Media Securely",
     description:
       "Send image, audio, or video files for detection using a simple method call or API request. The SDK handles authentication, file upload, and polling automatically",
-    image: "/api_images/test_images/upload-media-securely.avif",
+    // image: "",
   },
   {
     id: "4",
@@ -33,6 +33,6 @@ export const ProductApiSteps = [
     title: "Retrieve and Review Results",
     description:
       "Receive structured JSON responses with manipulation probability scores and explainable indicators. You can view results programmatically or directly in the Reality Defender dashboard.",
-    image: "/api_images/test_images/retrieve-and-review-results.avif",
+    // image: "",
   },
 ]

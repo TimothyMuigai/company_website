@@ -4,7 +4,7 @@ import ApiFeatureSection from "@/components/ProductApiComponents/ApiFeatureSecti
 import ApiStepsTab from "@/components/ProductApiComponents/ApiStepsTab";
 import BuiltForDev from "@/components/ProductApiComponents/BuiltForDevs";
 import ApiPricing from "@/components/ProductApiComponents/ApiPricing";
-import Image from "next/image";
+// import Image from "next/image";
 import { Navbar } from "@/components/landingPage/navs/navBar";
 
 const items = [
@@ -31,9 +31,9 @@ export default function ProductApiPage() {
     <>
     <Navbar/>
       <ApiFeatureSection
-        title="Deepfake Detection in Two Lines of Code"
+        title="Deepfake Detection in a few Lines of Code"
         description="RealAPI enables developers to add enterprise-grade deepfake detection into any app or platform. Detect manipulated images, audio, and video at scale."
-        imageSrc="/api_images/test_images/realapi_hero.avif"
+        // imageSrc=""
       />
       <ApiStepsTab />
       <BuiltForDev />
@@ -46,13 +46,13 @@ export default function ProductApiPage() {
               Integrate Deepfake Detection Wherever It&apos;s Needed
             </h2>
 
-            <div className="relative w-full h-[420px]">
-              <Image
-                src="/api_images/test_images/architecture-scale-picture-1.avif"
+            <div className="relative w-full h-105">
+              {/* <Image
+                src=""
                 alt="Deepfake Detection"
                 fill
                 className="object-cover rounded-md"
-              />
+              /> */}
             </div>
           </div>
 
@@ -72,7 +72,7 @@ export default function ProductApiPage() {
           </div>
         </div>
       </section>
-      <section className="bg-[#F9FAFB] min-h-[420px] flex items-center w-full py-20 border-y border-gray-200">
+      <section className="bg-[#F9FAFB] min-h-105 flex items-center w-full py-20 border-y border-gray-200">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             {/* Left column */}
