@@ -33,7 +33,7 @@ export default function ProductApiPage() {
       <ApiFeatureSection
         title="Deepfake Detection in a few Lines of Code"
         description="RealAPI enables developers to add enterprise-grade deepfake detection into any app or platform. Detect manipulated images, audio, and video at scale."
-        // imageSrc=""
+        imageSrc="/api_images/IMG-20260314-WA0016.jpg"
       />
       <ApiStepsTab />
       <BuiltForDev />
