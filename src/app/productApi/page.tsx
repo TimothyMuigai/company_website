@@ -10,7 +10,7 @@ import { Navbar } from "@/components/landingPage/navs/navBar";
 const items = [
   {
     title: "Identity and Access Verification",
-    desc: "Create a RealAPI account on the Reality Defender Platform to generate your API key. You’ll need a key to authenticate all RealAPI requests.",
+    desc: "Create a RealAPI account on the Deeptrack Platform to generate your API key. You’ll need a key to authenticate all RealAPI requests.",
   },
   {
     title: "Fraud and Threat Prevention",
@@ -46,14 +46,14 @@ export default function ProductApiPage() {
               Integrate Deepfake Detection Wherever It&apos;s Needed
             </h2>
 
-            <div className="relative w-full h-105">
-              {/* <Image
+            {/*<div className="relative w-full h-105">
+               <Image
                 src=""
                 alt="Deepfake Detection"
                 fill
                 className="object-cover rounded-md"
-              /> */}
-            </div>
+              /> 
+            {/* </div> */}
           </div>
 
           {/* RIGHT SIDE */}
@@ -87,8 +87,7 @@ export default function ProductApiPage() {
             {/* Right column */}
             <div className="flex flex-col space-y-8 max-w-xl">
               <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
-                Powered by continuous research and model development, Reality
-                Defender’s ensemble system combines multiple detection methods
+                Powered by continuous research and model development, Deeptrack’s ensemble system combines multiple detection methods
                 to stay ahead of evolving AI manipulation techniques.
               </p>
 

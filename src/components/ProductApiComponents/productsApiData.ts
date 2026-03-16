@@ -5,7 +5,7 @@ export const ProductApiSteps = [
     step: "Step 1",
     title: "Generate your API Key",
     description:
-      "Create a RealAPI account on the Reality Defender Platform to generate your API key. You’ll need a key to authenticate all RealAPI requests.",
+      "Create a RealAPI account on the Deeptrack Platform to generate your API key. You’ll need a key to authenticate all RealAPI requests.",
     // image: "",
   },
   {
@@ -32,7 +32,7 @@ export const ProductApiSteps = [
     step: "Step 4",
     title: "Retrieve and Review Results",
     description:
-      "Receive structured JSON responses with manipulation probability scores and explainable indicators. You can view results programmatically or directly in the Reality Defender dashboard.",
+      "Receive structured JSON responses with manipulation probability scores and explainable indicators. You can view results programmatically or directly in the Deeptrack dashboard.",
     // image: "",
   },
 ]

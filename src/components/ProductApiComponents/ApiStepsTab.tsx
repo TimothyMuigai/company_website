@@ -87,7 +87,7 @@ export default function ApiStepsTab() {
                         </motion.div>
 
                         {/* Image */}
-                        <motion.div
+                        {/*<motion.div
                             variants={{
                                 hidden: { opacity: 0, y: 16 },
                                 visible: { opacity: 1, y: 0 },
@@ -97,15 +97,15 @@ export default function ApiStepsTab() {
                             className="flex justify-center"
                         >
                             <div className="relative w-full max-w-lg aspect-4/3">
-                                {/* <Image
+                                 <Image
                                     src={activeStep.image}
                                     alt={activeStep.title}
                                     fill
                                     className="object-contain"
                                     priority
-                                /> */}
-                            </div>
-                        </motion.div>
+                                />
+                            {/* </div>
+                        {/* </motion.div> */}
                     </motion.div>
                 </AnimatePresence>
             </div>
