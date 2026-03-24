@@ -160,8 +160,14 @@ export function Navigation({ isHome }: { isHome: boolean }) {
             </NavigationMenuContent>
           </NavigationMenuItem>
 
-          {/* Blog & Research link */}
+          {/* Partner Portal link */}
+          <NavigationMenuLink asChild>
+            <NavLink href="/portal/dashboard" isHome={isHome}>
+              Partner Portal
+            </NavLink>
+          </NavigationMenuLink>
 
+          {/* Blog & Research link */}
           <NavigationMenuLink asChild>
             <NavLink href="/events" isHome={isHome}>
               Blog & Research

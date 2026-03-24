@@ -5,8 +5,7 @@ import JobDetail from '@/components/careers/JobDetail';
 import { Navbar } from '@/components/landingPage/navs/navBar';
 
 type Props = {
-  // `params` may be a Promise in the Next.js app router; unwrap with `await`.
-  params: { slug: string } | Promise<{ slug: string }>;
+  params: Promise<{ slug: string }>;
 };
 
 export default async function JobPage({ params }: Props) {
