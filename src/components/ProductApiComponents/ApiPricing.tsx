@@ -23,7 +23,7 @@ export default function ApiPricing() {
                     
                 </h2>
                 <p className="mt-3 text-sm text-gray-500">
-                    Individual developers and organizations of all sizes can get value from RealAPI. Choose the plan that best fits your needs or get in touch with us for custom features.
+                    Choose the plan that best fits your needs. Overages on subscription tiers are billed at the next tier's per-scan rate. All plans include full documentation, sandbox access, and webhook support.
                 </p>
             </motion.div>
 
@@ -64,7 +64,13 @@ export default function ApiPricing() {
                                 {plan.description}
                             </p>
 
-                            <div className="mt-6 text-2xl font-semibold text-gray-900">
+                            {plan.volume && (
+                                <p className="mt-2 text-xs text-gray-600">
+                                    <strong>Monthly Volume:</strong> {plan.volume}
+                                </p>
+                            )}
+
+                            <div className="mt-4 text-2xl font-semibold text-gray-900">
                                 {plan.price}
                                 {plan.period && (
                                     <span className="text-sm font-normal text-gray-500">
@@ -72,6 +78,12 @@ export default function ApiPricing() {
                                     </span>
                                 )}
                             </div>
+
+                            {plan.ratePerScan && (
+                                <p className="mt-1 text-sm text-gray-600">
+                                    {plan.ratePerScan}
+                                </p>
+                            )}
                         </div>
 
                         {/* CTA */}

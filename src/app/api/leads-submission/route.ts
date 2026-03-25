@@ -138,7 +138,7 @@ export async function POST(req: NextRequest) {
             Thank you for submitting a lead for <strong>${orgName}</strong> through the Deeptrack Channel Partner Portal.
           </p>
           <p style="margin: 0 0 15px 0; color: #666; line-height: 1.6;">
-            We've received your submission and our team will review it within 5 business days. You'll be notified once the lead is confirmed.
+            We've received your submission and our team will review it within 1-3 hours. You'll be notified once the lead is confirmed.
           </p>
 
           <div style="background-color: #f0f7ff; padding: 15px; border-left: 4px solid #185FA5; border-radius: 4px; margin: 20px 0;">
@@ -146,7 +146,7 @@ export async function POST(req: NextRequest) {
           </div>
 
           <p style="margin: 15px 0 0 0; color: #666; line-height: 1.6;">
-            Questions? Contact us at <a href="mailto:partnerships@deeptrack.io" style="color: #185FA5; text-decoration: none;">partnerships@deeptrack.io</a>
+            Questions? Contact us at <a href="bryan@deeptrack.io" style="color: #185FA5; text-decoration: none;">bryan@deeptrack.io</a>
           </p>
         </div>
 

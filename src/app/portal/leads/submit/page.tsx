@@ -122,7 +122,7 @@ export default function SubmitLeadPage() {
             Your lead has been submitted with reference number: <strong>{submitted}</strong>
           </p>
           <p className="text-[13px] text-emerald-700 mb-6">
-            Deeptrack will confirm registration within 5 business days. You'll receive an email notification once processed.
+            Deeptrack will confirm registration within 1-3 hours. You'll receive an email notification once processed.
           </p>
           <button
             onClick={() => window.location.href = "/portal/leads"}
