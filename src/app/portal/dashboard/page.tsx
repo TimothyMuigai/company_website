@@ -267,7 +267,7 @@ function RevenueChart({ chartData }: { chartData: { month: string; revenue: numb
     maintainAspectRatio: false,
     plugins: {
       legend: { display: false },
-      tooltip: { callbacks: { label: (c) => " $" + Math.round(c.parsed.y).toLocaleString() } },
+      tooltip: { callbacks: { label: (c) => " $" + Math.round(c.parsed.y ?? 0).toLocaleString() } },
     },
     scales: {
       x: { grid: { color: gridColor }, ticks: { color: labelColor, font: { size: 11 } } },
