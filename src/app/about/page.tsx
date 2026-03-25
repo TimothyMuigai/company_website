@@ -163,7 +163,7 @@ export default function AboutDeeptrack() {
         </h2>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 text-gray-700">
-          <Link href="/about/Company-and-Culture">→ Company & Culture</Link>
+          <Link href="/about/company-and-culture">→ Company & Culture</Link>
           <Link href="/about/Leadership">→ Leadership</Link>
           <Link href="/about/Technology">→ Technology</Link>
         </div>
