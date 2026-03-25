@@ -111,7 +111,7 @@ export default function SubmitLeadPage() {
               required
               value={formData.orgName}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#185FA5]/20 focus:border-[#185FA5]"
+              className="w-full px-3 py-2 border border-border rounded-md text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-[#185FA5]/20 focus:border-[#185FA5]"
             />
           </div>
           <div>
@@ -124,7 +124,7 @@ export default function SubmitLeadPage() {
               required
               value={formData.contactName}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#185FA5]/20 focus:border-[#185FA5]"
+              className="w-full px-3 py-2 border border-border rounded-md text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-[#185FA5]/20 focus:border-[#185FA5]"
             />
           </div>
         </div>
@@ -140,7 +140,7 @@ export default function SubmitLeadPage() {
               required
               value={formData.contactEmail}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#185FA5]/20 focus:border-[#185FA5]"
+              className="w-full px-3 py-2 border border-border rounded-md text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-[#185FA5]/20 focus:border-[#185FA5]"
             />
           </div>
           <div>
@@ -152,7 +152,7 @@ export default function SubmitLeadPage() {
               name="contactPhone"
               value={formData.contactPhone}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#185FA5]/20 focus:border-[#185FA5]"
+              className="w-full px-3 py-2 border border-border rounded-md text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-[#185FA5]/20 focus:border-[#185FA5]"
             />
           </div>
         </div>
@@ -167,7 +167,7 @@ export default function SubmitLeadPage() {
               required
               value={formData.industry}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#185FA5]/20 focus:border-[#185FA5]"
+              className="w-full px-3 py-2 border border-border rounded-md text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-[#185FA5]/20 focus:border-[#185FA5]"
             >
               <option value="">Select Industry</option>
               <option value="Fintech">Fintech</option>
@@ -186,7 +186,7 @@ export default function SubmitLeadPage() {
               required
               value={formData.geography}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#185FA5]/20 focus:border-[#185FA5]"
+              className="w-full px-3 py-2 border border-border rounded-md text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-[#185FA5]/20 focus:border-[#185FA5]"
             >
               <option value="">Select Geography</option>
               <option value="Kenya">Kenya</option>
@@ -207,7 +207,7 @@ export default function SubmitLeadPage() {
               required
               value={formData.dealSize}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#185FA5]/20 focus:border-[#185FA5]"
+              className="w-full px-3 py-2 border border-border rounded-md text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-[#185FA5]/20 focus:border-[#185FA5]"
             >
               <option value="">Select Size</option>
               <option value="$10k-$50k">$10k-$50k</option>
@@ -225,7 +225,7 @@ export default function SubmitLeadPage() {
               name="expectedClose"
               value={formData.expectedClose}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#185FA5]/20 focus:border-[#185FA5]"
+              className="w-full px-3 py-2 border border-border rounded-md text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-[#185FA5]/20 focus:border-[#185FA5]"
             />
           </div>
         </div>
@@ -239,7 +239,7 @@ export default function SubmitLeadPage() {
             value={formData.notes}
             onChange={handleChange}
             rows={4}
-            className="w-full px-3 py-2 border border-border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-[#185FA5]/20 focus:border-[#185FA5]"
+            className="w-full px-3 py-2 border border-border rounded-md text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-[#185FA5]/20 focus:border-[#185FA5]"
             placeholder="Any additional details about the opportunity..."
           />
         </div>

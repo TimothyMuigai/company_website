@@ -4,13 +4,15 @@ import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { useAuthActions } from "@convex-dev/auth/react";
 import Link from "next/link";
-import Alert from "@/components/Alert";
+import ErrorModal from "@/components/ErrorModal";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [successModalOpen, setSuccessModalOpen] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [code, setCode] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -24,6 +26,7 @@ export default function ForgotPasswordPage() {
 
     if (!email) {
       setError("Please enter your email address.");
+      setModalOpen(true);
       return;
     }
 
@@ -33,10 +36,12 @@ export default function ForgotPasswordPage() {
         flow: "reset",
         email,
       });
-      setMessage("If the account exists, check your email for reset instructions.");
+      setMessage("Check your email for reset instructions within the next 10 minutes.");
+      setSuccessModalOpen(true);
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Unable to start password reset flow. Please try again.";
-      setError(message);
+      const errorMsg = err instanceof Error ? err.message : "Unable to start password reset flow. Please try again.";
+      setError(errorMsg);
+      setModalOpen(true);
     } finally {
       setLoading(false);
     }
@@ -49,6 +54,13 @@ export default function ForgotPasswordPage() {
 
     if (!code || !newPassword) {
       setError("Please provide both reset code and new password.");
+      setModalOpen(true);
+      return;
+    }
+
+    if (newPassword.length < 8) {
+      setError("Password must be at least 8 characters long.");
+      setModalOpen(true);
       return;
     }
 
@@ -61,10 +73,12 @@ export default function ForgotPasswordPage() {
           newPassword,
         },
       });
-      setMessage("Password reset successful. You can now log in with your new password.");
+      setMessage("Password reset successful! You can now log in with your new password.");
+      setSuccessModalOpen(true);
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Unable to verify reset code. Check code and try again.";
-      setError(message);
+      const errorMsg = err instanceof Error ? err.message : "Invalid reset code or password. Please try again.";
+      setError(errorMsg);
+      setModalOpen(true);
     } finally {
       setLoading(false);
     }
@@ -78,17 +92,21 @@ export default function ForgotPasswordPage() {
           Enter your email to receive reset instructions.
         </p>
 
-        {error && (
-          <div className="mt-4">
-            <Alert type="error">{error}</Alert>
-          </div>
-        )}
+        <ErrorModal
+          isOpen={modalOpen}
+          onClose={() => setModalOpen(false)}
+          title="Password Reset Error"
+          message={error || "Something went wrong. Please try again."}
+          type="error"
+        />
 
-        {message && (
-          <div className="mt-4">
-            <Alert type="success">{message}</Alert>
-          </div>
-        )}
+        <ErrorModal
+          isOpen={successModalOpen}
+          onClose={() => setSuccessModalOpen(false)}
+          title="Success"
+          message={message || ""}
+          type="info"
+        />
 
         <form className="mt-4 space-y-3" onSubmit={handleRequestReset}>
           <input

@@ -4,12 +4,13 @@ import { useEffect, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
-import Alert from "@/components/Alert";
+import ErrorModal from "@/components/ErrorModal";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [localError, setLocalError] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const { signIn, isLoading, isAuthenticated, error } = useAuth();
@@ -27,6 +28,7 @@ export default function LoginPage() {
 
     if (!email || !password) {
       setLocalError("Please enter both email and password.");
+      setModalOpen(true);
       return;
     }
 
@@ -37,14 +39,15 @@ export default function LoginPage() {
       let message = "Invalid email or password.";
       if (err instanceof Error && err.message) {
         if (err.message.includes("no user") || err.message.includes("not found")) {
-          message = "Account not found. Please check your email.";
+          message = "Account not found. Please check your email or sign up.";
         } else if (err.message.includes("Incorrect password") || err.message.includes("credentials")) {
-          message = "Incorrect password. Please try again or reset your password.";
+          message = "Incorrect password. Please try again or use the forgot password option.";
         } else {
           message = err.message;
         }
       }
       setLocalError(message);
+      setModalOpen(true);
     }
   };
 
@@ -57,11 +60,13 @@ export default function LoginPage() {
           </h2>
         </div>
 
-        {(error || localError) && (
-          <div className="mt-2">
-            <Alert type="error">{error || localError}</Alert>
-          </div>
-        )}
+        <ErrorModal
+          isOpen={modalOpen}
+          onClose={() => setModalOpen(false)}
+          title="Sign In Error"
+          message={error || localError}
+          type="error"
+        />
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="text-right text-sm">
