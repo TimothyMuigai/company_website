@@ -46,9 +46,9 @@ export default function PortalLayout({
   // Show portal layout with sidebar for logged-in pages
   if (isAuthenticated) {
     return (
-      <div className="min-h-screen bg-background grid grid-cols-[280px_1fr]">
+      <div className="min-h-screen bg-background grid grid-cols-1 lg:grid-cols-[280px_1fr]">
         <PortalSidebar />
-        <main className="min-h-screen p-6 bg-background">{children}</main>
+        <main className="min-h-screen p-4 lg:p-6 bg-background">{children}</main>
       </div>
     );
   }

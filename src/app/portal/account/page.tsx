@@ -1,20 +1,57 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useQuery, useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 export default function AccountPage() {
+  const partnerData = useQuery(api.users.getCurrentPartner);
+  const updatePaymentDetails = useMutation(api.users.updatePaymentDetails);
+
   const [paymentDetails, setPaymentDetails] = useState({
     method: "",
     account: "",
     currency: "USD",
   });
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
 
-  const handlePaymentSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (!partnerData) return;
+
+    if (partnerData.paymentDetails) {
+      setPaymentDetails({
+        method: partnerData.paymentDetails.method,
+        account: partnerData.paymentDetails.account,
+        currency: partnerData.paymentDetails.currency,
+      });
+    }
+  }, [partnerData]);
+
+  const handlePaymentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Save to Convex
-    console.log("Saving payment details:", paymentDetails);
-    alert("Payment details saved successfully!");
+    setStatusMessage(null);
+
+    if (!paymentDetails.method || !paymentDetails.account || !paymentDetails.currency) {
+      setStatusMessage("Please provide payment method, account details, and currency.");
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      await updatePaymentDetails({
+        method: paymentDetails.method,
+        account: paymentDetails.account,
+        currency: paymentDetails.currency,
+      });
+      setStatusMessage("Payment details updated successfully.");
+    } catch (error) {
+      console.error("Failed to save payment details", error);
+      setStatusMessage("Unable to update payment details. Please try again.");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -22,16 +59,6 @@ export default function AccountPage() {
       ...prev,
       [e.target.name]: e.target.value
     }));
-  };
-
-  // Mock partner data
-  const partnerData = {
-    partnerId: "PTN-001",
-    tier: "Registered",
-    commissionRate: 10,
-    programStart: "2024-01-01",
-    renewalDate: "2025-01-01",
-    deeptrackContact: "Bryan Koyundi (bryan@deeptrack.io)",
   };
 
   return (
@@ -56,44 +83,65 @@ export default function AccountPage() {
         className="rounded-xl border border-border bg-background p-6"
       >
         <h2 className="text-[16px] font-medium text-foreground mb-4">Partner Details</h2>
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-[12px] font-medium text-muted-foreground uppercase tracking-wide mb-1">
-              Partner ID
-            </label>
-            <div className="text-[14px] text-foreground">{partnerData.partnerId}</div>
+
+        {!partnerData ? (
+          <p className="text-sm text-muted-foreground">Loading partner profile...</p>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-[12px] font-medium text-muted-foreground uppercase tracking-wide mb-1">
+                Partner ID
+              </label>
+              <div className="text-[14px] text-foreground">{partnerData._id?.toString() || "N/A"}</div>
+            </div>
+            <div>
+              <label className="block text-[12px] font-medium text-muted-foreground uppercase tracking-wide mb-1">
+                Partner Name
+              </label>
+              <div className="text-[14px] text-foreground">{partnerData.name || "Untitled"}</div>
+            </div>
+            <div>
+              <label className="block text-[12px] font-medium text-muted-foreground uppercase tracking-wide mb-1">
+                Email
+              </label>
+              <div className="text-[14px] text-foreground">{partnerData.email || "N/A"}</div>
+            </div>
+            <div>
+              <label className="block text-[12px] font-medium text-muted-foreground uppercase tracking-wide mb-1">
+                Tier
+              </label>
+              <div className="text-[14px] text-foreground">{partnerData.tier || "Registered"}</div>
+            </div>
+            <div>
+              <label className="block text-[12px] font-medium text-muted-foreground uppercase tracking-wide mb-1">
+                Commission Rate
+              </label>
+              <div className="text-[14px] text-foreground">{partnerData.commissionRate ? `${partnerData.commissionRate * 100}%` : "N/A"}</div>
+            </div>
+            <div>
+              <label className="block text-[12px] font-medium text-muted-foreground uppercase tracking-wide mb-1">
+                Program Start Date
+              </label>
+              <div className="text-[14px] text-foreground">
+                {partnerData.programStart ? new Date(partnerData.programStart).toLocaleDateString() : "N/A"}
+              </div>
+            </div>
+            <div>
+              <label className="block text-[12px] font-medium text-muted-foreground uppercase tracking-wide mb-1">
+                Renewal Date
+              </label>
+              <div className="text-[14px] text-foreground">
+                {partnerData.renewalDate ? new Date(partnerData.renewalDate).toLocaleDateString() : "N/A"}
+              </div>
+            </div>
+            <div>
+              <label className="block text-[12px] font-medium text-muted-foreground uppercase tracking-wide mb-1">
+                Deeptrack Contact
+              </label>
+              <div className="text-[14px] text-foreground">Bryan Koyundi (bryan@deeptrack.io)</div>
+            </div>
           </div>
-          <div>
-            <label className="block text-[12px] font-medium text-muted-foreground uppercase tracking-wide mb-1">
-              Tier
-            </label>
-            <div className="text-[14px] text-foreground">{partnerData.tier}</div>
-          </div>
-          <div>
-            <label className="block text-[12px] font-medium text-muted-foreground uppercase tracking-wide mb-1">
-              Commission Rate
-            </label>
-            <div className="text-[14px] text-foreground">{partnerData.commissionRate}%</div>
-          </div>
-          <div>
-            <label className="block text-[12px] font-medium text-muted-foreground uppercase tracking-wide mb-1">
-              Program Start Date
-            </label>
-            <div className="text-[14px] text-foreground">{partnerData.programStart}</div>
-          </div>
-          <div>
-            <label className="block text-[12px] font-medium text-muted-foreground uppercase tracking-wide mb-1">
-              Renewal Date
-            </label>
-            <div className="text-[14px] text-foreground">{partnerData.renewalDate}</div>
-          </div>
-          <div>
-            <label className="block text-[12px] font-medium text-muted-foreground uppercase tracking-wide mb-1">
-              Deeptrack Contact
-            </label>
-            <div className="text-[14px] text-foreground">{partnerData.deeptrackContact}</div>
-          </div>
-        </div>
+        )}
       </motion.div>
 
       {/* Payment Details Form */}
@@ -105,6 +153,11 @@ export default function AccountPage() {
       >
         <h2 className="text-[16px] font-medium text-foreground mb-4">Payment Details</h2>
         <form onSubmit={handlePaymentSubmit} className="space-y-4">
+          {statusMessage && (
+            <div className="rounded-lg bg-blue-50 border border-blue-200 px-3 py-2 text-sm text-blue-800">
+              {statusMessage}
+            </div>
+          )}
           <div>
             <label className="block text-[13px] font-medium text-foreground mb-2">
               Payment Method *
@@ -158,9 +211,10 @@ export default function AccountPage() {
 
           <button
             type="submit"
-            className="px-4 py-2 bg-[#185FA5] text-white rounded-md text-sm font-medium hover:bg-[#185FA5]/90 focus:outline-none focus:ring-2 focus:ring-[#185FA5]/20"
+            disabled={isSaving}
+            className="px-4 py-2 bg-[#185FA5] text-white rounded-md text-sm font-medium hover:bg-[#185FA5]/90 focus:outline-none focus:ring-2 focus:ring-[#185FA5]/20 disabled:bg-muted disabled:cursor-not-allowed"
           >
-            Save Payment Details
+            {isSaving ? "Saving..." : "Save Payment Details"}
           </button>
         </form>
       </motion.div>

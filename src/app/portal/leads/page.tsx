@@ -127,7 +127,7 @@ export default function MyLeadsPage() {
 
       {/* Table */}
       {leads ? (
-        <div className="rounded-xl border border-border bg-background overflow-hidden">
+        <div className="rounded-xl border border-border bg-background overflow-x-auto">
           {displayLeads.length > 0 ? (
             <table className="w-full">
               <thead className="bg-muted/40">

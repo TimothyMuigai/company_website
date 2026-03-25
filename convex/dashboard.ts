@@ -195,12 +195,24 @@ export const getFunnel = query({
 export const getMarkets = query({
   args: {},
   handler: async (ctx) => {
-    // Mock data
-    return [
-      { label: "Kenya", count: 6, pct: 75 },
-      { label: "USA", count: 2, pct: 25 },
-      { label: "EU", count: 1, pct: 12 },
-    ];
+    const partner = await getPartner(ctx);
+    const leads = await ctx.db
+      .query("leads")
+      .withIndex("by_partnerId", (q: any) => q.eq("partnerId", partner._id))
+      .collect();
+
+    const countByMarket: Record<string, number> = {};
+    leads.forEach((lead: any) => {
+      const geo = lead.geography || "Unknown";
+      countByMarket[geo] = (countByMarket[geo] || 0) + 1;
+    });
+
+    const total = leads.length || 1;
+    return Object.entries(countByMarket).map(([label, count]) => ({
+      label,
+      count,
+      pct: Math.round((count / total) * 100),
+    }));
   },
 });
 
@@ -208,11 +220,25 @@ export const getMarkets = query({
 export const getIndustries = query({
   args: {},
   handler: async (ctx) => {
-    // Mock data
+    const partner = await getPartner(ctx);
+    const leads = await ctx.db
+      .query("leads")
+      .withIndex("by_partnerId", (q: any) => q.eq("partnerId", partner._id))
+      .collect();
+
+    const countByIndustry: Record<string, number> = {};
+    leads.forEach((lead: any) => {
+      const industry = lead.industry || "Unknown";
+      countByIndustry[industry] = (countByIndustry[industry] || 0) + 1;
+    });
+
+    const labels = Object.keys(countByIndustry);
+    const data = Object.values(countByIndustry);
+
     return {
-      labels: ["Fintech", "Insurance", "HR Tech", "Media"],
-      data: [4, 2, 1, 1],
-      colors: ["#185FA5", "#378ADD", "#3B6D11", "#BA7517"],
+      labels,
+      data,
+      colors: ["#185FA5", "#378ADD", "#3B6D11", "#BA7517", "#8B5CF6", "#EC4899"].slice(0, labels.length),
     };
   },
 });

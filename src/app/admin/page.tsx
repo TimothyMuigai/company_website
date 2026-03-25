@@ -8,7 +8,8 @@ import { Loader, AlertCircle, CheckCircle2 } from "lucide-react";
 import { Id } from "@/convex/_generated/dataModel";
 
 export default function AdminPage() {
-  const leads = useQuery(api.leads.getMyLeads);
+  const leads = useQuery(api.leads.getAllLeads);
+  const partners = useQuery(api.users.getAllPartners);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedLead, setSelectedLead] = useState<string | null>(null);
   const [newStatus, setNewStatus] = useState("");
@@ -85,7 +86,13 @@ export default function AdminPage() {
                     <h3 className="text-[15px] font-semibold text-foreground">
                       {lead.orgName}
                     </h3>
-                    <div className="mt-2 grid grid-cols-2 gap-2 text-[12px] text-muted-foreground">
+                    <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-2 text-[12px] text-muted-foreground">
+                      <div>
+                        <span className="font-medium">Partner:</span> {lead.partnerName || "N/A"}
+                      </div>
+                      <div>
+                        <span className="font-medium">Partner Email:</span> {lead.partnerEmail || "N/A"}
+                      </div>
                       <div>
                         <span className="font-medium">Contact:</span> {lead.contactName}
                       </div>
@@ -99,6 +106,15 @@ export default function AdminPage() {
                         <span className="font-medium">Deal Size:</span> {lead.dealSize}
                       </div>
                     </div>
+                    {partners && partners.length > 0 && (
+                      <div className="mt-2 text-[12px] text-muted-foreground">
+                        <strong>Partner payment info:</strong>{" "}
+                        {(() => {
+                          const partnerEntry = partners.find((p: any) => p._id?.toString() === lead.partnerId?.toString());
+                          return partnerEntry?.paymentDetails ? `${partnerEntry.paymentDetails.method} • ${partnerEntry.paymentDetails.account} (${partnerEntry.paymentDetails.currency})` : "Not set";
+                        })()}
+                      </div>
+                    )}
                   </div>
                   <div className="flex-shrink-0">
                     <span

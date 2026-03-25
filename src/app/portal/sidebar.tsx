@@ -18,7 +18,7 @@ export default function PortalSidebar() {
   };
 
   return (
-    <aside className="w-64 bg-white shadow-lg flex flex-col">
+    <aside className="w-full lg:w-64 bg-white shadow-lg flex flex-col">
       <div className="p-6 border-b border-gray-200">
         <h2 className="text-xl font-bold text-gray-800">Deeptrack Portal</h2>
         {partner && (
@@ -45,6 +45,9 @@ export default function PortalSidebar() {
           </li>
           <li className="px-6 py-2 hover:bg-gray-100">
             <a href="/portal/account" className="text-gray-700">My Account</a>
+          </li>
+          <li className="px-6 py-2 hover:bg-gray-100">
+            <a href="/admin" className="text-gray-700">Admin Portal</a>
           </li>
         </ul>
       </nav>

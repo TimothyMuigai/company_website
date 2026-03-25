@@ -1,10 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { useAuth } from "@/lib/auth-context";
 
 export default function SubmitLeadPage() {
+  const { partner } = useAuth();
   const [formData, setFormData] = useState({
+    partnerName: "",
+    partnerEmail: "",
     orgName: "",
     contactName: "",
     contactEmail: "",
@@ -15,35 +21,85 @@ export default function SubmitLeadPage() {
     expectedClose: "",
     notes: "",
   });
-  const [submitted, setSubmitted] = useState(false);
+  const [submitted, setSubmitted] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const createLead = useMutation(api.leads.createLead);
+
+  useEffect(() => {
+    if (partner) {
+      setFormData((prev) => ({
+        ...prev,
+        partnerName: partner.name || "",
+        partnerEmail: partner.email || "",
+      }));
+    }
+  }, [partner]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
+    const requiredFields = [
+      "partnerName",
+      "partnerEmail",
+      "orgName",
+      "contactName",
+      "contactEmail",
+      "industry",
+      "geography",
+      "dealSize",
+    ];
+
+    for (const field of requiredFields) {
+      if (!formData[field as keyof typeof formData]) {
+        setError(`Missing required field: ${field}`);
+        setLoading(false);
+        return;
+      }
+    }
+
     try {
+      const leadResponse = await createLead({
+        partnerName: formData.partnerName,
+        partnerEmail: formData.partnerEmail,
+        orgName: formData.orgName,
+        contactName: formData.contactName,
+        contactEmail: formData.contactEmail,
+        contactPhone: formData.contactPhone || "",
+        industry: formData.industry,
+        geography: formData.geography,
+        dealSize: formData.dealSize,
+        expectedClose: formData.expectedClose || "",
+        notes: formData.notes || "",
+      });
+
+      // Send notification emails and Mongo fallback
       const res = await fetch("/api/leads-submission", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          leadId: leadResponse?.leadId,
+        }),
       });
 
       if (!res.ok) {
         const data = await res.json();
-        setError(data.message || "Failed to submit lead.");
-        setLoading(false);
-        return;
+        console.warn("Email route returned error:", data);
       }
 
-      setSubmitted(true);
+      setSubmitted(leadResponse?.leadId?.toString() ?? `LD-${Date.now()}`);
     } catch (err) {
       console.error("Lead submission error:", err);
       setError("An error occurred. Please try again.");
       setLoading(false);
+      return;
     }
+
+    setLoading(false);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -55,7 +111,7 @@ export default function SubmitLeadPage() {
 
   if (submitted) {
     return (
-      <div className="px-6 py-6 max-w-[600px] mx-auto">
+      <div className="px-6 py-6 max-w-[600px] mx-auto w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -63,7 +119,7 @@ export default function SubmitLeadPage() {
         >
           <h1 className="text-[18px] font-medium text-emerald-900 mb-4">Lead Submitted Successfully!</h1>
           <p className="text-[13px] text-emerald-800 mb-6">
-            Your lead has been submitted with reference number: <strong>LD-2024-001</strong>
+            Your lead has been submitted with reference number: <strong>{submitted}</strong>
           </p>
           <p className="text-[13px] text-emerald-700 mb-6">
             Deeptrack will confirm registration within 5 business days. You'll receive an email notification once processed.
@@ -100,6 +156,35 @@ export default function SubmitLeadPage() {
           </div>
         )}
         
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-[13px] font-medium text-foreground mb-2">
+              Partner Name *
+            </label>
+            <input
+              type="text"
+              name="partnerName"
+              required
+              value={formData.partnerName}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-border rounded-md text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-[#185FA5]/20 focus:border-[#185FA5]"
+            />
+          </div>
+          <div>
+            <label className="block text-[13px] font-medium text-foreground mb-2">
+              Partner Email *
+            </label>
+            <input
+              type="email"
+              name="partnerEmail"
+              required
+              value={formData.partnerEmail}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border border-border rounded-md text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-[#185FA5]/20 focus:border-[#185FA5]"
+            />
+          </div>
+        </div>
+
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-[13px] font-medium text-foreground mb-2">

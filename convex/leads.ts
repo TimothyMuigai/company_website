@@ -34,6 +34,8 @@ export const createLead = mutation({
     dealSize: v.string(),
     expectedClose: v.string(),
     notes: v.string(),
+    partnerName: v.string(),
+    partnerEmail: v.string(),
   },
   handler: async (ctx, args) => {
     const { partnerId } = await getPartnerId(ctx);
@@ -41,6 +43,8 @@ export const createLead = mutation({
 
     const leadId = await ctx.db.insert("leads", {
       partnerId,
+      partnerName: args.partnerName,
+      partnerEmail: args.partnerEmail,
       orgName: args.orgName,
       contactName: args.contactName,
       contactEmail: args.contactEmail,
@@ -75,6 +79,31 @@ export const getMyLeads = query({
       .query("leads")
       .withIndex("by_partnerId", (q: any) => q.eq("partnerId", partnerId))
       .collect();
+  },
+});
+
+// Admin-only; returns all leads across all partners
+export const getAllLeads = query({
+  args: {},
+  handler: async (ctx) => {
+    const userId = await getAuthUserId(ctx);
+    assertAuthenticated(userId);
+
+    const partner = await ctx.db
+      .query("partners")
+      .withIndex("by_userId", (q: any) => q.eq("userId", userId))
+      .first();
+    if (!partner) {
+      throw new Error("Partner not found");
+    }
+
+    const isAdmin = (partner.email || "").toLowerCase().endsWith("@deeptrack.io") ||
+      (partner.email || "").toLowerCase() === "bryan@deeptrack.io";
+    if (!isAdmin) {
+      throw new Error("Admin access required");
+    }
+
+    return await ctx.db.query("leads").collect();
   },
 });
 

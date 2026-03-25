@@ -291,6 +291,8 @@ export default function DashboardPage() {
   const partnerData = useQuery(api.dashboard.getPartnerData);
   const revenueChartData = useQuery(api.dashboard.getRevenueData);
   const funnel = useQuery(api.dashboard.getFunnel);
+  const marketsData = useQuery(api.dashboard.getMarkets);
+  const industriesData = useQuery(api.dashboard.getIndustries);
 
   const subtitle = useMemo(() => {
     const now = new Date();
@@ -340,7 +342,7 @@ export default function DashboardPage() {
   }, [partnerData]);
 
   // ✅ Early returns AFTER all hooks
-  const isLoading = partnerData === undefined || revenueChartData === undefined || funnel === undefined;
+  const isLoading = partnerData === undefined || revenueChartData === undefined || funnel === undefined || marketsData === undefined || industriesData === undefined;
 
   if (isLoading) {
     return (
@@ -382,14 +384,14 @@ export default function DashboardPage() {
       />
 
       {/* Metric cards */}
-      <div className="grid grid-cols-4 gap-3 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 mb-6">
         {metrics.map((card, i) => (
           <MetricCardComponent key={card.label} card={card} index={i} />
         ))}
       </div>
 
       {/* Revenue + Funnel */}
-      <div className="grid grid-cols-2 gap-4 mb-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
         <Card title="Monthly revenue generated" delay={0.28}>
           <div className="relative h-[180px]">
             <RevenueChart chartData={chartData} />
@@ -409,7 +411,7 @@ export default function DashboardPage() {
         className="rounded-xl border border-border bg-background p-5"
       >
         <div className="text-[13px] font-medium text-foreground mb-4">Partner insights</div>
-        <div className="grid grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
           {[
             { label: "Current tier", value: partnerData.tier },
             { label: "Commission rate", value: `${partnerData.commissionRate}%` },
@@ -431,6 +433,39 @@ export default function DashboardPage() {
           </a>
         </div>
       </motion.div>
+
+      {/* Market & Industry Summary (real data) */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+        <Card title="Lead distribution by market" delay={0.45}>
+          {marketsData && marketsData.length > 0 ? (
+            <ul className="space-y-2">
+              {marketsData.map((m: any) => (
+                <li key={m.label} className="flex justify-between text-[13px]">
+                  <span>{m.label}</span>
+                  <span>{m.count} leads ({m.pct}%)</span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-[12px] text-muted-foreground">No market data yet</p>
+          )}
+        </Card>
+
+        <Card title="Lead distribution by industry" delay={0.48}>
+          {industriesData && industriesData.labels?.length ? (
+            <ul className="space-y-2">
+              {industriesData.labels.map((label: string, idx: number) => (
+                <li key={label} className="flex justify-between text-[13px]">
+                  <span>{label}</span>
+                  <span>{industriesData.data[idx] || 0} leads</span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-[12px] text-muted-foreground">No industry data yet</p>
+          )}
+        </Card>
+      </div>
     </div>
   );
 }

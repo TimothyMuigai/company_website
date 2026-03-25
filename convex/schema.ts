@@ -31,6 +31,8 @@ export default defineSchema({
 
   leads: defineTable({
     partnerId: v.id("partners"),
+    partnerName: v.optional(v.string()),
+    partnerEmail: v.optional(v.string()),
     orgName: v.string(),
     contactName: v.string(),
     contactEmail: v.string(),

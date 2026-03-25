@@ -122,6 +122,34 @@ export const getPartner = query({
   },
 });
 
+export const getAllPartners = query({
+  args: {},
+  handler: async (ctx) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) {
+      throw new Error("Not authenticated");
+    }
+
+    const partner = await ctx.db
+      .query("partners")
+      .withIndex("by_userId", (q) => q.eq("userId", userId))
+      .first();
+
+    if (!partner) {
+      throw new Error("Partner not found");
+    }
+
+    const isAdmin = (partner.email || "").toLowerCase().endsWith("@deeptrack.io") ||
+      (partner.email || "").toLowerCase() === "bryan@deeptrack.io";
+
+    if (!isAdmin) {
+      throw new Error("Admin access required");
+    }
+
+    return await ctx.db.query("partners").collect();
+  },
+});
+
 /**
  * Update partner payment details
  */
