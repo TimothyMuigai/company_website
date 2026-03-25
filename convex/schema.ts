@@ -50,7 +50,10 @@ export default defineSchema({
     deeptrackNotes: v.string(),
     submittedAt: v.number(),
     updatedAt: v.number(),
-  }),
+  })
+    .index("by_partnerId", ["partnerId"])
+    .index("by_status", ["status"])
+    .index("by_geography", ["geography"]),
 
   deals: defineTable({
     leadId: v.id("leads"),
@@ -58,7 +61,9 @@ export default defineSchema({
     netRevenue: v.number(),
     closeDate: v.number(),
     market: v.string(),
-  }),
+  })
+    .index("by_partnerId", ["partnerId"])
+    .index("by_closeDate", ["closeDate"]),
 
   commissions: defineTable({
     partnerId: v.id("partners"),
@@ -69,7 +74,10 @@ export default defineSchema({
     status: v.union(v.literal("pending"), v.literal("paid")),
     paidAt: v.optional(v.number()),
     paymentMethod: v.optional(v.string()),
-  }),
+  })
+    .index("by_partnerId", ["partnerId"])
+    .index("by_status", ["status"])
+    .index("by_period", ["period"]),
 
   materials: defineTable({
     name: v.string(),
@@ -84,5 +92,7 @@ export default defineSchema({
     message: v.string(),
     createdAt: v.number(),
     read: v.boolean(),
-  }),
+  })
+    .index("by_partnerId", ["partnerId"])
+    .index("by_createdAt", ["createdAt"]),
 });
