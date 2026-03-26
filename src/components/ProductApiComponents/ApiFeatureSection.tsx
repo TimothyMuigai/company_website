@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Link from "next/link";
 
 interface ApiFeatureSectionProps {
   title: string;
@@ -15,7 +16,6 @@ const ApiFeatureSection = ({
   return (
     <section className="max-w-7xl mx-auto px-10 py-20">
       <div className="grid lg:grid-cols-2 gap-16 items-center">
-
         {/* LEFT IMAGE */}
         <div className="flex justify-center lg:justify-start">
           <Image
@@ -29,26 +29,22 @@ const ApiFeatureSection = ({
 
         {/* RIGHT CONTENT */}
         <div className="flex flex-col gap-8">
-
-          {/* TITLE */}
           <h1 className="text-[48px] leading-[1.1] font-light text-gray-900">
             {title}
           </h1>
+          <p className="text-lg text-gray-700 max-w-xl">{description}</p>
 
-          {/* DESCRIPTION */}
-          <p className="text-lg text-gray-700 max-w-xl">
-            {description}
-          </p>
-
-          {/* BUTTONS */}
           <div className="flex gap-6 mt-2 flex-wrap">
-
-            <button className="bg-gray-900 text-white px-8 py-4 rounded-md text-lg hover:bg-gray-700 transition flex items-center gap-2">
+            {/* Links to the dashboard console */}
+            <Link
+              href="/console"
+              className="bg-gray-900 text-white px-8 py-4 rounded-md text-lg hover:bg-gray-700 transition flex items-center gap-2"
+            >
               Start using RealAPI
               <span>↗</span>
-            </button>
+            </Link>
 
-            {/* VIEW API DOCS BUTTON WITH LINK */}
+            {/* Links to Mintlify docs */}
             <Link
               href="https://www.deeptrack.io/docs/introduction"
               target="_blank"
@@ -58,9 +54,7 @@ const ApiFeatureSection = ({
               View API docs
               <span>↗</span>
             </Link>
-
           </div>
-
         </div>
       </div>
     </section>

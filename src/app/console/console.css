@@ -1,0 +1,21 @@
+/* Console design tokens */
+:root {
+    --bg:          #0b0c0f;
+    --surface:     #111318;
+    --surface-2:   #181b22;
+    --border:      #1f2330;
+    --border-mid:  #2a2f3d;
+    --text-1:      #f0f0ee;
+    --text-2:      #8b90a0;
+    --text-3:      #4a5068;
+    --accent:      #00d68f;
+    --accent-dim:  #00d68f18;
+    --accent-mid:  #00d68f35;
+    --accent-text: #00b87a;
+    --red:         #f04040;
+    --red-dim:     #f0404018;
+    --amber:       #f0a000;
+    --amber-dim:   #f0a00018;
+    --mono:        'DM Mono', monospace;
+    --sans:        'DM Sans', sans-serif;
+  }
