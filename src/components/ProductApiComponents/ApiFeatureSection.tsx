@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 interface ApiFeatureSectionProps {
   title: string;
@@ -13,10 +14,9 @@ const ApiFeatureSection = ({
 }: ApiFeatureSectionProps) => {
   return (
     <section className="max-w-7xl mx-auto px-10 py-20">
-
       <div className="grid lg:grid-cols-2 gap-16 items-center">
 
-        {/* LEFT IMAGE (single image) */}
+        {/* LEFT IMAGE */}
         <div className="flex justify-center lg:justify-start">
           <Image
             src={imageSrc}
@@ -48,16 +48,21 @@ const ApiFeatureSection = ({
               <span>↗</span>
             </button>
 
-            <button className="bg-gray-900 text-white px-8 py-4 rounded-md text-lg hover:bg-gray-700 transition flex items-center gap-2">
+            {/* VIEW API DOCS BUTTON WITH LINK */}
+            <Link
+              href="https://www.deeptrack.io/docs/introduction"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-gray-900 text-white px-8 py-4 rounded-md text-lg hover:bg-gray-700 transition flex items-center gap-2"
+            >
               View API docs
               <span>↗</span>
-            </button>
+            </Link>
 
           </div>
 
         </div>
       </div>
-
     </section>
   );
 };
