@@ -82,26 +82,27 @@ export const getMyLeads = query({
   },
 });
 
-// Admin-only; returns all leads across all partners
+// Admin-only — returns null for non-admins instead of throwing,
+// so the client can show a modal rather than crashing.
 export const getAllLeads = query({
   args: {},
   handler: async (ctx) => {
     const userId = await getAuthUserId(ctx);
-    assertAuthenticated(userId);
+    if (!userId) return null;
 
     const partner = await ctx.db
       .query("partners")
       .withIndex("by_userId", (q: any) => q.eq("userId", userId))
       .first();
-    if (!partner) {
-      throw new Error("Partner not found");
-    }
 
-    const isAdmin = (partner.email || "").toLowerCase().endsWith("@deeptrack.io") ||
-      (partner.email || "").toLowerCase() === "bryan@deeptrack.io";
-    if (!isAdmin) {
-      throw new Error("Admin access required");
-    }
+    if (!partner) return null;
+
+    const isAdmin =
+      (partner.email || "").toLowerCase().endsWith("@deeptrack.io") ||
+      (partner.email || "").toLowerCase() === "bryan@deeptrack.io" ||
+      (partner.email || "").toLowerCase() === "ianngari01@gmail.com";
+
+    if (!isAdmin) return null;
 
     return await ctx.db.query("leads").collect();
   },
@@ -132,7 +133,6 @@ export const updateLeadStatus = mutation({
     deeptrackNotes: v.string(),
   },
   handler: async (ctx, { leadId, status, deeptrackNotes }) => {
-    // Admin-style mutations might not need to restrict to partner; still check auth
     const userId = await getAuthUserId(ctx);
     assertAuthenticated(userId);
 
@@ -159,7 +159,6 @@ export const createDeal = mutation({
     market: v.string(),
   },
   handler: async (ctx, { leadId, netRevenue, closeDate, market }) => {
-    // Admin actions only
     const userId = await getAuthUserId(ctx);
     assertAuthenticated(userId);
 

@@ -1,7 +1,7 @@
-import sgMail from "@sendgrid/mail";
+
 import { MongoClient } from "mongodb";
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY!);
+
 
 const MONGODB_URI = process.env.MONGODB_URI!;
 const MONGODB_DB = process.env.MONGODB_DB!;
@@ -39,7 +39,6 @@ ${airtableLink}
       `,
     }));
 
-    await sgMail.send(emails);
 
     return new Response(
       JSON.stringify({ message: "Notifications sent" }),

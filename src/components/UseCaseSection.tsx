@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function UseCasesSection() {
   return (
@@ -78,25 +79,54 @@ export default function UseCasesSection() {
 
             {/* Bottom row */}
             <div className="
-              flex flex-col-reverse gap-3
+              flex flex-col gap-3
               sm:flex-row sm:items-center sm:justify-between sm:gap-4
             ">
-              {/* CTA */}
-              <button className="
-                inline-flex items-center justify-center
-                text-sm font-medium text-white
-                bg-gray-900 px-4 py-2 rounded-md
-                hover:bg-gray-700 transition
-                whitespace-nowrap
-                w-full sm:w-auto
-              "
-                onClick={() => {
-                  const section = document.getElementById("industries");
-                  section?.scrollIntoView({ behavior: "smooth" });
-                }}
-              >
-                Explore use cases →
-              </button>
+              <div className="flex flex-col gap-3 sm:flex-row items-stretch sm:items-center">
+                <a
+                  href="https://gotham.deeptrack.io/signup"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="
+                    inline-flex items-center justify-center
+                    text-sm font-medium text-white
+                    bg-indigo-600 px-4 py-2 rounded-md
+                    hover:bg-indigo-500 transition
+                    whitespace-nowrap
+                    w-full sm:w-auto
+                  "
+                >
+                  Get started
+                </a>
+                <button className="
+                  inline-flex items-center justify-center
+                  text-sm font-medium text-white
+                  bg-gray-900 px-4 py-2 rounded-md
+                  hover:bg-gray-700 transition
+                  whitespace-nowrap
+                  w-full sm:w-auto
+                "
+                  onClick={() => {
+                    const section = document.getElementById("industries");
+                    section?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                >
+                  View use cases →
+                </button>
+                <Link
+                  href="/portal/login"
+                  className="
+                    inline-flex items-center justify-center
+                    text-sm font-medium text-gray-900
+                    border border-gray-300 px-4 py-2 rounded-md
+                    bg-white hover:bg-gray-100 transition
+                    whitespace-nowrap
+                    w-full sm:w-auto
+                  "
+                >
+                  Partner Portal
+                </Link>
+              </div>
 
               {/* Verified indicator */}
               <div className="

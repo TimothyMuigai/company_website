@@ -16,37 +16,65 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// Maps raw Convex/auth error messages to human-readable strings
+function parseAuthError(err: unknown): string {
+  const raw = err instanceof Error ? err.message : String(err);
+  if (raw.includes("InvalidSecret") || raw.includes("Invalid secret")) {
+    return "Incorrect password. Please try again or reset your password.";
+  }
+  if (raw.includes("no user") || raw.includes("not found") || raw.includes("NoUser")) {
+    return "No account found with that email address.";
+  }
+  if (raw.includes("InvalidAccountId") || raw.includes("Invalid account")) {
+    return "No account found with that email address.";
+  }
+  if (raw.includes("Too many") || raw.includes("rate limit")) {
+    return "Too many attempts. Please wait a few minutes and try again.";
+  }
+  if (raw.includes("Password reset is not enabled")) {
+    return "Password reset is currently disabled. Please contact support.";
+  }
+  if (raw.includes("credentials") || raw.includes("Unauthorized")) {
+    return "Invalid email or password.";
+  }
+  return "Sign in failed. Please check your credentials and try again.";
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // useAuthActions is the correct hook from @convex-dev/auth
   const { signIn: convexSignIn, signOut: convexSignOut } = useAuthActions();
 
+  // undefined = query still in flight, null = unauthenticated, object = authenticated
   const partner = useQuery(api.users.getCurrentPartner);
 
   useEffect(() => {
+    // As soon as Convex resolves (any value including null), we know auth state
     if (partner !== undefined) {
       setIsLoading(false);
     }
   }, [partner]);
 
+  // Safety net: never block the UI for more than 5 seconds
+  useEffect(() => {
+    const t = setTimeout(() => setIsLoading(false), 5000);
+    return () => clearTimeout(t);
+  }, []);
+
   const signIn = async (email: string, password: string) => {
     setError(null);
     setIsLoading(true);
     try {
-      // flow: "signIn" is required by the Password provider
-      await convexSignIn("password", {
-        flow: "signIn",
-        email,
-        password,
-      });
+      await convexSignIn("password", { flow: "signIn", email, password });
+      // On success: isLoading cleared by partner useEffect above when Convex
+      // returns the partner record after authentication completes
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Sign in failed";
+      const message = parseAuthError(err);
       setError(message);
-      throw err;
-    } finally {
       setIsLoading(false);
+      // Re-throw the cleaned message so the login page catch block shows it
+      throw new Error(message);
     }
   };
 
@@ -61,16 +89,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const value = {
-    isLoading,
-    isAuthenticated: !!partner,
-    partner,
-    signIn,
-    signOut,
-    error,
-  };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{
+      isLoading,
+      isAuthenticated: !!partner,
+      partner,
+      signIn,
+      signOut,
+      error,
+    }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
 export function useAuth() {

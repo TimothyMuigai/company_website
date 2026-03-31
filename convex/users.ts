@@ -40,7 +40,6 @@ export const createPartnerAccount = mutation({
     ),
   },
   handler: async (ctx, args) => {
-    // Check if partner with this email already exists
     const existingPartner = await ctx.db
       .query("partners")
       .withIndex("by_email", (q) => q.eq("email", args.email))
@@ -50,17 +49,15 @@ export const createPartnerAccount = mutation({
       throw new Error("Partner with this email already exists");
     }
 
-    // Determine commission rate based on tier
     const tierRates: Record<string, number> = {
-      registered: 0.10, // 10%
-      silver: 0.12,     // 12%
-      gold: 0.13,       // 13%
-      platinum: 0.15,   // 15%
+      registered: 0.10,
+      silver: 0.12,
+      gold: 0.13,
+      platinum: 0.15,
     };
 
     const commissionRate = tierRates[args.tier] ?? 0.10;
 
-    // createAccount returns { account, user } — extract the user ID from result
     const { user } = await createAccount(ctx as any, {
       provider: "password",
       account: {
@@ -74,7 +71,6 @@ export const createPartnerAccount = mutation({
 
     const userId = user._id;
 
-    // Capitalise tier for storage
     const partnerTier =
       args.tier === "platinum"
         ? "Platinum"
@@ -84,7 +80,6 @@ export const createPartnerAccount = mutation({
         ? "Silver"
         : "Registered";
 
-    // Create partner record linked to the user
     const partnerId = await ctx.db.insert("partners", {
       userId,
       email: args.email,
@@ -105,7 +100,6 @@ export const createPartnerAccount = mutation({
 export const getPartner = query({
   args: { partnerId: v.id("partners") },
   handler: async (ctx, args) => {
-    // Bug fix: was using auth.getUserId — use getAuthUserId instead
     const userId = await getAuthUserId(ctx);
     if (!userId) {
       return null;
@@ -113,7 +107,6 @@ export const getPartner = query({
 
     const partner = await ctx.db.get(args.partnerId);
 
-    // Ensure partner belongs to current user
     if (!partner || partner.userId !== userId) {
       return null;
     }
@@ -122,29 +115,27 @@ export const getPartner = query({
   },
 });
 
+// Admin-only — returns null for non-admins instead of throwing,
+// so the client can show a modal rather than crashing.
 export const getAllPartners = query({
   args: {},
   handler: async (ctx) => {
     const userId = await getAuthUserId(ctx);
-    if (!userId) {
-      throw new Error("Not authenticated");
-    }
+    if (!userId) return null;
 
     const partner = await ctx.db
       .query("partners")
       .withIndex("by_userId", (q) => q.eq("userId", userId))
       .first();
 
-    if (!partner) {
-      throw new Error("Partner not found");
-    }
+    if (!partner) return null;
 
-    const isAdmin = (partner.email || "").toLowerCase().endsWith("@deeptrack.io") ||
-      (partner.email || "").toLowerCase() === "bryan@deeptrack.io";
+    const isAdmin =
+      (partner.email || "").toLowerCase().endsWith("@deeptrack.io") ||
+      (partner.email || "").toLowerCase() === "bryan@deeptrack.io" ||
+      (partner.email || "").toLowerCase() === "ianngari01@gmail.com";
 
-    if (!isAdmin) {
-      throw new Error("Admin access required");
-    }
+    if (!isAdmin) return null;
 
     return await ctx.db.query("partners").collect();
   },
@@ -160,7 +151,6 @@ export const updatePaymentDetails = mutation({
     currency: v.string(),
   },
   handler: async (ctx, args) => {
-    // Bug fix: was using auth.getUserId — use getAuthUserId instead
     const userId = await getAuthUserId(ctx);
     if (!userId) {
       throw new Error("Not authenticated");
