@@ -4,6 +4,7 @@ import { motion, Variants } from 'framer-motion';
 import Image from 'next/image';
 import { ShieldCheck, Scale, Lock, Cpu } from 'lucide-react';
 import { Navbar } from '@/components/landingPage/navs/navBar';
+import FinalCTASection from '@/components/Footer';
 
 const leadership = [
   {
@@ -244,6 +245,7 @@ export default function CompanyCulture() {
         </motion.div>
       </section>
 
+      <FinalCTASection />
     </main>
     </>
   );

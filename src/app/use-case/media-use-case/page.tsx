@@ -8,6 +8,7 @@ import InformationSection from '@/components/use-case/informationSection';
 import UseCaseFooterBanner from '@/components/use-case/useCaseFooterBanner';
 import MediaUseCaseExtraSection from '@/components/use-case/MediaUseCaseExtraSection';
 import { Navbar } from '@/components/landingPage/navs/navBar';
+import FinalCTASection from '@/components/Footer';
 
 const features = [
     {
@@ -90,6 +91,7 @@ const MediaUseCase = () => {
               title='Ready to Enhance Your Media Security with Advanced Deepfake Detection?'
           />
       </div>
+      <FinalCTASection />
     </>
   )
 }

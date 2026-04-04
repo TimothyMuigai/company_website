@@ -6,6 +6,7 @@ import BuiltForDev from "@/components/ProductApiComponents/BuiltForDevs";
 import ApiPricing from "@/components/ProductApiComponents/ApiPricing";
 // import Image from "next/image";
 import { Navbar } from "@/components/landingPage/navs/navBar";
+import FinalCTASection from "@/components/Footer";
 
 const items = [
   {
@@ -108,6 +109,7 @@ export default function ProductApiPage() {
           </div>
         </div>
       </section>
+      <FinalCTASection />
     </>
   );
 }

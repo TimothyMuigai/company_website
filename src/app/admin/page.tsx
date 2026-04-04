@@ -8,6 +8,7 @@ import { Loader, AlertCircle, ChevronDown, ChevronUp, Plus, Send, Upload, CheckC
 import { Id } from "@/convex/_generated/dataModel";
 import { useRouter } from "next/navigation";
 import ErrorModal from "@/components/ErrorModal";
+import FinalCTASection from "@/components/Footer";
 
 type Tab = "leads" | "commissions" | "materials" | "notifications";
 type StatusForm = { leadId: string; status: string; notes: string };
@@ -507,6 +508,7 @@ export default function AdminPage() {
           </motion.div>
         </div>
       )}
+      <FinalCTASection />
     </>
   );
 }

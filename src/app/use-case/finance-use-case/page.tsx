@@ -10,6 +10,7 @@ import InformationSection from '@/components/use-case/informationSection';
 import UseCaseDetailedInformation from '@/components/use-case/useCaseDetailedInformation';
 import UseCaseFooterBanner from '@/components/use-case/useCaseFooterBanner';
 import MediaUseCaseExtraSection from '@/components/use-case/MediaUseCaseExtraSection';
+import FinalCTASection from '@/components/Footer';
 
 const features = [
     {
@@ -92,6 +93,7 @@ const FinanceUseCase = () => {
               title='Ready to Enhance Your Financial Security with AI Deepfake Detection?'
           />
       </div>
+      <FinalCTASection />
     </>
   )
 }

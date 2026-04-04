@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 
 import { Navbar } from "@/components/landingPage/navs/navBar";
 import Link from "next/link";
+import FinalCTASection from "@/components/Footer";
 
 export default function News() {
   const [name, setName] = useState("");
@@ -162,6 +163,7 @@ export default function News() {
           </div>
         </div>
       </section>
+      <FinalCTASection />
     </>
   );
 }

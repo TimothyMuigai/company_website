@@ -5,6 +5,7 @@ import { Navbar } from '@/components/landingPage/navs/navBar';
 import ExecutiveIdentityShielding from '@/components/use-case/executiveUseCase';
 import ExtraSection from '@/components/use-case/extra-section';
 import Head from 'next/head';
+import FinalCTASection from '@/components/Footer';
 
 const Events = () => {
   return (

@@ -19,6 +19,17 @@ interface UsageData {
   by_product: ProductUsage[];
 }
 
+interface UsageMeResponse {
+  owner?: string;
+  track?: string;
+  plan?: string;
+  rate_per_scan?: number;
+  monthly_limit?: number;
+  used_this_month?: number;
+  remaining?: number;
+  resets_at?: string;
+}
+
 const FALLBACK: UsageData = {
   scans_used: 280,
   scans_limit: 1000,
@@ -41,8 +52,11 @@ export default function UsageTab() {
   useEffect(() => {
     async function fetchUsage() {
       try {
+        const key = getApiKey();
+        if (!key) throw new Error('Missing API key');
+
         const res = await fetch(ENDPOINTS.usageMe, {
-          headers: { Authorization: `Bearer ${getApiKey()}` },
+          headers: { 'X-API-Key': key },
         });
         if (!res.ok) throw new Error(`${res.status}`);
         const json = await res.json();
@@ -136,12 +150,30 @@ function getApiKey(): string {
 
 // Adjust field names once you see the real /v1/client/usage/me shape
 function normalise(json: Record<string, unknown>): UsageData {
+  const usageMe = json as UsageMeResponse;
+  const scansLimit = usageMe.monthly_limit ?? (json.scans_limit as number) ?? FALLBACK.scans_limit;
+  const scansUsed = usageMe.used_this_month ?? (json.scans_used as number) ?? FALLBACK.scans_used;
+  const scansRemaining = usageMe.remaining ?? (json.scans_remaining as number) ?? FALLBACK.scans_remaining;
+  const resetDate = usageMe.resets_at ?? (json.reset_date as string) ?? FALLBACK.reset_date;
+
+  const pct = scansLimit >= 999999 ? 0 : Math.min(100, Math.round((scansUsed / Math.max(scansLimit, 1)) * 1000) / 10);
+  const label = usageMe.owner && usageMe.plan
+    ? `${usageMe.owner} (${usageMe.track || 'api'} · ${usageMe.plan})`
+    : 'All scans';
+
   return {
-    scans_used:      (json.scans_used      as number)        ?? FALLBACK.scans_used,
-    scans_limit:     (json.scans_limit     as number)        ?? FALLBACK.scans_limit,
-    scans_remaining: (json.scans_remaining as number)        ?? FALLBACK.scans_remaining,
+    scans_used: scansUsed,
+    scans_limit: scansLimit,
+    scans_remaining: scansRemaining,
     avg_response_ms: (json.avg_response_ms as number)        ?? FALLBACK.avg_response_ms,
-    reset_date:      (json.reset_date      as string)        ?? FALLBACK.reset_date,
-    by_product:      (json.by_product      as ProductUsage[]) ?? FALLBACK.by_product,
+    reset_date: resetDate,
+    by_product: (json.by_product as ProductUsage[]) ?? [
+      {
+        name: label,
+        scans: scansUsed,
+        pct,
+        avgConf: usageMe.rate_per_scan ?? 0,
+      },
+    ],
   };
 }

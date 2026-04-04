@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import FinalCTASection from "@/components/Footer";
 
 export default function ServiceLevelAgreement() {
     const router = useRouter();
@@ -344,6 +345,7 @@ export default function ServiceLevelAgreement() {
                     </section>
                 </div>
             </div>
+            <FinalCTASection />
         </div>
     );
 }

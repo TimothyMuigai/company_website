@@ -6,6 +6,7 @@ import { jobs } from "@/data/jobs";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import FinalCTASection from "@/components/Footer";
 
 export default function Careers() {
   const router = useRouter();
@@ -89,6 +90,7 @@ export default function Careers() {
       })()}
 
       <JobList />
+      <FinalCTASection />
     </div>
   );
 }

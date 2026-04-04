@@ -1,5 +1,6 @@
 import { ConvexClientProvider } from "@/lib/convex-client-provider";
 import { AuthProvider } from "@/lib/auth-context";
+import { ClerkProvider } from "@clerk/nextjs";
 import { Outfit } from "next/font/google";
 import "./globals.css";
 
@@ -13,9 +14,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={outfit.className}>
       <body className="bg-[#ffffff] text-white antialiased">
-        <ConvexClientProvider>
-          <AuthProvider>{children}</AuthProvider>
-        </ConvexClientProvider>
+        <ClerkProvider>
+          <ConvexClientProvider>
+            <AuthProvider>{children}</AuthProvider>
+          </ConvexClientProvider>
+        </ClerkProvider>
       </body>
     </html>
   );

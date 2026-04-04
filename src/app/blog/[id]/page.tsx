@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation';
 
 import { WaitlistButton } from '@/components/landingPage/waiting-list';
 import { blogComponents } from '@/components/blogsBody/blogsComponent';
+import FinalCTASection from '@/components/Footer';
 
 const DisplayBlog = () => {
   const params = useParams();
@@ -48,6 +49,7 @@ const DisplayBlog = () => {
           </div>
         </div>
       </section>
+      <FinalCTASection />
     </>
   );
 };

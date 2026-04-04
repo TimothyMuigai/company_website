@@ -29,7 +29,7 @@ export const SCANS: ScanRow[] = [
 ];
 
 // Real API endpoints from DeepTrack API reference
-export const API_BASE = 'https://api.deeptrack.io';
+export const API_BASE = process.env.NEXT_PUBLIC_DEEPTRACK_API_BASE_URL || 'https://facedetectionsystem-staging.onrender.com';
 
 export const ENDPOINTS = {
   health:       `${API_BASE}/v1/health`,

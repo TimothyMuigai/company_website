@@ -28,7 +28,7 @@ export const SCANS: ScanRow[] = [
   { file: 'profile_photo.png',    type: 'image',    product: 'Mirror',   verdict: 'manipulated', conf: 0.88, time: '2h ago' },
 ];
 
-export const API_BASE = 'https://api.deeptrack.io';
+export const API_BASE = process.env.NEXT_PUBLIC_DEEPTRACK_API_BASE_URL || 'https://facedetectionsystem-staging.onrender.com';
 
 export const ENDPOINTS = {
   health:       `${API_BASE}/v1/health`,

@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import FinalCTASection from "@/components/Footer";
 
 export default function PrivacyPolicy() {
   const router = useRouter();
@@ -266,6 +267,7 @@ export default function PrivacyPolicy() {
 
         </div>
       </div>
+      <FinalCTASection />
     </div>
   );
 }

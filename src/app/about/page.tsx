@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { ShieldCheck, Search, Cpu, Scale, EyeOff } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Navbar } from '@/components/landingPage/navs/navBar';
+import FinalCTASection from '@/components/Footer';
 export default function AboutDeeptrack() {
   return (
     <>
@@ -169,6 +170,7 @@ export default function AboutDeeptrack() {
         </div>
       </section>
 
+      <FinalCTASection />
     </main>
     </>
   );

@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { jobs } from '@/data/jobs';
 import JobDetail from '@/components/careers/JobDetail';
 import { Navbar } from '@/components/landingPage/navs/navBar';
+import FinalCTASection from '@/components/Footer';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -17,6 +18,7 @@ export default async function JobPage({ params }: Props) {
     <div className="space-y-6">
       <Navbar />
       <JobDetail job={job} />
+      <FinalCTASection />
     </div>
   );
 }

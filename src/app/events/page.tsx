@@ -6,6 +6,7 @@ import BlogBanner from "@/components/layout/events/BlogBanner"
 import EventsSection from "@/components/layout/events/EventSection"
 import WhyAttend from "@/components/layout/events/WhyAttendComponent"
 import ExploreSection from "@/components/layout/Explore"
+import FinalCTASection from "@/components/Footer"
 
 export default function BlogsAndResearch() {
     return (
@@ -65,6 +66,7 @@ export default function BlogsAndResearch() {
                     </section>
                 </div>
             </section>
+            <FinalCTASection />
         </>
     )
 }

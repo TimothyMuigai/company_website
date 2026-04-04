@@ -8,6 +8,7 @@ import Head from "next/head"
 import ExploreSection from "@/components/layout/Explore"
 import { WaitlistButton } from "@/components/landingPage/waiting-list"
 import ImageFeatureSection from "@/components/layout/ImageFeatureSection"
+import FinalCTASection from "@/components/Footer"
 
 const ImageAuthenticationPage = () => {
     return (
@@ -110,8 +111,7 @@ const ImageAuthenticationPage = () => {
                         
                     </section>
                 </div>
-            </div>
-        </>
+            </div>            <FinalCTASection />        </>
     )
 }
 

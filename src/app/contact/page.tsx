@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Navbar } from "@/components/landingPage/navs/navBar";
 import Link from "next/link";
+import FinalCTASection from "@/components/Footer";
 
 export default function Contact() {
   const [firstName, setFirstName] = useState("");
@@ -198,6 +199,7 @@ export default function Contact() {
           </div>
         </div>
       </section>
+      <FinalCTASection />
     </>
   );
 }

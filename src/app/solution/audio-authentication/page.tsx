@@ -8,6 +8,7 @@ import ExploreSection from "@/components/layout/Explore"
 import { WaitlistButton } from "@/components/landingPage/waiting-list"
 import InfoSection from "@/components/layout/InfoSection"
 import FeatureSection from "@/components/layout/AudioFeatureSection"
+import FinalCTASection from "@/components/Footer"
 
 const AudioAuthenticationPage = () => {
     return (
@@ -100,8 +101,7 @@ const AudioAuthenticationPage = () => {
                         
                     </section>
                 </div>
-            </div>
-        </>
+            </div>            <FinalCTASection />        </>
     )
 }
 

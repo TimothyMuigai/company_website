@@ -6,6 +6,7 @@ import { WaitlistButton } from '@/components/landingPage/waiting-list';
 import UseCaseFeatureInformation from '@/components/use-case/useCaseFeatureInformation';
 import UseCaseFooterGothamBanner from '@/components/layout/UseCaseFooterGothamBanner';
 import FeatureHighlightGotham from '@/components/layout/FeatureHighlightGotham';
+import FinalCTASection from '@/components/Footer';
 
 const features = [
   {
@@ -100,6 +101,7 @@ const GothamPage = () => {
           ]}
         />
       </div>
+      <FinalCTASection />
     </>
   )
 }

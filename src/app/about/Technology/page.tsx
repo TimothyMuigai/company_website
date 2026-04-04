@@ -14,6 +14,7 @@ import {
   UserCheck,
   Search,
 } from 'lucide-react';
+import FinalCTASection from '@/components/Footer';
 
 const architecture = [
   {
@@ -223,8 +224,7 @@ export default function TechnologiesPage() {
 
         </motion.div>
       </section>
-
-    </main>
+      <FinalCTASection />    </main>
     </>
   );
 }

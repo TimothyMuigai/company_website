@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import FinalCTASection from "@/components/Footer";
 
 export default function TermsOfUse() {
   const router = useRouter();
@@ -386,6 +387,7 @@ export default function TermsOfUse() {
 
         </div>
       </div>
+      <FinalCTASection />
     </div>
   );
 }

@@ -7,6 +7,7 @@ import FeatureHighlight from '@/components/use-case/feature-highlight';
 import MediaUseCaseExtraSection from '@/components/use-case/MediaUseCaseExtraSection';
 import UseCaseInfoSection from '@/components/use-case/useCaseInfoSection';
 import UseCaseFeatureInformation from '@/components/use-case/useCaseFeatureInformation';
+import FinalCTASection from '@/components/Footer';
 
 const features = [
     {
@@ -83,7 +84,7 @@ const GovernmentUseCase = () => {
                     title='Ready to Secure Democracy with AI Deepfake Protection?'
                 />
             </div>
-        </>
+      <FinalCTASection />
     )
 }
 

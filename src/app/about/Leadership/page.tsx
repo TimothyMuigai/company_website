@@ -3,6 +3,7 @@
 import { Navbar } from '@/components/landingPage/navs/navBar';
 import { motion, Variants } from 'framer-motion';
 import Image from 'next/image';
+import FinalCTASection from '@/components/Footer';
 
 const executive = {
   name: 'Bryan Koyundi',
@@ -326,8 +327,7 @@ export default function LeadershipPage() {
             </div>
           </div>
         </section>
-
-      </main >
+        <FinalCTASection />      </main >
     </>
   );
 }

@@ -8,6 +8,7 @@ import UseCaseFeatureInformation from "@/components/use-case/useCaseFeatureInfor
 import InformationSection from "@/components/use-case/informationSection";
 import UseCaseFooterBanner from "@/components/use-case/useCaseFooterBanner";
 import FinanceUseCaseExtraSection from "@/components/use-case/FinanaceUseCaseExtraSection";
+import FinalCTASection from "@/components/Footer";
 
 
 const features = [
@@ -99,6 +100,7 @@ export default function InsuranceUseCasePage() {
 
                 {/* Extra section to match Finance extra section */}
                 <FinanceUseCaseExtraSection title="Ready to Transform Your Insurance Fraud Prevention with AI?" />
+                <FinalCTASection />
             </div>
         </>
     );
