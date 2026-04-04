@@ -1,7 +1,24 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-export default function FinalCTASection() {
+type FooterProps = {
+  isGlobal?: boolean;
+};
+
+export default function FinalCTASection({ isGlobal = false }: FooterProps) {
+  const pathname = usePathname();
+
+  if (!isGlobal) {
+    return null;
+  }
+
+  if (pathname?.startsWith("/portal")) {
+    return null;
+  }
+
   return (
     <section className="relative overflow-hidden text-white">
       {/* Background image */}
