@@ -84,7 +84,8 @@ const GovernmentUseCase = () => {
                     title='Ready to Secure Democracy with AI Deepfake Protection?'
                 />
             </div>
-      <FinalCTASection />
+            <FinalCTASection />
+        </>
     )
 }
 
