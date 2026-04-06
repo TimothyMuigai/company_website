@@ -42,12 +42,17 @@ export default function ForgotPasswordPage() {
       setStep("verify");
     } catch (err) {
       const raw = err instanceof Error ? err.message : String(err);
-      if (raw.includes("not found") || raw.includes("NoUser") || raw.includes("no user")) {
+      if (
+        raw.includes("not found") ||
+        raw.includes("NoUser") ||
+        raw.includes("no user") ||
+        raw.includes("InvalidAccountId")
+      ) {
         showError("No account found with that email address.");
       } else if (raw.includes("Password reset is not enabled")) {
         showError("Password reset is currently disabled. Please contact support.");
       } else {
-        showError(`Unable to send reset email. ${raw}`);
+        showError("Unable to send reset email. Please try again in a moment.");
       }
     } finally {
       setLoading(false);
