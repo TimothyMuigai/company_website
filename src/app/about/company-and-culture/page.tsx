@@ -31,24 +31,24 @@ const leadership = [
     img: '/people/sammy.jpg',
     link: "https://www.linkedin.com/in/sammydeprez/",
   },
-  {
-    name: 'MauriceOyundi',
-    title: 'Advisor, Enterprise Technology & Public Sector Solutions',
-    img: '/people/maurice.jpg',
-    link: "https://www.linkedin.com/in/maurice-oyundi-50bb7119/"
-  },
+  // {
+  //   name: 'MauriceOyundi',
+  //   title: 'Advisor, Enterprise Technology & Public Sector Solutions',
+  //   img: '/people/maurice.jpg',
+  //   link: "https://www.linkedin.com/in/maurice-oyundi-50bb7119/"
+  // },
   {
     name: 'Ian Lumbasio',
     title: 'Advisor, Legal, Transactions & Venture Capital',
     img: '/people/ian.jpeg',
     link: "https://ke.linkedin.com/in/ian-lumbasio"
   },
-  {
-    name: 'Brenda Gentry',
-    title: 'Marketing and Expansion ',
-    img: '/people/brenda.jpg',
-    link: "https://www.linkedin.com/in/brenda-gentry-4b56b087/"
-  },
+  // {
+  //   name: 'Brenda Gentry',
+  //   title: 'Marketing and Expansion ',
+  //   img: '/people/brenda.jpg',
+  //   link: "https://www.linkedin.com/in/brenda-gentry-4b56b087/"
+  // },
 ];
 
 const fadeUp: Variants = {
