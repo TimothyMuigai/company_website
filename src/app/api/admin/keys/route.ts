@@ -7,26 +7,24 @@ import {
   toUpstreamError,
 } from "../_utils";
 
-export async function GET() {
-  const configError = ensureAdminConfigured();
+export async function GET(request: NextRequest) {
+  const configError = ensureAdminConfigured(request);
   if (configError) return configError;
 
   const response = await fetch(`${DEEPTRACK_ADMIN_BASE_URL}/admin/keys`, {
     method: "GET",
-    headers: buildAdminHeaders(),
+    headers: buildAdminHeaders(request),
     cache: "no-store",
   });
 
   const data = await response.json();
-  if (!response.ok) {
-    return toUpstreamError(response.status, data);
-  }
+  if (!response.ok) return toUpstreamError(response.status, data);
 
   return NextResponse.json(data, { status: 200 });
 }
 
 export async function POST(request: NextRequest) {
-  const configError = ensureAdminConfigured();
+  const configError = ensureAdminConfigured(request);
   if (configError) return configError;
 
   const body = await parseBody(request);
@@ -36,15 +34,13 @@ export async function POST(request: NextRequest) {
 
   const response = await fetch(`${DEEPTRACK_ADMIN_BASE_URL}/admin/keys`, {
     method: "POST",
-    headers: buildAdminHeaders(true),
+    headers: buildAdminHeaders(request, true),
     body: JSON.stringify(body),
     cache: "no-store",
   });
 
   const data = await response.json();
-  if (!response.ok) {
-    return toUpstreamError(response.status, data);
-  }
+  if (!response.ok) return toUpstreamError(response.status, data);
 
   return NextResponse.json(data, { status: 200 });
 }

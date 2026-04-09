@@ -1,36 +1,47 @@
 'use client';
 
+import { useAuth0 } from '@auth0/auth0-react';
+import { useEffect } from 'react';
 import { User } from '@/lib/console-data';
 
 interface AuthGateProps {
   onLogin: (user: User) => void;
 }
 
-const DEMO_USER: User = { name: 'Brian Koyundi', email: 'brian@deeptrack.io', picture: null };
-
 export default function AuthGate({ onLogin }: AuthGateProps) {
-  function handleGoogle() {
-    // Replace with real Auth0 SDK call: auth0Client.loginWithRedirect({ authorizationParams: { connection: 'google-oauth2' } })
-    setTimeout(() => onLogin(DEMO_USER), 1000);
-  }
+  const { loginWithRedirect, user, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
 
-  function handleAuth0() {
-    // Replace with real Auth0 SDK call: auth0Client.loginWithRedirect()
-    setTimeout(() => onLogin(DEMO_USER), 1000);
+  useEffect(() => {
+    if (!isAuthenticated || !user) return;
+
+    async function hydrate() {
+      try {
+        const token = await getAccessTokenSilently();
+        sessionStorage.setItem('dt_access_token', token);
+      } catch {
+        // token refresh failed silently
+      }
+      onLogin({
+        name: user!.name ?? user!.email ?? 'User',
+        email: user!.email ?? '',
+        picture: user!.picture ?? null,
+      });
+    }
+
+    void hydrate();
+  }, [isAuthenticated, user, getAccessTokenSilently, onLogin]);
+
+  if (isLoading) {
+    return (
+      <div style={centeredPage}>
+        <div style={spinnerStyle} />
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+      </div>
+    );
   }
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '24px',
-      background: 'var(--bg)',
-      position: 'relative',
-      overflow: 'hidden',
-    }}>
+    <div style={centeredPage}>
       {/* Grid background */}
       <div style={{
         position: 'absolute', inset: 0,
@@ -48,16 +59,7 @@ export default function AuthGate({ onLogin }: AuthGateProps) {
         pointerEvents: 'none',
       }} />
 
-      <div style={{
-        position: 'relative', zIndex: 1,
-        background: 'var(--surface)',
-        border: '1px solid var(--border-mid)',
-        borderRadius: 16,
-        padding: '40px 44px',
-        width: '100%', maxWidth: 420,
-        textAlign: 'center',
-        animation: 'fadeIn 0.35s ease both',
-      }}>
+      <div style={cardStyle}>
         {/* Logo */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, marginBottom: 28 }}>
           <div style={{
@@ -83,8 +85,11 @@ export default function AuthGate({ onLogin }: AuthGateProps) {
           <a href="https://www.deeptrack.io/contact" style={{ color: 'var(--accent-text)', textDecoration: 'none' }}>Talk to us →</a>
         </p>
 
-        {/* Google */}
-        <button onClick={handleGoogle} style={btnStyle('google')}>
+        {/* Google via Auth0 social connection */}
+        <button
+          onClick={() => loginWithRedirect({ authorizationParams: { connection: 'google-oauth2' } })}
+          style={btnStyle('google')}
+        >
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
             <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615Z" fill="#4285F4"/>
             <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18Z" fill="#34A853"/>
@@ -94,15 +99,14 @@ export default function AuthGate({ onLogin }: AuthGateProps) {
           Continue with Google
         </button>
 
-        {/* Divider */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, margin: '20px 0' }}>
           <span style={{ flex: 1, height: 1, background: 'var(--border)' }} />
           <em style={{ fontStyle: 'normal', fontSize: 12, color: 'var(--text-3)' }}>or</em>
           <span style={{ flex: 1, height: 1, background: 'var(--border)' }} />
         </div>
 
-        {/* Auth0 */}
-        <button onClick={handleAuth0} style={btnStyle('auth0')}>
+        {/* Auth0 universal login */}
+        <button onClick={() => loginWithRedirect()} style={btnStyle('auth0')}>
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
             <path d="M9 1.5L14.5 5.1V9C14.5 12.1 12.1 14.9 9 15.9C5.9 14.9 3.5 12.1 3.5 9V5.1L9 1.5Z" stroke="#00d68f" strokeWidth="1.4" strokeLinejoin="round"/>
             <circle cx="9" cy="9" r="2" fill="#00d68f"/>
@@ -118,7 +122,7 @@ export default function AuthGate({ onLogin }: AuthGateProps) {
         </p>
 
         <div style={{ marginTop: 20, fontSize: 13 }}>
-          <a href="https://www.deeptrack.io/productApi" style={{ color: 'var(--text-2)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 5 }}>
+          <a href="https://www.deeptrack.io/productApi" style={{ color: 'var(--text-2)', textDecoration: 'none' }}>
             ← Back to RealAPI
           </a>
         </div>
@@ -126,11 +130,43 @@ export default function AuthGate({ onLogin }: AuthGateProps) {
 
       <style>{`
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes spin { to { transform: rotate(360deg); } }
         button:active { transform: scale(0.98) !important; }
       `}</style>
     </div>
   );
 }
+
+const centeredPage: React.CSSProperties = {
+  minHeight: '100vh',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '24px',
+  background: 'var(--bg)',
+  position: 'relative',
+  overflow: 'hidden',
+};
+
+const cardStyle: React.CSSProperties = {
+  position: 'relative', zIndex: 1,
+  background: 'var(--surface)',
+  border: '1px solid var(--border-mid)',
+  borderRadius: 16,
+  padding: '40px 44px',
+  width: '100%', maxWidth: 420,
+  textAlign: 'center',
+  animation: 'fadeIn 0.35s ease both',
+};
+
+const spinnerStyle: React.CSSProperties = {
+  width: 32, height: 32,
+  border: '2px solid var(--border)',
+  borderTopColor: 'var(--accent)',
+  borderRadius: '50%',
+  animation: 'spin 0.7s linear infinite',
+};
 
 function btnStyle(variant: 'google' | 'auth0'): React.CSSProperties {
   return {

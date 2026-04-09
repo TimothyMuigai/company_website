@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const DEFAULT_BASE_URL = "https://facedetectionsystem-staging.onrender.com";
+const DEFAULT_BASE_URL = "https://facedetectionsystem-test-auth.onrender.com";
 
 export async function POST(request: NextRequest) {
   const baseUrl = process.env.DEEPTRACK_API_BASE_URL || DEFAULT_BASE_URL;

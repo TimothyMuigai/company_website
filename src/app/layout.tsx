@@ -1,6 +1,7 @@
 import { ConvexClientProvider } from "@/lib/convex-client-provider";
 import { AuthProvider } from "@/lib/auth-context";
 import { ClerkProvider } from "@clerk/nextjs";
+import Auth0ClientProvider from "@/lib/auth0-provider";
 import FinalCTASection from "@/components/Footer";
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
@@ -26,10 +27,12 @@ export default function RootLayout({
       <body className="bg-[#ffffff] text-white antialiased">
         <ClerkProvider>
           <ConvexClientProvider>
-            <AuthProvider>
-              {children}
-              <FinalCTASection isGlobal />
-            </AuthProvider>
+            <Auth0ClientProvider>
+              <AuthProvider>
+                {children}
+                <FinalCTASection isGlobal />
+              </AuthProvider>
+            </Auth0ClientProvider>
           </ConvexClientProvider>
         </ClerkProvider>
       </body>

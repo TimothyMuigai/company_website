@@ -1,19 +1,10 @@
 "use client";
 
-/**
- * RealAPI Console — deeptrack.io/console
- *
- * Auth:  Auth0-style demo mode (no live auth calls while DEMO_MODE is true)
- * Style: CSS-in-JSX via <style> tag — all design tokens preserved from v3 HTML
- *
- * TODO items are marked with  // TODO:  comments throughout.
- * Most live data should come from your Deeptrack backend API.
- */
-
-// TODO: re-enable Clerk once keys are configured
-// import { useUser, useClerk, useSignIn } from "@clerk/nextjs";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 import ApiKeysTab from "@/components/admin/ApiKeysTab";
+import { ENDPOINTS } from "@/lib/console-data";
+import { parseUsageMonthJson, USAGE_FALLBACK } from "@/lib/usage-month";
 
 // ─────────────────────────────────────────
 // Types
@@ -42,19 +33,10 @@ interface Scan {
   time: string;
 }
 
-interface UsageStat {
-  product: string;
-  scans: number;
-  pct: number;
-  avgConf: number;
-}
-
 // ─────────────────────────────────────────
-// Demo / placeholder data
-// Replace these with real API calls.
+// Static data
 // ─────────────────────────────────────────
 
-// TODO: fetch from  GET /api/scans  authenticated with the user's token
 const SCANS: Scan[] = [
   { file: "kyc_upload_2841.jpg",  type: "image",    product: "Sentinel", verdict: "manipulated", conf: 0.97, time: "2m ago"  },
   { file: "press_release_v2.mp4", type: "video",    product: "Atlas",    verdict: "authentic",   conf: 0.89, time: "5m ago"  },
@@ -66,15 +48,6 @@ const SCANS: Scan[] = [
   { file: "profile_photo.png",    type: "image",    product: "Mirror",   verdict: "manipulated", conf: 0.88, time: "2h ago"  },
 ];
 
-// TODO: fetch from  GET /api/usage  authenticated with the user's token
-const USAGE_BY_PRODUCT: UsageStat[] = [
-  { product: "Sentinel", scans: 142, pct: 50.7, avgConf: 0.91 },
-  { product: "Gotham",   scans: 88,  pct: 31.4, avgConf: 0.87 },
-  { product: "Atlas",    scans: 34,  pct: 12.1, avgConf: 0.83 },
-  { product: "Foundry",  scans: 16,  pct: 5.7,  avgConf: 0.79 },
-];
-
-// TODO: fetch from  GET /api/stats  authenticated with the user's token
 const STATS = {
   totalScans:  2841,
   authentic:   2104,
@@ -82,36 +55,21 @@ const STATS = {
   uncertain:   125,
 };
 
-// TODO: fetch from  GET /api/billing  authenticated with the user's token
-const BILLING = {
-  scansUsed:   280,
-  scansLimit:  1000,
-  remaining:   720,
-  resetsOn:    "May 1, 2026",
-  plan:        "Enterprise",
-  avgResponse: "1.2s",
-};
-
-// ─────────────────────────────────────────
-// Code snippets (Step 01)
-// ─────────────────────────────────────────
-
 const CODE: Record<Lang, { fname: string; install: { pm: string; pkg: string }[] | null; body: string }> = {
   ts: {
     fname: "index.ts",
     install: [
-      { pm: "npm install", pkg: "@deeptrack/sdk" },
-      { pm: "yarn add",    pkg: "@deeptrack/sdk" },
+      { pm: "npm install", pkg: "@deeptrack" },
+      { pm: "yarn add",    pkg: "@deeptrack" },
     ],
-    body: `import { Deeptrack } from '@deeptrack/sdk';
+    body: `import { Deeptrack } from '@deeptrack';
 
 const client = new Deeptrack({ apiKey: 'dt_live_••••••••••••••••' });
 
-// Scan media for deepfake manipulation
 const result = await client.scan({
   type:    'image',
   url:     'https://your-domain.com/media/photo.jpg',
-  product: 'sentinel', // 'sentinel' | 'atlas' | 'foundry' | 'gotham' | 'mirror'
+  product: 'sentinel',
 });
 
 console.log(result.verdict);    // 'authentic' | 'manipulated' | 'uncertain'
@@ -120,7 +78,7 @@ console.log(result.signals);    // detection signal breakdown`,
   },
   py: {
     fname: "main.py",
-    install: [{ pm: "pip install", pkg: "deeptrack-sdk" }],
+    install: [{ pm: "pip install", pkg: "deeptrack" }],
     body: `from deeptrack import Deeptrack
 
 client = Deeptrack(api_key="dt_live_••••••••••••••••")
@@ -146,10 +104,6 @@ print(result.confidence) # 0.0 – 1.0`,
 { "verdict": "manipulated", "confidence": 0.94, "scan_id": "sc_01j8x...", "signals": [...] }`,
   },
 };
-
-// ─────────────────────────────────────────
-// Product suite
-// ─────────────────────────────────────────
 
 const PRODUCTS = [
   {
@@ -206,174 +160,89 @@ const PRODUCTS = [
 
 function getInitials(name: string | null | undefined): string {
   if (!name) return "?";
-  return name
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 2);
+  return name.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2);
 }
 
 async function copyToClipboard(text: string): Promise<void> {
   await navigator.clipboard.writeText(text);
 }
 
-const AUTH0_DOMAIN = "YOUR_AUTH0_DOMAIN.auth0.com";
-const AUTH0_CLIENT_ID = "YOUR_AUTH0_CLIENT_ID";
-const DEMO_MODE = true;
-
 // ─────────────────────────────────────────
-// Auth Gate (shown when not signed in)
+// AppShell
 // ─────────────────────────────────────────
 
-function AuthGate({ onSignIn }: { onSignIn: (user: DemoUser) => void }) {
-  const [loading, setLoading] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  function enterApp(user: DemoUser) {
-    onSignIn(user);
-  }
-
-  function loginWithGoogle() {
-    setError(null);
-    setLoading("Redirecting to Google...");
-    if (DEMO_MODE) {
-      setTimeout(() => {
-        enterApp({ name: "Demo Developer" });
-      }, 1200);
-      return;
-    }
-    setLoading(null);
-    setError(`Auth is not configured yet. Set ${AUTH0_DOMAIN} and ${AUTH0_CLIENT_ID}.`);
-  }
-
-  function loginWithAuth0() {
-    setError(null);
-    setLoading("Redirecting to Auth0...");
-    if (DEMO_MODE) {
-      setTimeout(() => {
-        enterApp({ name: "Demo Developer" });
-      }, 1200);
-      return;
-    }
-    setLoading(null);
-    setError(`Auth is not configured yet. Set ${AUTH0_DOMAIN} and ${AUTH0_CLIENT_ID}.`);
-  }
-
-  return (
-    <div id="auth-gate">
-      <div className="auth-card fade-up">
-        {/* Logo */}
-        <div className="auth-logo-wrap">
-          <svg width="200" height="44" viewBox="0 0 200 44" fill="none">
-            <text x="0" y="32" fontFamily="'Space Grotesk', sans-serif" fontSize="28" fontWeight="600" fill="#111827" letterSpacing="-0.5">deeptrack</text>
-            <rect x="166" y="8"  width="9"  height="28" rx="1.5" fill="#7EC8E3" />
-            <rect x="178" y="4"  width="9"  height="32" rx="1.5" fill="#4DB8E0" />
-            <rect x="190" y="0"  width="10" height="36" rx="1.5" fill="#009FE3" />
-          </svg>
-        </div>
-
-        <h1 className="auth-headline">Sign in to RealAPI Console</h1>
-        <p className="auth-sub">
-          Access your developer dashboard, generate API keys, and monitor your
-          deepfake detection scans in real time.<br /><br />
-          No account yet?{" "}
-          <a href="https://www.deeptrack.io/contact">Talk to us →</a>
-        </p>
-
-        {loading ? (
-          <div className="auth-loading" style={{ display: "flex" }}>
-            <div className="spinner" />
-            <span>{loading}</span>
-          </div>
-        ) : (
-          <>
-            <button type="button" className="auth-btn auth-btn-google" onClick={loginWithGoogle}>
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615Z" fill="#4285F4" />
-                <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18Z" fill="#34A853" />
-                <path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332Z" fill="#FBBC05" />
-                <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58Z" fill="#EA4335" />
-              </svg>
-              Continue with Google
-            </button>
-
-            <div className="auth-divider">
-              <span /><em>or</em><span />
-            </div>
-
-            <button type="button" className="auth-btn auth-btn-auth0" onClick={loginWithAuth0}>
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <path d="M9 1L15 4.5V9c0 3.5-3 6-6 7.5C6 15 3 12.5 3 9V4.5L9 1Z" stroke="white" strokeWidth="1.5" strokeLinejoin="round" />
-                <circle cx="9" cy="9" r="2.5" fill="white" />
-              </svg>
-              Continue with Auth0 SSO
-            </button>
-
-            {error && (
-              <div
-                role="alert"
-                style={{
-                  marginTop: 10,
-                  border: "1px solid #fecaca",
-                  background: "#fef2f2",
-                  color: "#991b1b",
-                  borderRadius: 8,
-                  padding: "10px 12px",
-                  fontSize: 12,
-                  lineHeight: 1.5,
-                  textAlign: "left",
-                }}
-              >
-                {error}
-              </div>
-            )}
-          </>
-        )}
-
-        <p className="auth-terms" style={{ marginTop: 20 }}>
-          By signing in you agree to Deeptrack&apos;s{" "}
-          <a href="https://docs.google.com/document/d/1jSyNPxKrabOBlZxi8kf0eRsjsAyo6G5vFCLDhY6ockE/edit?tab=t.0" target="_blank" rel="noreferrer">Terms of Service</a>
-          {" "}and{" "}
-          <a href="https://app.eu.vanta.com/deeptrack.io/trust/ykzpe8x33wwv9mki8rjv61" target="_blank" rel="noreferrer">Privacy Policy</a>.
-        </p>
-        <div className="auth-back">
-          <a href="https://www.deeptrack.io/productApi">← Back to RealAPI</a>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ─────────────────────────────────────────
-// App Shell (shown when signed in)
-// ─────────────────────────────────────────
-
-function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: string }) {
-  const [activeTab, setActiveTab]     = useState<Tab>("quickstart");
-  const [activeLang, setActiveLang]   = useState<Lang>("ts");
-  const [apiKey, setApiKey]           = useState<string | null>(null);
+function AppShell({
+  onSignOut,
+  userName,
+  getAccessTokenSilently,
+}: {
+  onSignOut: () => void;
+  userName: string;
+  getAccessTokenSilently: () => Promise<string>;
+}) {
+  const [activeTab, setActiveTab]             = useState<Tab>("quickstart");
+  const [activeLang, setActiveLang]           = useState<Lang>("ts");
+  const [apiKey, setApiKey]                   = useState<string | null>(null);
   const [isGeneratingKey, setIsGeneratingKey] = useState(false);
   const [generateKeyError, setGenerateKeyError] = useState<string | null>(null);
-  const [copied, setCopied]           = useState<string | null>(null); // tracks which copy button
+  const [copied, setCopied]                   = useState<string | null>(null);
+  const [usageData, setUsageData]             = useState(USAGE_FALLBACK);
+  const [usageLoading, setUsageLoading]       = useState(false);
+  const [usageError, setUsageError]           = useState<string | null>(null);
 
   const name     = userName;
   const initials = getInitials(name);
   const role     = "Developer · Deeptrack";
 
-  // Credit bar percentage
-  const creditPct = Math.round((BILLING.scansUsed / BILLING.scansLimit) * 100);
+  useEffect(() => {
+    try {
+      const k = sessionStorage.getItem("dt_api_key");
+      if (k) setApiKey(k);
+    } catch { /* ignore */ }
+  }, []);
 
-  function showTab(tab: Tab) {
-    setActiveTab(tab);
-  }
+  useEffect(() => {
+    let cancelled = false;
+    void (async () => {
+      setUsageLoading(true);
+      setUsageError(null);
+      try {
+        const token = await getAccessTokenSilently();
+        const res = await fetch(ENDPOINTS.usageMonth, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        const json = (await res.json()) as Record<string, unknown>;
+        if (!cancelled) setUsageData(parseUsageMonthJson(json));
+      } catch {
+        if (!cancelled) {
+          setUsageError("Could not load live usage data. Showing demo values.");
+          setUsageData(USAGE_FALLBACK);
+        }
+      } finally {
+        if (!cancelled) setUsageLoading(false);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [getAccessTokenSilently]);
+
+  const creditPct = Math.min(
+    100,
+    Math.round((usageData.scans_used / Math.max(usageData.scans_limit, 1)) * 100),
+  );
 
   async function handleGenKey() {
     setIsGeneratingKey(true);
     setGenerateKeyError(null);
 
     try {
-      const usersResponse = await fetch("/api/admin/users", { cache: "no-store" });
+      const token = await getAccessTokenSilently();
+      const authHeader = { Authorization: `Bearer ${token}` };
+
+      const usersResponse = await fetch("/api/admin/users", {
+        cache: "no-store",
+        headers: authHeader,
+      });
       const usersPayload = await usersResponse.json();
       if (!usersResponse.ok) {
         const usersErr = usersPayload?.error || usersPayload?.details?.detail || "Failed to load users";
@@ -385,19 +254,16 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
         throw new Error("No users found. Create at least one user before generating keys.");
       }
 
-      const matchedUser =
-        users.find((u) => u.name?.toLowerCase() === name.toLowerCase()) || users[0];
+      const matchedUser = users.find((u) => u.name?.toLowerCase() === name.toLowerCase()) || users[0];
 
       const response = await fetch("/api/admin/keys", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { ...authHeader, "Content-Type": "application/json" },
         body: JSON.stringify({
-          owner: name || matchedUser.name,
+          owner:   name || matchedUser.name,
           user_id: matchedUser.id,
-          track: "api",
-          plan: "starter",
+          track:   "api",
+          plan:    "starter",
         }),
       });
 
@@ -447,19 +313,19 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
 
         <nav>
           <div className="nav-label">Developer</div>
-          <a className={`nav-item${activeTab === "quickstart"   ? " active" : ""}`} href="#" onClick={(e) => { e.preventDefault(); showTab("quickstart");   }}>
+          <a className={`nav-item${activeTab === "quickstart" ? " active" : ""}`} href="#" onClick={(e) => { e.preventDefault(); setActiveTab("quickstart"); }}>
             <svg className="ni" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="5" height="5" rx="1.2" stroke="currentColor" strokeWidth="1.2"/><rect x="8" y="1" width="5" height="5" rx="1.2" stroke="currentColor" strokeWidth="1.2"/><rect x="1" y="8" width="5" height="5" rx="1.2" stroke="currentColor" strokeWidth="1.2"/><rect x="8" y="8" width="5" height="5" rx="1.2" stroke="currentColor" strokeWidth="1.2"/></svg>
             Quick start
           </a>
-          <a className={`nav-item${activeTab === "keys" ? " active" : ""}`} href="#" onClick={(e) => { e.preventDefault(); showTab("keys"); }}>
+          <a className={`nav-item${activeTab === "keys" ? " active" : ""}`} href="#" onClick={(e) => { e.preventDefault(); setActiveTab("keys"); }}>
             <svg className="ni" viewBox="0 0 14 14" fill="none"><circle cx="4.5" cy="6" r="2.5" stroke="currentColor" strokeWidth="1.2"/><path d="M7 6h6M10 6v2M12 6v2" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/></svg>
             API keys
           </a>
-          <a className={`nav-item${activeTab === "results" ? " active" : ""}`} href="#" onClick={(e) => { e.preventDefault(); showTab("results"); }}>
+          <a className={`nav-item${activeTab === "results" ? " active" : ""}`} href="#" onClick={(e) => { e.preventDefault(); setActiveTab("results"); }}>
             <svg className="ni" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" strokeWidth="1.2"/><circle cx="7" cy="7" r="2" stroke="currentColor" strokeWidth="1.2"/></svg>
             Scan results
           </a>
-          <a className={`nav-item${activeTab === "usage"   ? " active" : ""}`} href="#" onClick={(e) => { e.preventDefault(); showTab("usage");   }}>
+          <a className={`nav-item${activeTab === "usage" ? " active" : ""}`} href="#" onClick={(e) => { e.preventDefault(); setActiveTab("usage"); }}>
             <svg className="ni" viewBox="0 0 14 14" fill="none"><path d="M1 10L4 6l3 2 3-4 3 3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
             Usage &amp; limits
           </a>
@@ -480,26 +346,21 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
         </nav>
 
         <div className="sidebar-footer">
-          {/* TODO: replace BILLING values with live API data */}
           <div className="credit-row">
-            <strong>{BILLING.remaining} scans left</strong>
-            <span>{BILLING.scansLimit.toLocaleString()}/mo</span>
+            <strong>{usageLoading ? "—" : usageData.scans_remaining.toLocaleString()} scans left</strong>
+            <span>{usageData.scans_limit.toLocaleString()}/mo</span>
           </div>
           <div className="credit-track">
             <div className="credit-fill" style={{ width: `${creditPct}%` }} />
           </div>
-          <div className="credit-sub">Renews {BILLING.resetsOn} · {BILLING.plan}</div>
+          <div className="credit-sub">Renews {usageData.reset_date} · {usageData.plan_name ?? "API"}</div>
           <div className="user-row">
             <div className="avatar">{initials}</div>
             <div>
               <div className="user-name">{name}</div>
               <div className="user-role">{role}</div>
             </div>
-            <button
-              className="logout-btn"
-              title="Sign out"
-              onClick={() => onSignOut()}
-            >
+            <button className="logout-btn" title="Sign out" onClick={onSignOut}>
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                 <path d="M5 2H2.5A1.5 1.5 0 001 3.5v7A1.5 1.5 0 002.5 12H5M9 10l3-3-3-3M13 7H5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
@@ -510,14 +371,14 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
 
       {/* ── MAIN ── */}
       <main className="main">
-        {/* Tab bar */}
         <div className="tabs">
-          <button id="tab-btn-quickstart"   className={`tab-btn${activeTab === "quickstart"   ? " active" : ""}`} onClick={() => showTab("quickstart")}>Quick start</button>
-          <button id="tab-btn-keys" className={`tab-btn${activeTab === "keys" ? " active" : ""}`} onClick={() => showTab("keys")}>API keys</button>
-          <button id="tab-btn-results" className={`tab-btn${activeTab === "results" ? " active" : ""}`} onClick={() => showTab("results")}>Scan results</button>
-          <button id="tab-btn-usage"   className={`tab-btn${activeTab === "usage"   ? " active" : ""}`} onClick={() => showTab("usage")}>Usage &amp; limits</button>
+          <button className={`tab-btn${activeTab === "quickstart" ? " active" : ""}`} onClick={() => setActiveTab("quickstart")}>Quick start</button>
+          <button className={`tab-btn${activeTab === "keys"       ? " active" : ""}`} onClick={() => setActiveTab("keys")}>API keys</button>
+          <button className={`tab-btn${activeTab === "results"    ? " active" : ""}`} onClick={() => setActiveTab("results")}>Scan results</button>
+          <button className={`tab-btn${activeTab === "usage"      ? " active" : ""}`} onClick={() => setActiveTab("usage")}>Usage &amp; limits</button>
         </div>
 
+        {/* ── KEYS TAB ── */}
         {activeTab === "keys" && (
           <div className="tab-panel active fade-up">
             <div className="page-tag">RealAPI · API keys</div>
@@ -551,7 +412,7 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
               </div>
             </div>
 
-            {/* STEP 01 — Install SDK */}
+            {/* STEP 01 */}
             <div className="step">
               <div className="step-num">01</div>
               <div className="step-body">
@@ -559,32 +420,20 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
                   <div className="step-title">Install the SDK</div>
                   <div className="lang-toggle">
                     {(["ts", "py", "curl"] as Lang[]).map((l) => (
-                      <button
-                        key={l}
-                        className={`lang-btn${activeLang === l ? " active" : ""}`}
-                        onClick={() => setActiveLang(l)}
-                      >
+                      <button key={l} className={`lang-btn${activeLang === l ? " active" : ""}`} onClick={() => setActiveLang(l)}>
                         {l === "ts" ? "TypeScript" : l === "py" ? "Python" : "cURL"}
                       </button>
                     ))}
                   </div>
                 </div>
-                <div className="step-desc">
-                  Install the Deeptrack client library and authenticate with your RealAPI key.
-                </div>
+                <div className="step-desc">Install the Deeptrack client library and authenticate with your RealAPI key.</div>
 
                 {lang.install && (
                   <div className="install-row">
                     {lang.install.map((pill) => (
                       <div key={pill.pm} className="install-pill">
-                        <span>
-                          <span className="pm">{pill.pm}</span>{" "}
-                          <span className="pn">{pill.pkg}</span>
-                        </span>
-                        <button
-                          className={`copy-btn${copied === pill.pkg ? " ok" : ""}`}
-                          onClick={() => handleCopy(pill.pkg, `${pill.pm} ${pill.pkg}`)}
-                        >
+                        <span><span className="pm">{pill.pm}</span> <span className="pn">{pill.pkg}</span></span>
+                        <button className={`copy-btn${copied === pill.pkg ? " ok" : ""}`} onClick={() => handleCopy(pill.pkg, `${pill.pm} ${pill.pkg}`)}>
                           {copied === pill.pkg ? "Copied!" : "Copy"}
                         </button>
                       </div>
@@ -596,10 +445,7 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
                   <div className="code-header">
                     <div className="code-dots"><span /><span /><span /></div>
                     <span className="code-fname">{lang.fname}</span>
-                    <button
-                      className={`copy-btn${copied === "code-body" ? " ok" : ""}`}
-                      onClick={() => handleCopy("code-body", lang.body)}
-                    >
+                    <button className={`copy-btn${copied === "code-body" ? " ok" : ""}`} onClick={() => handleCopy("code-body", lang.body)}>
                       {copied === "code-body" ? "Copied!" : "Copy"}
                     </button>
                   </div>
@@ -608,14 +454,12 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
               </div>
             </div>
 
-            {/* STEP 02 — Generate Key */}
+            {/* STEP 02 */}
             <div className="step">
               <div className="step-num">02</div>
               <div className="step-body">
                 <div className="step-title" style={{ marginBottom: 4 }}>Generate your API key</div>
-                <div className="step-desc">
-                  Your key authenticates every RealAPI request. Never expose it in client-side code.
-                </div>
+                <div className="step-desc">Your key authenticates every RealAPI request. Never expose it in client-side code.</div>
                 <div className="api-key-card">
                   <div>
                     <strong>Production key</strong>
@@ -631,43 +475,31 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
                   </button>
                 </div>
                 {generateKeyError && (
-                  <div style={{ marginTop: 10, color: "var(--red)", fontSize: 12.5 }}>
-                    {generateKeyError}
-                  </div>
+                  <div style={{ marginTop: 10, color: "var(--red)", fontSize: 12.5 }}>{generateKeyError}</div>
                 )}
                 {apiKey && (
                   <div style={{ marginTop: 10 }}>
                     <div className="code-block">
                       <div className="code-header">
                         <div className="code-dots"><span /><span /><span /></div>
-                        <span className="code-fname" style={{ color: "var(--amber)" }}>
-                          New key — copy now, it won't be shown again
-                        </span>
-                        <button
-                          className={`copy-btn${copied === "api-key" ? " ok" : ""}`}
-                          onClick={() => handleCopy("api-key", apiKey)}
-                        >
+                        <span className="code-fname" style={{ color: "var(--amber)" }}>New key — copy now, it won&apos;t be shown again</span>
+                        <button className={`copy-btn${copied === "api-key" ? " ok" : ""}`} onClick={() => handleCopy("api-key", apiKey)}>
                           {copied === "api-key" ? "Copied!" : "Copy"}
                         </button>
                       </div>
-                      <div className="code-body" style={{ color: "var(--blue-primary)", fontWeight: 700 }}>
-                        {apiKey}
-                      </div>
+                      <div className="code-body" style={{ color: "var(--blue-primary)", fontWeight: 700 }}>{apiKey}</div>
                     </div>
                   </div>
                 )}
               </div>
             </div>
 
-            {/* STEP 03 — View Scan Results */}
+            {/* STEP 03 */}
             <div className="step">
               <div className="step-num">03</div>
               <div className="step-body">
                 <div className="step-title" style={{ marginBottom: 4 }}>View your scan results</div>
-                <div className="step-desc">
-                  Once your integration is live, verdicts and confidence scores stream into the
-                  Scan results tab in real time.
-                </div>
+                <div className="step-desc">Once your integration is live, verdicts and confidence scores stream into the Scan results tab in real time.</div>
                 <div className="empty-state">
                   <div className="empty-icon">
                     <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -677,12 +509,8 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
                     </svg>
                   </div>
                   <h3>No scans yet</h3>
-                  <p>
-                    Complete steps 1 &amp; 2 then run your first scan. Results appear here and in the{" "}
-                    <a href="#" onClick={(e) => { e.preventDefault(); showTab("results"); }}>
-                      Scan results
-                    </a>{" "}
-                    tab.
+                  <p>Complete steps 1 &amp; 2 then run your first scan. Results appear here and in the{" "}
+                    <a href="#" onClick={(e) => { e.preventDefault(); setActiveTab("results"); }}>Scan results</a> tab.
                   </p>
                 </div>
               </div>
@@ -693,12 +521,7 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
               <div className="products-label">Deeptrack product suite</div>
               <div className="product-grid">
                 {PRODUCTS.map((p) => (
-                  <div
-                    key={p.name}
-                    className="product-card"
-                    onClick={() => showTab("results")}
-                    // TODO: replace showTab("results") with a product-specific route when ready
-                  >
+                  <div key={p.name} className="product-card" onClick={() => setActiveTab("results")}>
                     <div className="product-icon">{p.icon}</div>
                     <div className="product-name">{p.name}</div>
                     <div className="product-desc">{p.desc}</div>
@@ -715,7 +538,6 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
             <div className="page-tag">RealAPI · Scan results</div>
             <h1 className="page-title" style={{ marginBottom: 20 }}>Scan results</h1>
 
-            {/* TODO: replace STATS values with live API data */}
             <div className="stat-grid">
               <div className="stat-card"><div className="stat-label">Total scans</div><div className="stat-value blue">{STATS.totalScans.toLocaleString()}</div><div className="stat-sub">Last 30 days</div></div>
               <div className="stat-card"><div className="stat-label">Authentic</div><div className="stat-value green">{STATS.authentic.toLocaleString()}</div><div className="stat-sub">{((STATS.authentic / STATS.totalScans) * 100).toFixed(1)}% of scans</div></div>
@@ -726,15 +548,11 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
             <div className="table-wrap">
               <div className="table-head-bar">
                 <strong>Recent scans</strong>
-                {/* TODO: replace with live total count */}
                 <span>Showing {SCANS.length} of {STATS.totalScans.toLocaleString()}</span>
               </div>
               <table>
                 <thead>
-                  <tr>
-                    <th>File</th><th>Type</th><th>Product</th>
-                    <th>Verdict</th><th>Confidence</th><th>Time</th>
-                  </tr>
+                  <tr><th>File</th><th>Type</th><th>Product</th><th>Verdict</th><th>Confidence</th><th>Time</th></tr>
                 </thead>
                 <tbody>
                   {SCANS.map((s, i) => {
@@ -747,9 +565,7 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
                         <td><span className={`v-pill ${s.verdict}`}>{s.verdict}</span></td>
                         <td>
                           <div className="conf-wrap">
-                            <div className="conf-bg">
-                              <div className={`conf-fill${fillCls}`} style={{ width: `${Math.round(s.conf * 100)}%` }} />
-                            </div>
+                            <div className="conf-bg"><div className={`conf-fill${fillCls}`} style={{ width: `${Math.round(s.conf * 100)}%` }} /></div>
                             <span className="conf-pct">{Math.round(s.conf * 100)}%</span>
                           </div>
                         </td>
@@ -769,43 +585,52 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
             <div className="page-tag">RealAPI · Usage</div>
             <h1 className="page-title" style={{ marginBottom: 20 }}>Usage &amp; limits</h1>
 
-            {/* TODO: replace BILLING values with live API data */}
+            {usageError && (
+              <div style={{ background: "var(--amber-light)", border: "1px solid #f0a00030", borderRadius: 8, padding: "10px 16px", fontSize: 12.5, color: "var(--amber)", marginBottom: 20 }}>
+                {usageError}
+              </div>
+            )}
+
             <div className="stat-grid" style={{ gridTemplateColumns: "repeat(3, minmax(0, 1fr))" }}>
-              <div className="stat-card"><div className="stat-label">Scans used</div><div className="stat-value blue">{BILLING.scansUsed}</div><div className="stat-sub">of {BILLING.scansLimit.toLocaleString()} this month</div></div>
-              <div className="stat-card"><div className="stat-label">Remaining</div><div className="stat-value green">{BILLING.remaining}</div><div className="stat-sub">Resets {BILLING.resetsOn}</div></div>
-              <div className="stat-card"><div className="stat-label">Avg response</div><div className="stat-value">{BILLING.avgResponse}</div><div className="stat-sub">Last 7 days</div></div>
+              <div className="stat-card"><div className="stat-label">Scans used</div><div className="stat-value blue">{usageLoading ? "—" : usageData.scans_used.toLocaleString()}</div><div className="stat-sub">of {usageData.scans_limit.toLocaleString()} this month</div></div>
+              <div className="stat-card"><div className="stat-label">Remaining</div><div className="stat-value green">{usageLoading ? "—" : usageData.scans_remaining.toLocaleString()}</div><div className="stat-sub">Resets {usageData.reset_date}</div></div>
+              <div className="stat-card"><div className="stat-label">Avg response</div><div className="stat-value">{usageLoading ? "—" : `${(usageData.avg_response_ms / 1000).toFixed(1)}s`}</div><div className="stat-sub">Last 7 days</div></div>
             </div>
 
             <div className="table-wrap" style={{ marginTop: 0 }}>
               <div className="table-head-bar">
-                <strong>Usage by product</strong>
-                <span>Current billing period</span>
+                <strong>{usageData.usage_row_kind === "key" ? "Usage by API key" : "Usage by product"}</strong>
+                <span>{usageData.usage_period_label ?? "Current billing period"}</span>
               </div>
               <table>
                 <thead>
-                  <tr><th>Product</th><th>Scans</th><th>% of total</th><th>Avg confidence</th></tr>
+                  <tr>
+                    <th>{usageData.usage_row_kind === "key" ? "API key" : "Product"}</th>
+                    <th>Scans</th><th>% of total</th><th>Avg confidence</th>
+                  </tr>
                 </thead>
                 <tbody>
-                  {/* TODO: replace USAGE_BY_PRODUCT with live API data */}
-                  {USAGE_BY_PRODUCT.map((row) => (
-                    <tr key={row.product}>
-                      <td><strong>{row.product}</strong></td>
-                      <td>{row.scans}</td>
-                      <td>
-                        <div className="conf-wrap">
-                          <div className="conf-bg">
-                            <div className="conf-fill" style={{ width: `${row.pct}%` }} />
+                  {usageData.by_product.length === 0 ? (
+                    <tr><td colSpan={4} style={{ color: "var(--text-3)", fontSize: 13 }}>No usage recorded for this period.</td></tr>
+                  ) : (
+                    usageData.by_product.map((row) => (
+                      <tr key={row.name}>
+                        <td><strong>{row.name}</strong></td>
+                        <td>{row.scans}</td>
+                        <td>
+                          <div className="conf-wrap">
+                            <div className="conf-bg"><div className="conf-fill" style={{ width: `${row.pct}%` }} /></div>
+                            <span className="conf-pct">{row.pct}%</span>
                           </div>
-                          <span className="conf-pct">{row.pct}%</span>
-                        </div>
-                      </td>
-                      <td>
-                        <span style={{ fontFamily: "var(--mono)", fontSize: 12, color: "var(--blue-primary)", fontWeight: 700 }}>
-                          {row.avgConf.toFixed(2)}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
+                        </td>
+                        <td>
+                          <span style={{ fontFamily: "var(--mono)", fontSize: 12, color: "var(--blue-primary)", fontWeight: 700 }}>
+                            {usageData.usage_row_kind === "key" && row.avgConf === 0 ? "—" : row.avgConf.toFixed(2)}
+                          </span>
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>
@@ -821,15 +646,33 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
 // ─────────────────────────────────────────
 
 export default function ConsolePage() {
-  const [isSignedIn, setIsSignedIn] = useState(false);
+  const { isAuthenticated, isLoading, user, loginWithRedirect, logout, getAccessTokenSilently } = useAuth0();
   const [currentUser, setCurrentUser] = useState<DemoUser>({ name: "Developer" });
+
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      setCurrentUser({ name: user.name ?? user.email ?? "Developer" });
+    }
+  }, [isAuthenticated, user]);
+
+  if (isLoading) {
+    return (
+      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#F0F4F7" }}>
+        <div style={{ width: 24, height: 24, border: "2px solid #C4D6E0", borderTopColor: "#009FE3", borderRadius: "50%", animation: "spin 0.7s linear infinite" }} />
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    loginWithRedirect();
+    return null;
+  }
 
   return (
     <>
-      {/* All design tokens + component styles from v3 HTML - do not hardcode hex values in new code */}
       <style>{`
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
         :root {
           --blue-primary:  #009FE3;
           --blue-mid:      #4DB8E0;
@@ -852,51 +695,13 @@ export default function ConsolePage() {
           --green:         #059669;
           --green-light:   #ECFDF5;
           --code-bg:       #F8FAFB;
-          --code-kw:       #6366F1;
-          --code-str:      #C2410C;
-          --code-fn:       #0077B6;
-          --code-cm:       #9CA3AF;
-          --code-num:      #B45309;
           --sans: 'Space Grotesk', sans-serif;
           --mono: 'Space Mono', monospace;
         }
-
         html, body { height: 100%; }
         body { font-family: var(--sans); background: var(--bg); color: var(--text-1); line-height: 1.5; -webkit-font-smoothing: antialiased; }
-
-        /* AUTH GATE */
-        #auth-gate { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; background: var(--bg); position: relative; overflow: hidden; }
-        #auth-gate::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle, var(--border-mid) 1px, transparent 1px); background-size: 28px 28px; opacity: 0.6; pointer-events: none; }
-        #auth-gate::after  { content: ''; position: absolute; top: 30%; left: 50%; transform: translate(-50%,-50%); width: 700px; height: 500px; background: radial-gradient(ellipse, #009FE320 0%, transparent 65%); pointer-events: none; }
-        .auth-card { position: relative; z-index: 1; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 44px 48px; width: 100%; max-width: 440px; box-shadow: 0 4px 24px rgba(0,159,227,0.08), 0 1px 4px rgba(0,0,0,0.06); text-align: center; }
-        .auth-logo-wrap { display: flex; align-items: center; justify-content: center; margin-bottom: 32px; }
-        .auth-headline { font-size: 22px; font-weight: 700; color: var(--text-1); letter-spacing: -0.4px; margin-bottom: 8px; }
-        .auth-sub { font-size: 14px; color: var(--text-2); line-height: 1.65; margin-bottom: 32px; }
-        .auth-sub a { color: var(--blue-primary); text-decoration: none; font-weight: 500; }
-        .auth-sub a:hover { text-decoration: underline; }
-        .auth-btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 13px 20px; border-radius: 10px; font-size: 14px; font-weight: 600; font-family: var(--sans); cursor: pointer; transition: all 0.15s; margin-bottom: 10px; letter-spacing: -0.1px; }
-        .auth-btn:active { transform: scale(0.98); }
-        .auth-btn-google { background: var(--surface); color: var(--text-1); border: 1.5px solid var(--border-mid); }
-        .auth-btn-google:hover { background: var(--surface-2); border-color: var(--blue-primary); }
-        .auth-btn-auth0  { background: var(--blue-primary); color: #fff; border: 1.5px solid var(--blue-primary); }
-        .auth-btn-auth0:hover { background: var(--blue-deep); border-color: var(--blue-deep); }
-        .auth-divider { display: flex; align-items: center; gap: 12px; margin: 6px 0 16px; }
-        .auth-divider span { flex: 1; height: 1px; background: var(--border); }
-        .auth-divider em { font-style: normal; font-size: 12px; color: var(--text-3); }
-        .auth-loading { display: none; flex-direction: column; align-items: center; gap: 12px; padding: 8px 0; font-size: 13px; color: var(--text-2); }
-        .spinner { width: 20px; height: 20px; border: 2px solid var(--border-mid); border-top-color: var(--blue-primary); border-radius: 50%; animation: spin 0.7s linear infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .auth-terms { font-size: 11.5px; color: var(--text-3); margin-top: 20px; line-height: 1.6; }
-        .auth-terms a { color: var(--text-2); text-decoration: underline; }
-        .auth-back { margin-top: 16px; font-size: 13px; }
-        .auth-back a { color: var(--text-2); text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
-        .auth-back a:hover { color: var(--blue-primary); }
-
-        /* APP SHELL */
         #app { display: none; min-height: 100vh; }
         #app.visible { display: flex; }
-
-        /* SIDEBAR */
         .sidebar { width: 240px; flex-shrink: 0; background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
         .logo-area { padding: 18px 18px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
         .api-badge { font-size: 9.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; background: var(--blue-pale); color: var(--blue-primary); border: 1px solid var(--blue-pale2); padding: 3px 8px; border-radius: 20px; }
@@ -908,7 +713,6 @@ export default function ConsolePage() {
         .ni { width: 14px; height: 14px; opacity: 0.4; flex-shrink: 0; }
         .nav-item.active .ni { opacity: 1; color: var(--blue-primary); }
         .nav-item:hover .ni { opacity: 0.7; }
-        .nav-badge { margin-left: auto; font-size: 10px; font-weight: 500; background: var(--surface-2); color: var(--text-3); padding: 2px 7px; border-radius: 20px; border: 1px solid var(--border); }
         .sidebar-footer { padding: 16px 18px; border-top: 1px solid var(--border); }
         .credit-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; margin-bottom: 6px; }
         .credit-row strong { color: var(--text-1); font-weight: 600; }
@@ -922,42 +726,29 @@ export default function ConsolePage() {
         .user-role { font-size: 11px; color: var(--text-3); }
         .logout-btn { margin-left: auto; background: none; border: none; color: var(--text-3); cursor: pointer; padding: 4px; border-radius: 5px; transition: color 0.12s; display: flex; align-items: center; }
         .logout-btn:hover { color: var(--text-2); }
-
-        /* MAIN */
         .main { flex: 1; padding: 44px 52px; max-width: 880px; }
         .page-tag { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue-primary); margin-bottom: 6px; }
         .page-title { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; color: var(--text-1); margin-bottom: 6px; }
         .page-desc { font-size: 14px; color: var(--text-2); line-height: 1.65; max-width: 540px; margin-bottom: 28px; font-weight: 400; }
-
-        /* TABS */
         .tabs { display: flex; border-bottom: 1.5px solid var(--border); margin-bottom: 32px; }
         .tab-btn { padding: 10px 18px; font-size: 13.5px; font-weight: 500; color: var(--text-3); background: none; border: none; border-bottom: 2.5px solid transparent; margin-bottom: -1.5px; cursor: pointer; font-family: var(--sans); transition: all 0.12s; }
         .tab-btn:hover { color: var(--text-1); }
         .tab-btn.active { color: var(--blue-primary); border-bottom-color: var(--blue-primary); font-weight: 600; }
         .tab-panel { display: none; }
         .tab-panel.active { display: block; }
-
-        /* ALERT */
         .alert { background: var(--blue-pale); border: 1px solid var(--blue-pale2); border-left: 3px solid var(--blue-primary); border-radius: 10px; padding: 14px 18px; display: flex; align-items: center; gap: 13px; margin-bottom: 32px; font-size: 13.5px; color: var(--text-2); line-height: 1.55; }
         .alert-icon { width: 32px; height: 32px; background: var(--blue-pale2); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .alert a { color: var(--blue-primary); text-decoration: none; font-weight: 600; }
-        .alert a:hover { text-decoration: underline; }
         .alert strong { color: var(--text-1); }
-
-        /* STEPS */
         .step { display: flex; gap: 20px; margin-bottom: 30px; }
         .step-num { width: 34px; height: 34px; border-radius: 8px; background: var(--blue-pale); border: 1.5px solid var(--blue-pale2); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: var(--blue-primary); flex-shrink: 0; margin-top: 1px; font-family: var(--mono); }
         .step-body { flex: 1; }
         .step-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 4px; flex-wrap: wrap; }
         .step-title { font-size: 15px; font-weight: 700; color: var(--text-1); }
         .step-desc { font-size: 13.5px; color: var(--text-2); line-height: 1.6; margin-bottom: 14px; font-weight: 400; }
-
-        /* LANG TOGGLE */
         .lang-toggle { display: flex; gap: 2px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 3px; flex-shrink: 0; }
         .lang-btn { font-size: 11.5px; font-weight: 500; padding: 4px 11px; border-radius: 6px; border: none; background: transparent; color: var(--text-3); cursor: pointer; font-family: var(--sans); transition: all 0.12s; }
         .lang-btn.active { background: var(--surface); color: var(--text-1); font-weight: 600; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
-
-        /* CODE BLOCK */
         .code-block { background: var(--code-bg); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 10px; }
         .code-header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 9px 14px; display: flex; align-items: center; gap: 8px; }
         .code-dots { display: flex; gap: 5px; }
@@ -967,22 +758,16 @@ export default function ConsolePage() {
         .copy-btn:hover { border-color: var(--blue-primary); color: var(--blue-primary); }
         .copy-btn.ok { color: var(--green); border-color: #A7F3D0; }
         .code-body { padding: 16px 18px; font-size: 12.5px; font-family: var(--mono); line-height: 1.8; overflow-x: auto; white-space: pre; color: #374151; margin: 0; }
-
-        /* INSTALL ROW */
         .install-row { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
         .install-pill { flex: 1; min-width: 200px; background: var(--code-bg); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; font-family: var(--mono); font-size: 12.5px; color: var(--text-2); }
         .install-pill .pm { color: var(--text-3); margin-right: 6px; }
         .install-pill .pn { color: var(--blue-primary); font-weight: 700; }
-
-        /* API KEY CARD */
         .api-key-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
         .api-key-card strong { font-size: 14px; font-weight: 700; color: var(--text-1); display: block; margin-bottom: 3px; }
         .api-key-card p { font-size: 13px; color: var(--text-2); line-height: 1.5; }
         .generate-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--blue-primary); color: #fff; font-size: 13.5px; font-weight: 700; padding: 10px 20px; border-radius: 9px; border: none; cursor: pointer; font-family: var(--sans); transition: all 0.15s; white-space: nowrap; }
         .generate-btn:hover { background: var(--blue-deep); }
         .generate-btn:active { transform: scale(0.98); }
-
-        /* STATS */
         .stat-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 22px; }
         .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
         .stat-label { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-3); margin-bottom: 6px; }
@@ -992,8 +777,6 @@ export default function ConsolePage() {
         .stat-value.red   { color: var(--red); }
         .stat-value.amber { color: var(--amber); }
         .stat-sub { font-size: 11.5px; color: var(--text-3); margin-top: 5px; }
-
-        /* TABLE */
         .table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 16px; }
         .table-head-bar { padding: 12px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
         .table-head-bar strong { font-size: 13.5px; font-weight: 700; color: var(--text-1); }
@@ -1017,15 +800,11 @@ export default function ConsolePage() {
         .conf-fill.a { background: var(--amber); }
         .conf-pct { font-size: 11.5px; font-family: var(--mono); color: var(--text-3); min-width: 30px; text-align: right; }
         .type-pill { font-size: 11px; font-family: var(--mono); background: var(--surface-2); border: 1px solid var(--border); color: var(--text-2); padding: 2px 8px; border-radius: 5px; }
-
-        /* EMPTY STATE */
         .empty-state { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 48px 24px; text-align: center; }
         .empty-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--blue-pale); border: 1.5px solid var(--blue-pale2); display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; }
         .empty-state h3 { font-size: 15px; font-weight: 700; color: var(--text-1); margin-bottom: 6px; }
         .empty-state p  { font-size: 13.5px; color: var(--text-2); line-height: 1.65; max-width: 360px; margin: 0 auto; }
         .empty-state a  { color: var(--blue-primary); text-decoration: none; font-weight: 600; }
-
-        /* PRODUCTS */
         .products-section { margin-top: 36px; padding-top: 26px; border-top: 1px solid var(--border); }
         .products-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); margin-bottom: 12px; }
         .product-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
@@ -1034,17 +813,19 @@ export default function ConsolePage() {
         .product-icon { width: 28px; height: 28px; border-radius: 6px; background: var(--surface-2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
         .product-name { font-size: 12.5px; font-weight: 700; color: var(--text-1); margin-bottom: 2px; }
         .product-desc { font-size: 10.5px; color: var(--text-3); line-height: 1.4; }
-
-        /* UTILS */
         ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--border-mid); border-radius: 3px; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes spin { to { transform: rotate(360deg); } }
         .fade-up { animation: fadeUp 0.35s ease both; }
       `}</style>
 
-      {!isSignedIn && <AuthGate onSignIn={(user) => { setCurrentUser(user); setIsSignedIn(true); }} />}
-      {isSignedIn  && <AppShell userName={currentUser.name} onSignOut={() => setIsSignedIn(false)} />}
+      <AppShell
+        userName={currentUser.name}
+        onSignOut={() => logout({ logoutParams: { returnTo: window.location.origin } })}
+        getAccessTokenSilently={getAccessTokenSilently}
+      />
     </>
   );
 }

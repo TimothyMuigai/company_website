@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import {
   DEEPTRACK_ADMIN_BASE_URL,
   buildAdminHeaders,
@@ -7,10 +7,10 @@ import {
 } from "../../../../admin/_utils";
 
 export async function PATCH(
-  _request: Request,
+  request: NextRequest,
   { params }: { params: Promise<{ keyId: string }> },
 ) {
-  const configError = ensureAdminConfigured();
+  const configError = ensureAdminConfigured(request);
   if (configError) return configError;
 
   const { keyId } = await params;
@@ -18,7 +18,7 @@ export async function PATCH(
     `${DEEPTRACK_ADMIN_BASE_URL}/admin/keys/${keyId}/activate`,
     {
       method: "PATCH",
-      headers: buildAdminHeaders(),
+      headers: buildAdminHeaders(request),
       cache: "no-store",
     },
   );

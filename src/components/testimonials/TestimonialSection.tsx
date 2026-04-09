@@ -22,8 +22,13 @@ function TypingText({
     margin: "-40px", // safe for small screens
   });
   const shouldReduceMotion = useReducedMotion();
+  const [hasMounted, setHasMounted] = useState(false);
 
   const [displayedText, setDisplayedText] = useState("");
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   useEffect(() => {
     if (!isInView) return;
@@ -46,9 +51,11 @@ function TypingText({
   return (
     <p ref={ref} className={className}>
       {displayedText}
-      {!shouldReduceMotion && displayedText.length < text.length && (
-        <span className="inline-block w-[1px] h-5 bg-gray-800 ml-[2px] animate-pulse" />
-      )}
+      {hasMounted &&
+        !shouldReduceMotion &&
+        displayedText.length < text.length && (
+          <span className="inline-block w-[1px] h-5 bg-gray-800 ml-[2px] animate-pulse" />
+        )}
     </p>
   );
 }

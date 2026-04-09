@@ -29,7 +29,7 @@ export const SCANS: ScanRow[] = [
 ];
 
 // Real API endpoints from DeepTrack API reference
-export const API_BASE = process.env.NEXT_PUBLIC_DEEPTRACK_API_BASE_URL || 'https://facedetectionsystem-staging.onrender.com';
+export const API_BASE = process.env.NEXT_PUBLIC_DEEPTRACK_API_BASE_URL || 'https://facedetectionsystem-test-auth.onrender.com';
 
 export const ENDPOINTS = {
   health:       `${API_BASE}/v1/health`,
@@ -41,7 +41,7 @@ export const ENDPOINTS = {
   videoJob:     (id: string) => `${API_BASE}/v1/video/jobs/${id}`,
   videoReset:   `${API_BASE}/v1/video/reset`,
   videoWs:      'wss://api.deeptrack.io/v1/video/ws',
-  usageMe:      `${API_BASE}/v1/client/usage/me`,
+  usageMonth:   `${API_BASE}/usage/month`,
 } as const;
 
 // Code snippets per language — using real API shapes
@@ -49,11 +49,11 @@ export const CODE_SNIPPETS: Record<string, { fname: string; install: { pm: strin
   ts: {
     fname: 'index.ts',
     install: [
-      { pm: 'npm install', pkg: '@deeptrack/sdk' },
-      { pm: 'yarn add',    pkg: '@deeptrack/sdk' },
+      { pm: 'npm install', pkg: '@deeptrack' },
+      { pm: 'yarn add',    pkg: '@deeptrack' },
     ],
     body: [
-      "import { Deeptrack } from '@deeptrack/sdk';",
+      "import { Deeptrack } from '@deeptrack';",
       "",
       "const client = new Deeptrack({",
       "  apiKey:  'dt_live_••••••••••••••••',",

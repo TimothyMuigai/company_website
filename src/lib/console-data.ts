@@ -28,30 +28,31 @@ export const SCANS: ScanRow[] = [
   { file: 'profile_photo.png',    type: 'image',    product: 'Mirror',   verdict: 'manipulated', conf: 0.88, time: '2h ago' },
 ];
 
-export const API_BASE = process.env.NEXT_PUBLIC_DEEPTRACK_API_BASE_URL || 'https://facedetectionsystem-staging.onrender.com';
+export const API_BASE = process.env.NEXT_PUBLIC_DEEPTRACK_API_BASE_URL || 'https://facedetectionsystem-test-auth.onrender.com';
 
 export const ENDPOINTS = {
   health:       `${API_BASE}/v1/health`,
   status:       `${API_BASE}/v1/status`,
   imagePredict: `${API_BASE}/v1/image/predict`,
-  videoUpload:  `${API_BASE}/v1/video/predict/video`,
-  videoFrame:   `${API_BASE}/v1/video/predict/frame`,
+  videoUpload:  `${API_BASE}/v1/video/predict`,
+  videoFrame:   `${API_BASE}/v1/video/predict`,
   videoJobs:    `${API_BASE}/v1/video/jobs`,
   videoJob:     (id: string) => `${API_BASE}/v1/video/jobs/${id}`,
   videoReset:   `${API_BASE}/v1/video/reset`,
   videoWs:      'wss://api.deeptrack.io/v1/video/ws',
-  usageMe:      `${API_BASE}/v1/client/usage/me`,
+  /** Monthly usage for the authenticated API key (and per-key breakdown when `usage` map is returned). */
+  usageMonth:   `${API_BASE}/usage/month`,
 } as const;
 
 export const CODE_SNIPPETS: Record<string, { fname: string; install: { pm: string; pkg: string }[] | null; body: string }> = {
   ts: {
     fname: 'index.ts',
     install: [
-      { pm: 'npm install', pkg: '@deeptrack/sdk' },
-      { pm: 'yarn add',    pkg: '@deeptrack/sdk' },
+      { pm: 'npm install', pkg: '@deeptrack' },
+      { pm: 'yarn add',    pkg: '@deeptrack' },
     ],
     body: [
-      "import { Deeptrack } from '@deeptrack/sdk';",
+      "import { Deeptrack } from '@deeptrack';",
       "",
       "const client = new Deeptrack({",
       "  apiKey:  'dt_live_••••••••••••••••',",
