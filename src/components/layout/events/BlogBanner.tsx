@@ -29,7 +29,7 @@ export default function BlogBanner() {
                 src="/researchImage.jpg"
                 alt="Feature"
                 fill
-                className="object-cover"
+                className="object-contain"
               />
             </div>
 
