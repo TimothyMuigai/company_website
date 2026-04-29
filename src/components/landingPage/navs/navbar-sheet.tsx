@@ -89,7 +89,7 @@ export function NavbarSheet() {
             </DropdownMenu>
 
             {/* Research */}
-            <Link href='/events'>Research</Link>
+            <Link href='/research'>Research</Link>
             <Link href='/news'>News Center</Link>
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center space-x-2">
