@@ -169,7 +169,7 @@ export function Navigation({ isHome }: { isHome: boolean }) {
 
           {/* Research link */}
           <NavigationMenuLink asChild>
-            <NavLink href="/events" isHome={isHome}>
+            <NavLink href="/research" isHome={isHome}>
               Research
             </NavLink>
           </NavigationMenuLink>
