@@ -1,89 +1,58 @@
-'use client';  // Ensure this is a client component
+'use client';
 
-import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { features } from '@/data/blog';
-import { ArrowUpRight } from 'lucide-react';
 
-const categories = [
-    'ALL',
-    'CYBERSECURITY',
-    'KYC SECURITY',
-    'LAW ENFORCEMENT',
-    'MEDIA VERIFICATION',
-    'THREAT INTELLIGENCE',
-];
+export default function BlogBanner(){
+  return (
+    <section className="w-full py-20 bg-[#F9FAFB]">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
-const BlogBanner: React.FC = () => {
-    const [selectedCategory, setSelectedCategory] = useState('ALL');
+        {/* LEFT CONTENT */}
+        <div>
+          <h1 className="text-5xl lg:text-6xl font-light text-gray-800 leading-tight mb-6">
+            The Latest From the <br />
+            Deeptrack AI <br />
+            and Research Team
+          </h1>
 
-    const filteredFeatures = selectedCategory === 'ALL'
-        ? features
-        : features.filter((feature) => feature.category === selectedCategory);
-
-    return (
-        <div className="py-10 bg-[#111721]">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-                {/* Category Navigation */}
-                <nav className="flex flex-wrap justify-center space-x-4 mb-10 text-sm">
-                    {categories.map((category, index) => (
-                        <React.Fragment key={category}>
-                            <button
-                                onClick={() => setSelectedCategory(category)}
-                                className={`px-3 py-1 rounded-lg transition-colors ${selectedCategory === category
-                                        ? 'bg-white text-gray-700'
-                                        : 'text-gray-400 hover:text-white'
-                                    }`}
-                            >
-                                {category}
-                            </button>
-                            {index < categories.length - 1 && <span className="hidden sm:inline text-gray-400">|</span>}
-                        </React.Fragment>
-                    ))}
-                </nav>
-
-                {/* Blog Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 ">
-                    {filteredFeatures.map((feature, id) => (
-                        <div
-                            key={id}
-                            className="bg-[#192332] rounded-2xl shadow-md overflow-hidden transition-transform transform hover:-translate-y-1 hover:shadow-lg "
-                        >
-                            <div className="relative w-full h-56 ">
-                                <Image
-                                    src={feature.image}
-                                    alt={feature.title}
-                                    fill
-                                    className="object-cover"
-                                />
-                            </div>
-                            <div className="p-6 flex flex-col">
-                                <span className="text-xs text-gray-200 font-light mb-1">
-                                    {feature.category}
-                                </span>
-                                <h3 className="text-lg font-light mb-2 text-white line-clamp-2">
-                                    {feature.title}
-                                </h3>
-                                <p className="text-sm text-gray-500 mb-4 line-clamp-3">
-                                    {feature.description}
-                                </p>
-                                
-                                {/* Use Next.js <Link> to pass the blog ID */}
-                                <Link
-                                    href={`/blog/${feature.id}`}
-                                    className="text-white flex items-center mt-auto font-light hover:underline"
-                                >
-                                    Read <ArrowUpRight size={20} className="ml-1" />
-                                </Link>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
+          <p className="text-gray-700 text-lg max-w-xl">
+            Read publications about cutting-edge advancements in deepfake detection.
+          </p>
         </div>
-    );
-};
 
-export default BlogBanner;
+        {/* RIGHT FEATURE CARD */}
+        <div className="w-full">
+          <div className="bg-white rounded-xl overflow-hidden ">
+            <div className="relative w-full h-[280px]">
+              <Image
+                src="/documentImage.webp"
+                alt="Feature"
+                fill
+                className="object-cover"
+              />
+            </div>
+
+            <div className="p-6">
+              <p className="text-sm text-gray-700 mb-2">
+                Research | Oct 09, 2025
+              </p>
+
+              <h3 className="text-xl text-black font-light leading-snug">
+                PolyJuice Makes It Real: Black-Box, Universal Red Teaming for Synthetic Image Detectors
+              </h3>
+
+              <Link
+                href="/research"
+                className="inline-flex items-center mt-4 text-black hover:underline"
+              >
+                Read More →
+              </Link>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  );
+}

@@ -3,23 +3,21 @@
 import { Navbar } from "@/components/landingPage/navs/navBar"
 import { WaitlistButton } from "@/components/landingPage/waiting-list"
 import BlogBanner from "@/components/layout/events/BlogBanner"
-import EventsSection from "@/components/layout/events/EventSection"
 import WhyAttend from "@/components/layout/events/WhyAttendComponent"
 import ExploreSection from "@/components/layout/Explore"
 import FinalCTASection from "@/components/Footer"
+import ResearchGrid from "@/components/layout/events/ResearchSection"
 
 export default function BlogsAndResearch() {
     return (
         <>
             <Navbar />
             <section className="w-full space-y-16 flex flex-col items-center justify-center pt-6">
-                <h1 className="text-3xl md:text-4xl font-light tracking-tight text-gray-900">
-                    Deepfake Detection Blog & Industry Events
-                </h1>
-                <div className="px-4">
-                    <EventsSection />
-                </div>
+                {/* <h1 className="text-3xl md:text-4xl font-light tracking-tight text-gray-900">
+                    Deepfake Research
+                </h1> */}
                 <BlogBanner />
+                <ResearchGrid/>
                 <WhyAttend />
                 <div className="text-black">
                     <ExploreSection
