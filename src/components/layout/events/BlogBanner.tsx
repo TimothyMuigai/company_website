@@ -3,17 +3,17 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function BlogBanner(){
+export default function BlogBanner() {
   return (
-    <section className="w-full py-20 bg-[#F9FAFB]">
+    <section className="w-full py-3 bg-[#F9FAFB]">
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
         {/* LEFT CONTENT */}
         <div>
           <h1 className="text-5xl lg:text-6xl font-light text-gray-800 leading-tight mb-6">
-            The Latest From the <br />
-            Deeptrack AI <br />
-            and Research Team
+            The Latest From <br />
+            Deeptrack <br />
+            and the Research Team
           </h1>
 
           <p className="text-gray-700 text-lg max-w-xl">
@@ -23,10 +23,10 @@ export default function BlogBanner(){
 
         {/* RIGHT FEATURE CARD */}
         <div className="w-full">
-          <div className="bg-white rounded-xl overflow-hidden ">
+          <div className="bg-white rounded-xl overflow-hidden">
             <div className="relative w-full h-[280px]">
               <Image
-                src="/documentImage.webp"
+                src="/researchImage.jpg"
                 alt="Feature"
                 fill
                 className="object-cover"
@@ -35,15 +35,17 @@ export default function BlogBanner(){
 
             <div className="p-6">
               <p className="text-sm text-gray-700 mb-2">
-                Research | Oct 09, 2025
+                Research | April 9, 2026
               </p>
 
               <h3 className="text-xl text-black font-light leading-snug">
-                PolyJuice Makes It Real: Black-Box, Universal Red Teaming for Synthetic Image Detectors
+                The NACHA 2026 Fraud Rules and Deepfakes:
+                What Every Financial Institution Must Know
+                Before June 19
               </h3>
 
               <Link
-                href="/research"
+                href="/research/nacha-2026-fraud-rules"
                 className="inline-flex items-center mt-4 text-black hover:underline"
               >
                 Read More →

@@ -6,7 +6,6 @@ import BlogBanner from "@/components/layout/events/BlogBanner"
 import WhyAttend from "@/components/layout/events/WhyAttendComponent"
 import ExploreSection from "@/components/layout/Explore"
 import FinalCTASection from "@/components/Footer"
-import ResearchGrid from "@/components/layout/events/ResearchSection"
 
 export default function BlogsAndResearch() {
     return (
@@ -17,7 +16,6 @@ export default function BlogsAndResearch() {
                     Deepfake Research
                 </h1> */}
                 <BlogBanner />
-                <ResearchGrid/>
                 <WhyAttend />
                 <div className="text-black">
                     <ExploreSection

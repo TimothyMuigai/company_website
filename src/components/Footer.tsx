@@ -104,7 +104,8 @@ export default function FinalCTASection({ isGlobal = false }: FooterProps) {
                 {/* <Link href="/legal/privacy-policy">Privacy Policy</Link>
                 <Link href="/legal/terms-of-use">Terms of Use</Link>
                 <Link href="/legal/service-level-agreement">Service Level Agreement</Link> */}
-                <Link href="https://docs.google.com/document/d/1jSyNPxKrabOBlZxi8kf0eRsjsAyo6G5vFCLDhY6ockE/edit?pli=1&tab=t.0" target="_blank" rel="noopener noreferrer">Legal Center</Link>
+                {/* <Link href="https://docs.google.com/document/d/1jSyNPxKrabOBlZxi8kf0eRsjsAyo6G5vFCLDhY6ockE/edit?pli=1&tab=t.0" target="_blank" rel="noopener noreferrer">Legal Center</Link> */}
+                <Link href="/legal">Legal Center</Link>
               </div>
             </div>
           </div>
