@@ -1,4 +1,5 @@
 import clientPromise from "@/lib/mongoDB";
+import crypto from "crypto";
 
 export async function POST(request: Request) {
     try {
@@ -23,6 +24,9 @@ export async function POST(request: Request) {
             );
         }
 
+        // Generate unique access token for news centre
+        const accessToken = crypto.randomBytes(32).toString("hex");
+
         const dbName = process.env.MONGODB_DB;
 
         if (clientPromise && dbName) {
@@ -38,6 +42,8 @@ export async function POST(request: Request) {
                             email,
                             institution,
                             message,
+                            accessToken,
+                            approved: true,
                             updatedAt: new Date(),
                         },
                         $setOnInsert: {
@@ -56,7 +62,11 @@ export async function POST(request: Request) {
         }
 
         return new Response(
-            JSON.stringify({ message: "Submission successful" }),
+            JSON.stringify({ 
+                message: "Submission successful", 
+                accessToken,
+                accessGranted: true
+            }),
             { status: 200 }
         );
     } catch (error) {

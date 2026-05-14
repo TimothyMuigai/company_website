@@ -14,11 +14,13 @@ export default function News() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
+  const [accessToken, setAccessToken] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
     setSuccess("");
+    setAccessToken("");
     setLoading(true);
 
     try {
@@ -36,16 +38,11 @@ export default function News() {
       const data = await res.json();
 
       if (res.ok) {
-        setSuccess("Thank you! Your request has been received.");
+        setSuccess("Thank you! Your access has been granted.");
+        setAccessToken(data.accessToken || "");
         setName("");
         setInstitution("");
         setEmail("");
-        
-        window.open(process.env.NEXT_PUBLIC_AIRTABLE_LINK, "_blank");
-        // const airtableLink = process.env.NEXT_PUBLIC_AIRTABLE_LINK;
-        // if (airtableLink) {
-        //   window.open(airtableLink, "_blank");
-        // }
       } else {
         setLoading(false);
         setError(data.message || "Submission failed. Try again.");
@@ -133,7 +130,26 @@ export default function News() {
 
               {/* Feedback Messages */}
               {success && (
-                <p className="text-green-600 text-sm">{success}</p>
+                <div className="bg-green-50 border border-green-200 rounded-lg p-4 space-y-3">
+                  <p className="text-green-700 text-sm font-medium">{success}</p>
+                  {accessToken && (
+                    <div className="space-y-2">
+                      <p className="text-sm text-gray-700">Your Access Code:</p>
+                      <code className="block bg-white border border-green-300 rounded px-3 py-2 text-sm text-gray-900 font-mono break-all">
+                        {accessToken}
+                      </code>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          navigator.clipboard.writeText(accessToken);
+                        }}
+                        className="text-xs text-green-700 hover:text-green-900 underline"
+                      >
+                        Copy to Clipboard
+                      </button>
+                    </div>
+                  )}
+                </div>
               )}
               {error && (
                 <p className="text-red-600 text-sm">{error}</p>
