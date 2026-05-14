@@ -1,10 +1,11 @@
 "use client";
 
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Navbar } from "@/components/landingPage/navs/navBar";
 import FinalCTASection from "@/components/Footer";
 
-export default function NewsCentrePortal() {
+function PortalContent() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
 
@@ -107,5 +108,27 @@ export default function NewsCentrePortal() {
       </section>
       <FinalCTASection />
     </>
+  );
+}
+
+export default function NewsCentrePortal() {
+  return (
+    <Suspense
+      fallback={
+        <>
+          <Navbar />
+          <section className="w-full py-20">
+            <div className="max-w-4xl mx-auto px-6 lg:px-12">
+              <div className="text-center">
+                <p className="text-gray-600">Loading News Centre...</p>
+              </div>
+            </div>
+          </section>
+          <FinalCTASection />
+        </>
+      }
+    >
+      <PortalContent />
+    </Suspense>
   );
 }
