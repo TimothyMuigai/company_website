@@ -1,5 +1,3 @@
-"use client";
-
 import Hero from "./Hero";
 import { Navbar } from "@/components/landingPage/navs/navBar";
 import UseCasesSection from "../components/UseCaseSection";
@@ -12,9 +10,13 @@ import TestimonialsSection from "@/components/testimonials/TestimonialSection";
 import PricingSection from "@/components/pricing/PricingSection";
 import FAQSection from "@/components/faq/FaqSection";
 import Image from "next/image";
+import type { Metadata } from "next";
+import { homePageMeta } from "@/lib/seo/metadata";
 import TryApiSection from "@/components/ApiSection";
 import FinalCTASection from "@/components/Footer";
 // import Navbar from "./NavBar";
+
+export const metadata: Metadata = homePageMeta;
 
 export default function Home() {
   return (

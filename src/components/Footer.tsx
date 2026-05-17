@@ -47,9 +47,9 @@ export default function FinalCTASection({ isGlobal = false }: FooterProps) {
           </h2>
 
           <p className="mt-6 text-sm text-gray-300 leading-relaxed">
-            Deeptrack is an AI-powered deepfake detection platform for finance,
-            media, government, HR, and insurance helping organizations verify
-            digital content, prevent fraud, and protect trust.
+            Deeptrack is a global enterprise AI trust infrastructure platform for
+            finance, media, government, HR, and insurance helping organizations
+            verify digital content, prevent fraud, and protect trust worldwide.
           </p>
 
           <div className="mt-8 flex gap-4">

@@ -24,7 +24,7 @@ export default function PricingSection() {
           speed and scale
         </h2>
         <p className="mt-3 text-sm text-gray-500">
-          *Save 20% on yearly plans.
+          *Save 20% on yearly plans. Platform pricing is available for direct teams, with API pricing from $0.40 per scan and enterprise volume discounts.
         </p>
       </motion.div>
 

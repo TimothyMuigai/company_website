@@ -17,17 +17,20 @@ export default function Hero() {
         verification and deepfake detection.
       </p>
 
-      <div className="mt-10 flex gap-4">
-        <button className="rounded-md bg-white text-black px-6 py-3 text-sm font-medium hover:bg-gray-200 transition">
-          <Link href="https://gotham.deeptrack.io/signup" 
-                target="_blank" >Get started</Link>
-        </button>
+      <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <Link
+          href="https://gotham.deeptrack.io/signup"
+          target="_blank"
+          className="inline-flex items-center justify-center rounded-md bg-white px-6 py-3 text-sm font-medium text-black transition hover:bg-gray-200"
+        >
+          Get started
+        </Link>
 
-        <button 
+        <button
           className="rounded-md border border-white/30 px-6 py-3 text-sm hover:bg-white/10 transition"
           onClick={() => {
-            const section = document.getElementById("industries");
-            section?.scrollIntoView({ behavior: "smooth" });
+            const section = document.getElementById('industries')
+            section?.scrollIntoView({ behavior: 'smooth' })
           }}
         >
           View use cases

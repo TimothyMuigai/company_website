@@ -117,6 +117,12 @@ export function Navigation({ isHome }: { isHome: boolean }) {
                 <ListItem href="/solution/gotham" title="Gotham">
                   Gotham Enterprise — media verification SaaS for enterprises. Verify media at scale with credit-based scans and detailed reports.
                 </ListItem>
+                <ListItem href="/watchtower" title="Watchtower">
+                  Autonomous video intelligence for perimeter security, retail loss prevention and access control.
+                </ListItem>
+                <ListItem href="/sentinel" title="Sentinel">
+                  AI-powered KYC/KYB and synthetic identity detection for regulated financial services.
+                </ListItem>
 
               </ul>
             </NavigationMenuContent>
