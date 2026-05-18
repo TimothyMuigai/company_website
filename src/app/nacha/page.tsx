@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Navbar } from "@/components/landingPage/navs/navBar";
@@ -172,38 +173,53 @@ export default function NACHA() {
         <section className="relative overflow-hidden bg-slate-950 text-white">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(14,165,233,0.2),_transparent_45%),linear-gradient(180deg,rgba(15,23,42,0.9)_0%,rgba(15,23,42,0.95)_100%)]" />
           <div className="relative mx-auto max-w-7xl px-6 py-24 sm:py-28">
-            <div className="max-w-3xl space-y-8">
-              <p className="inline-flex rounded-full border border-slate-500 px-4 py-1 text-sm uppercase tracking-[0.25em] text-slate-300">
-                NACHA 2026 Compliance
-              </p>
-              <h1 className="text-4xl font-light tracking-tight sm:text-5xl lg:text-6xl">
-                NACHA 2026 Compliance Starts With Detecting AI-Generated Fraud
-              </h1>
-              <p className="text-lg leading-8 text-slate-300">
-                The June 19, 2026 NACHA operating rule changes require every ACH originator, ODFI, RDFI, payroll processor, and third-party sender to implement proactive, risk-based fraud monitoring. Deeptrack Gotham helps financial institutions detect deepfakes, synthetic identities, AI-generated documents, and impersonation fraud before fraudulent ACH transactions enter the network.
-              </p>
+            <div className="grid gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+              <div className="space-y-8">
+                <p className="inline-flex rounded-full border border-slate-500 px-4 py-1 text-sm uppercase tracking-[0.25em] text-slate-300">
+                  NACHA 2026 Compliance
+                </p>
+                <h1 className="text-4xl font-light tracking-tight sm:text-5xl lg:text-6xl">
+                  NACHA 2026 Compliance Starts With Detecting AI-Generated Fraud
+                </h1>
+                <p className="text-lg leading-8 text-slate-300">
+                  The June 19, 2026 NACHA operating rule changes require every ACH originator, ODFI, RDFI, payroll processor, and third-party sender to implement proactive, risk-based fraud monitoring. Deeptrack Gotham helps financial institutions detect deepfakes, synthetic identities, AI-generated documents, and impersonation fraud before fraudulent ACH transactions enter the network.
+                </p>
 
-              <div className="flex flex-col gap-4 sm:flex-row">
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center justify-center rounded-full bg-cyan-500 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
-                >
-                  Book a Demo
-                </Link>
-                <Link
-                  href="/resources/nacha-2026-checklist"
-                  className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white/95 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
-                >
-                  Download NACHA Compliance Checklist
-                </Link>
+                <div className="flex flex-col gap-4 sm:flex-row">
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center justify-center rounded-full bg-cyan-500 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-300"
+                  >
+                    Book a Demo
+                  </Link>
+                  <Link
+                    href="/resources/nacha-2026-checklist"
+                    className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white/95 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-slate-100"
+                  >
+                    Download NACHA Compliance Checklist
+                  </Link>
+                </div>
+
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  {trustHighlights.map((item) => (
+                    <div key={item} className="rounded-3xl border border-white/10 bg-white/5 p-5 text-sm text-slate-100 shadow-lg shadow-slate-950/10">
+                      {item}
+                    </div>
+                  ))}
+                </div>
               </div>
 
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                {trustHighlights.map((item) => (
-                  <div key={item} className="rounded-3xl border border-white/10 bg-white/5 p-5 text-sm text-slate-100 shadow-lg shadow-slate-950/10">
-                    {item}
-                  </div>
-                ))}
+              <div className="mx-auto w-full max-w-xl overflow-hidden rounded-[2rem] border border-white/10 bg-slate-900/80 p-4 shadow-xl shadow-slate-950/30">
+                <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[1.5rem]">
+                  <Image
+                    src="/step5.jpeg"
+                    alt="Enterprise deepfake detection and AI content verification"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover"
+                    priority
+                  />
+                </div>
               </div>
             </div>
           </div>

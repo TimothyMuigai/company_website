@@ -131,38 +131,6 @@ export const nacahaMeta: Metadata = {
   },
 }
 
-export const watchtowerMeta: Metadata = {
-  title: 'Deeptrack Watchtower | Autonomous Video Intelligence & Deepfake-Resistant Security',
-  description:
-    'Deeptrack Watchtower is an autonomous video intelligence platform for perimeter intrusion, retail theft, identity access control, and crowd anomaly detection. Built for enterprises that need AI-driven security evidence and compound behavioral detection.',
-  keywords: [
-    'autonomous video intelligence',
-    'video deepfake detection',
-    'Watchtower video security',
-    'perimeter intrusion detection',
-    'retail theft detection AI',
-    'identity access control AI',
-    'crowd anomaly detection',
-    'enterprise video security platform',
-    'AI security operations',
-    'Deeptrack Watchtower',
-  ],
-  alternates: { canonical: `${BASE_URL}/watchtower` },
-  openGraph: {
-    title: 'Deeptrack Watchtower | Autonomous Video Intelligence & Deepfake-Resistant Security',
-    description:
-      'Deeptrack Watchtower is an autonomous video intelligence platform for perimeter intrusion, retail theft, identity access control, and crowd anomaly detection. Built for enterprises that need AI-driven security evidence and compound behavioral detection.',
-    url: `${BASE_URL}/watchtower`,
-    type: 'article',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Deeptrack Watchtower | Autonomous Video Intelligence & Deepfake-Resistant Security',
-    description:
-      'Deeptrack Watchtower is an autonomous video intelligence platform for perimeter intrusion, retail theft, identity access control, and crowd anomaly detection.',
-    images: ['/og-image.png'],
-  },
-}
 export const sentinelMeta: Metadata = {
   title: 'Deeptrack Sentinel | AI KYC, KYB, and Synthetic Identity Detection',
   description:

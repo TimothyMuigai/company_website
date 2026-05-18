@@ -18,12 +18,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
-      url: `${BASE_URL}/watchtower`,
-      lastModified: now,
-      changeFrequency: 'monthly',
-      priority: 0.9,
-    },
-    {
       url: `${BASE_URL}/sentinel`,
       lastModified: now,
       changeFrequency: 'monthly',
