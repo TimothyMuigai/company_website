@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/portal/', '/api/'],
       },
     ],
-    sitemap: 'https://deeptrack.io/sitemap.xml',
-    host: 'https://deeptrack.io',
+    sitemap: 'https://www.deeptrack.io/sitemap.xml',
+    host: 'https://www.deeptrack.io',
   }
 }

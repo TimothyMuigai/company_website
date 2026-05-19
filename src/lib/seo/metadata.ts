@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-const BASE_URL = 'https://deeptrack.io'
+const BASE_URL = 'https://www.deeptrack.io'
 
 export const SITE_NAME = 'Deeptrack'
 export const TAGLINE = 'Enterprise deepfake detection for financial institutions, media, and governments worldwide'

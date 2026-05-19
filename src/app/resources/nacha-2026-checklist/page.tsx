@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: 'NACHA 2026 Checklist | Deeptrack Gotham',
   description:
     'Access a practical NACHA 2026 compliance checklist for ACH originators, ODFIs, RDFIs, payroll processors, and fintechs preparing for AI-enabled fraud monitoring.',
-  alternates: { canonical: 'https://deeptrack.io/resources/nacha-2026-checklist' },
+  alternates: { canonical: 'https://www.deeptrack.io/resources/nacha-2026-checklist' },
 }
 
 const checklistHighlights = [

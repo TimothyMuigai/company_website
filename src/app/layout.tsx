@@ -26,8 +26,8 @@ export default function RootLayout({
               '@context': 'https://schema.org',
               '@type': 'Organization',
               name: 'Deeptrack Inc.',
-              url: 'https://deeptrack.io',
-              logo: 'https://deeptrack.io/logos/deeptrack-high-resolution-logo-transparent.png',
+              url: 'https://www.deeptrack.io',
+              logo: 'https://www.deeptrack.io/logos/deeptrack-high-resolution-logo-transparent.png',
               description:
                 'Global enterprise AI deepfake detection and content authenticity platform for financial institutions, media organizations, and governments worldwide.',
               foundingDate: '2024',
