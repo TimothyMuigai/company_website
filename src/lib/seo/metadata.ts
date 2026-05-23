@@ -65,7 +65,7 @@ export const rootMetadata: Metadata = {
     description: DESCRIPTION,
     images: [
       {
-        url: '/og-image.png',
+        url: '/step5.jpeg',
         width: 1200,
         height: 630,
         alt: 'Deeptrack — Enterprise Deepfake Detection Platform',
@@ -78,7 +78,7 @@ export const rootMetadata: Metadata = {
     creator: '@deeptrck',
     title: `${SITE_NAME} | ${TAGLINE}`,
     description: DESCRIPTION,
-    images: ['/og-image.png'],
+    images: ['/step5.jpeg'],
   },
   alternates: {
     canonical: BASE_URL,
@@ -127,7 +127,7 @@ export const nacahaMeta: Metadata = {
     title: 'NACHA 2026 Compliance for ACH Fraud & Deepfake Detection | Deeptrack Gotham',
     description:
       'Prepare for the June 19, 2026 NACHA fraud monitoring rules with proactive AI trust and fraud detection from Deeptrack Gotham.',
-    images: ['/og-image.png'],
+    images: ['/step5.jpeg'],
   },
 }
 
@@ -158,6 +158,6 @@ export const sentinelMeta: Metadata = {
     title: 'Deeptrack Sentinel | AI KYC, KYB, and Synthetic Identity Detection',
     description:
       'Deeptrack Sentinel combines deepfake-resistant identity verification, liveness detection, and synthetic identity detection for banks, fintechs, payroll providers, and regulated enterprises.',
-    images: ['/og-image.png'],
+    images: ['/step5.jpeg'],
   },
 }
