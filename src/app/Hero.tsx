@@ -35,6 +35,13 @@ export default function Hero() {
         >
           View use cases
         </button>
+
+        <Link
+          href="/nacha"
+          className="inline-flex items-center justify-center rounded-md border border-white/30 px-6 py-3 text-sm hover:bg-white/10 transition"
+        >
+          View NACHA page
+        </Link>
       </div>
     </section>
   );

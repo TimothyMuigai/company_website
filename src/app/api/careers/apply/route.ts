@@ -137,6 +137,14 @@ export async function POST(req: Request) {
       </div>
     `;
 
+    const adminAttachments = [
+      {
+        filename: cvFile.name,
+        content: cvBuffer,
+        content_type: cvFile.type || 'application/octet-stream',
+      },
+    ];
+
     // Email Template for Applicant (Confirmation)
     const applicantEmailHtml = `
       <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -176,6 +184,13 @@ export async function POST(req: Request) {
         to: ADMIN_EMAIL,
         subject: `New Application: ${jobTitle} - ${firstName} ${lastName}`,
         html: adminEmailHtml,
+        attachments: [
+          {
+            filename: cvFile.name,
+            content: cvBuffer,
+            contentType: cvFile.type || 'application/octet-stream',
+          },
+        ],
       });
     } catch (emailError) {
       console.error("Failed to send admin email:", emailError);
