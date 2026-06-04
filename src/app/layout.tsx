@@ -1,5 +1,6 @@
 import { ConvexClientProvider } from "@/lib/convex-client-provider";
 import { AuthProvider } from "@/lib/auth-context";
+import { PostHogProvider } from "@/components/observability/PostHogProvider";
 import { ClerkProvider } from "@clerk/nextjs";
 import FinalCTASection from "@/components/Footer";
 import type { Metadata } from "next";
@@ -89,12 +90,14 @@ export default function RootLayout({
           }}
         />
         <ClerkProvider>
-          <ConvexClientProvider>
-            <AuthProvider>
-              {children}
-              <FinalCTASection isGlobal />
-            </AuthProvider>
-          </ConvexClientProvider>
+          <PostHogProvider>
+            <ConvexClientProvider>
+              <AuthProvider>
+                {children}
+                <FinalCTASection isGlobal />
+              </AuthProvider>
+            </ConvexClientProvider>
+          </PostHogProvider>
         </ClerkProvider>
       </body>
     </html>
