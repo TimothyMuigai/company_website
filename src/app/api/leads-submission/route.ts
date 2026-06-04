@@ -177,9 +177,15 @@ export async function POST(req: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
-    console.error("Leads submission error:", error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error("Leads submission error:", errorMessage);
+    console.error("Full error:", error);
+    
     return NextResponse.json(
-      { message: "Something went wrong. Please try again." },
+      { 
+        message: "Something went wrong. Please try again.",
+        details: process.env.NODE_ENV === "development" ? errorMessage : undefined
+      },
       { status: 500 }
     );
   }

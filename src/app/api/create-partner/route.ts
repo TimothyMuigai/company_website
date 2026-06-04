@@ -84,10 +84,12 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error: any) {
-    console.error("Error creating partner account:", error);
+    const errorMessage = error?.message || String(error);
+    console.error("Error creating partner account:", errorMessage);
+    console.error("Full error:", error);
 
     // Handle specific Convex errors
-    if (error.message.includes("already exists")) {
+    if (errorMessage.includes("already exists")) {
       return NextResponse.json(
         { error: "Email already in use" },
         { status: 409 }
@@ -95,7 +97,10 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(
-      { error: error.message || "Failed to create partner account" },
+      { 
+        error: errorMessage || "Failed to create partner account",
+        details: process.env.NODE_ENV === "development" ? errorMessage : undefined
+      },
       { status: 500 }
     );
   }
