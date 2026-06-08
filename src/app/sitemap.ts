@@ -163,14 +163,14 @@ const staticPages: MetadataRoute.Sitemap = [
 export default function sitemap(): MetadataRoute.Sitemap {
   const blogPages: MetadataRoute.Sitemap = features.map((feature) => ({
     url: `${BASE_URL}${feature.link}`,
-    lastModified: feature.publishedAt ? new Date(feature.publishedAt) : now,
+    lastModified: now,
     changeFrequency: 'monthly' as const,
     priority: 0.6,
   }))
 
   const careerPages: MetadataRoute.Sitemap = jobs.map((job) => ({
     url: `${BASE_URL}/career/${job.slug}`,
-    lastModified: job.updatedAt ? new Date(job.updatedAt) : now,
+    lastModified: now,
     changeFrequency: 'monthly' as const,
     priority: 0.5,
   }))
