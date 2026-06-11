@@ -12,7 +12,7 @@
 
 // TODO: re-enable Clerk once keys are configured
 // import { useUser, useClerk, useSignIn } from "@clerk/nextjs";
-import React, { useState, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import ApiKeysTab from "@/components/admin/ApiKeysTab";
 
 // ─────────────────────────────────────────
@@ -49,101 +49,77 @@ interface UsageStat {
   avgConf: number;
 }
 
+interface KeyUsage {
+  api_key_preview: string;
+  scans_used: number;
+  status: string;
+  created_at: string;
+  plan: string;
+}
+
+interface UsageResponse {
+  keys: KeyUsage[];
+  total_scans: number;
+}
+
 // ─────────────────────────────────────────
 // Demo / placeholder data
 // Replace these with real API calls.
 // ─────────────────────────────────────────
 
-// TODO: fetch from  GET /api/scans  authenticated with the user's token
-const SCANS: Scan[] = [
-  { file: "kyc_upload_2841.jpg",  type: "image",    product: "Sentinel", verdict: "manipulated", conf: 0.97, time: "2m ago"  },
-  { file: "press_release_v2.mp4", type: "video",    product: "Atlas",    verdict: "authentic",   conf: 0.89, time: "5m ago"  },
-  { file: "claims_doc_1194.pdf",  type: "document", product: "Foundry",  verdict: "uncertain",   conf: 0.61, time: "12m ago" },
-  { file: "id_scan_front.jpg",    type: "image",    product: "Sentinel", verdict: "authentic",   conf: 0.96, time: "18m ago" },
-  { file: "ceo_interview.mp4",    type: "video",    product: "Gotham",   verdict: "manipulated", conf: 0.93, time: "34m ago" },
-  { file: "passport_scan.jpg",    type: "image",    product: "Sentinel", verdict: "authentic",   conf: 0.91, time: "41m ago" },
-  { file: "article_draft.html",   type: "text",     product: "Atlas",    verdict: "authentic",   conf: 0.78, time: "1h ago"  },
-  { file: "profile_photo.png",    type: "image",    product: "Mirror",   verdict: "manipulated", conf: 0.88, time: "2h ago"  },
-];
+// Live data will be fetched from server APIs; keep empty defaults here.
+const SCANS: Scan[] = [];
 
-// TODO: fetch from  GET /api/usage  authenticated with the user's token
-const USAGE_BY_PRODUCT: UsageStat[] = [
-  { product: "Sentinel", scans: 142, pct: 50.7, avgConf: 0.91 },
-  { product: "Gotham",   scans: 88,  pct: 31.4, avgConf: 0.87 },
-  { product: "Atlas",    scans: 34,  pct: 12.1, avgConf: 0.83 },
-  { product: "Foundry",  scans: 16,  pct: 5.7,  avgConf: 0.79 },
-];
-
-// TODO: fetch from  GET /api/stats  authenticated with the user's token
-const STATS = {
-  totalScans:  2841,
-  authentic:   2104,
-  manipulated: 612,
-  uncertain:   125,
-};
-
-// TODO: fetch from  GET /api/billing  authenticated with the user's token
-const BILLING = {
-  scansUsed:   280,
-  scansLimit:  1000,
-  remaining:   720,
-  resetsOn:    "May 1, 2026",
-  plan:        "Enterprise",
-  avgResponse: "1.2s",
-};
+const USAGE_BY_PRODUCT: UsageStat[] = [];
 
 // ─────────────────────────────────────────
 // Code snippets (Step 01)
 // ─────────────────────────────────────────
 
+const GOTHAM_ENDPOINT = process.env.NEXT_PUBLIC_GOTHAM_ENDPOINT || "https://gotham.deeptrack.io/scan";
+
 const CODE: Record<Lang, { fname: string; install: { pm: string; pkg: string }[] | null; body: string }> = {
   ts: {
     fname: "index.ts",
-    install: [
-      { pm: "npm install", pkg: "@deeptrack/sdk" },
-      { pm: "yarn add",    pkg: "@deeptrack/sdk" },
-    ],
-    body: `import { Deeptrack } from '@deeptrack/sdk';
-
-const client = new Deeptrack({ apiKey: 'dt_live_••••••••••••••••' });
-
-// Scan media for deepfake manipulation
-const result = await client.scan({
-  type:    'image',
-  url:     'https://your-domain.com/media/photo.jpg',
-  product: 'sentinel', // 'sentinel' | 'atlas' | 'foundry' | 'gotham' | 'mirror'
+    install: null,
+    body: `const response = await fetch('%ENDPOINT%', {
+  method: 'POST',
+  headers: {
+    'x-api-key': '%KEY%',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({ file_url: 'https://example.com/video.mp4' }),
 });
 
-console.log(result.verdict);    // 'authentic' | 'manipulated' | 'uncertain'
-console.log(result.confidence); // 0.0 – 1.0
-console.log(result.signals);    // detection signal breakdown`,
+const result = await response.json();
+console.log(result);
+`,
   },
   py: {
     fname: "main.py",
-    install: [{ pm: "pip install", pkg: "deeptrack-sdk" }],
-    body: `from deeptrack import Deeptrack
+    install: [{ pm: "pip install", pkg: "requests" }],
+    body: `import requests
 
-client = Deeptrack(api_key="dt_live_••••••••••••••••")
-
-result = client.scan(
-  type="image",
-  url="https://your-domain.com/media/photo.jpg",
-  product="sentinel"
+response = requests.post(
+  "%ENDPOINT%",
+  headers={
+    "x-api-key": "%KEY%",
+    "Content-Type": "application/json",
+  },
+  json={"file_url": "https://example.com/video.mp4"},
 )
 
-print(result.verdict)    # 'authentic' | 'manipulated' | 'uncertain'
-print(result.confidence) # 0.0 – 1.0`,
+print(response.json())
+`,
   },
   curl: {
     fname: "terminal",
     install: null,
-    body: `curl https://api.deeptrack.io/v1/scan \\
-  -H "Authorization: Bearer dt_live_••••••••••••••••" \\
-  -H "Content-Type: application/json" \\
-  -d '{"type":"image","url":"https://your-domain.com/photo.jpg","product":"sentinel"}'
-
-# Response
-{ "verdict": "manipulated", "confidence": 0.94, "scan_id": "sc_01j8x...", "signals": [...] }`,
+    body: `curl -X POST %ENDPOINT% \
+  -H 'x-api-key: %KEY%' \
+  -H 'Content-Type: application/json' \
+  -d '{"file_url":"https://example.com/video.mp4"}'
+`,
   },
 };
 
@@ -355,14 +331,14 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
   const [apiKey, setApiKey]           = useState<string | null>(null);
   const [isGeneratingKey, setIsGeneratingKey] = useState(false);
   const [generateKeyError, setGenerateKeyError] = useState<string | null>(null);
+  const [usageData, setUsageData] = useState<UsageResponse | null>(null);
+  const [usageError, setUsageError] = useState<string | null>(null);
   const [copied, setCopied]           = useState<string | null>(null); // tracks which copy button
+  const [revoking, setRevoking] = useState<string | null>(null);
 
   const name     = userName;
   const initials = getInitials(name);
-  const role     = "Developer · Deeptrack";
-
-  // Credit bar percentage
-  const creditPct = Math.round((BILLING.scansUsed / BILLING.scansLimit) * 100);
+  const role     = "";
 
   function showTab(tab: Tab) {
     setActiveTab(tab);
@@ -373,55 +349,75 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
     setGenerateKeyError(null);
 
     try {
-      const usersResponse = await fetch("/api/admin/users", { cache: "no-store" });
-      const usersPayload = await usersResponse.json();
-      if (!usersResponse.ok) {
-        const usersErr = usersPayload?.error || usersPayload?.details?.detail || "Failed to load users";
-        throw new Error(typeof usersErr === "string" ? usersErr : JSON.stringify(usersErr));
-      }
-
-      const users = (usersPayload?.users || []) as AdminUserRecord[];
-      if (users.length === 0) {
-        throw new Error("No users found. Create at least one user before generating keys.");
-      }
-
-      const matchedUser =
-        users.find((u) => u.name?.toLowerCase() === name.toLowerCase()) || users[0];
-
-      const response = await fetch("/api/admin/keys", {
+      const response = await fetch("/api/generate-key", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          owner: name || matchedUser.name,
-          user_id: matchedUser.id,
-          track: "api",
-          plan: "starter",
+          clientId: name,
+          clientName: name,
         }),
       });
 
       const payload = await response.json();
       if (!response.ok) {
-        const detail = payload?.details?.detail;
-        const firstDetail = Array.isArray(detail) && detail.length > 0 ? detail[0]?.msg : undefined;
-        const err = payload?.error || firstDetail || detail || "Failed to generate key";
-        throw new Error(typeof err === "string" ? err : JSON.stringify(err));
+        throw new Error(payload?.error || "Failed to generate key");
       }
 
-      const rawKey = payload?.key || payload?.api_key;
+      const rawKey = payload?.api_key;
       if (!rawKey || typeof rawKey !== "string") {
-        throw new Error("Key not returned by /keys endpoint");
+        throw new Error("Key not returned by /api/generate-key");
       }
 
       setApiKey(rawKey);
       sessionStorage.setItem("dt_api_key", rawKey);
+      await fetchUsage();
     } catch (error) {
       setGenerateKeyError(error instanceof Error ? error.message : "Failed to generate key");
     } finally {
       setIsGeneratingKey(false);
     }
   }
+
+  async function fetchUsage() {
+    try {
+      setUsageError(null);
+      const response = await fetch(`/api/usage?clientId=${encodeURIComponent(name)}`, { cache: "no-store" });
+      const payload = await response.json();
+      if (!response.ok) {
+        throw new Error(payload?.error || "Failed to load usage data");
+      }
+      setUsageData(payload);
+    } catch (error) {
+      setUsageError(error instanceof Error ? error.message : "Failed to load usage");
+    }
+  }
+
+  async function handleRevoke(apiKeyPreview: string) {
+    if (!confirm("Revoke this API key? This cannot be undone.")) return;
+    try {
+      setRevoking(apiKeyPreview);
+      setUsageError(null);
+      const response = await fetch("/api/revoke-key", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ api_key_preview: apiKeyPreview }),
+      });
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload?.error || "Failed to revoke key");
+      await fetchUsage();
+    } catch (err) {
+      setUsageError(err instanceof Error ? err.message : "Failed to revoke key");
+    } finally {
+      setRevoking(null);
+    }
+  }
+
+  useEffect(() => {
+    if (!name) return;
+    void fetchUsage();
+  }, [name]);
 
   const handleCopy = useCallback(async (id: string, text: string) => {
     await copyToClipboard(text);
@@ -430,6 +426,11 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
   }, []);
 
   const lang = CODE[activeLang];
+  const codeBody = lang.body
+    .replace(/%ENDPOINT%/g, GOTHAM_ENDPOINT)
+    .replace(/%KEY%/g, apiKey || "dt_live_••••••••••••••••");
+
+  const keyRows = usageData?.keys ?? [];
 
   return (
     <div id="app" className="visible">
@@ -479,33 +480,7 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
           </a>
         </nav>
 
-        <div className="sidebar-footer">
-          {/* TODO: replace BILLING values with live API data */}
-          <div className="credit-row">
-            <strong>{BILLING.remaining} scans left</strong>
-            <span>{BILLING.scansLimit.toLocaleString()}/mo</span>
-          </div>
-          <div className="credit-track">
-            <div className="credit-fill" style={{ width: `${creditPct}%` }} />
-          </div>
-          <div className="credit-sub">Renews {BILLING.resetsOn} · {BILLING.plan}</div>
-          <div className="user-row">
-            <div className="avatar">{initials}</div>
-            <div>
-              <div className="user-name">{name}</div>
-              <div className="user-role">{role}</div>
-            </div>
-            <button
-              className="logout-btn"
-              title="Sign out"
-              onClick={() => onSignOut()}
-            >
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path d="M5 2H2.5A1.5 1.5 0 001 3.5v7A1.5 1.5 0 002.5 12H5M9 10l3-3-3-3M13 7H5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </button>
-          </div>
-        </div>
+        {/* sidebar footer removed per request */}
       </aside>
 
       {/* ── MAIN ── */}
@@ -598,12 +573,12 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
                     <span className="code-fname">{lang.fname}</span>
                     <button
                       className={`copy-btn${copied === "code-body" ? " ok" : ""}`}
-                      onClick={() => handleCopy("code-body", lang.body)}
+                      onClick={() => handleCopy("code-body", codeBody)}
                     >
                       {copied === "code-body" ? "Copied!" : "Copy"}
                     </button>
                   </div>
-                  <pre className="code-body">{lang.body}</pre>
+                  <pre className="code-body">{codeBody}</pre>
                 </div>
               </div>
             </div>
@@ -656,6 +631,18 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
                     </div>
                   </div>
                 )}
+                <div style={{ marginTop: 14 }}>
+                  <div className="endpoint-row">
+                    <span>Endpoint:</span>
+                    <code>{GOTHAM_ENDPOINT}</code>
+                    <button
+                      className={`copy-btn${copied === "endpoint" ? " ok" : ""}`}
+                      onClick={() => handleCopy("endpoint", GOTHAM_ENDPOINT)}
+                    >
+                      {copied === "endpoint" ? "Copied!" : "Copy endpoint"}
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -715,51 +702,67 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
             <div className="page-tag">RealAPI · Scan results</div>
             <h1 className="page-title" style={{ marginBottom: 20 }}>Scan results</h1>
 
-            {/* TODO: replace STATS values with live API data */}
-            <div className="stat-grid">
-              <div className="stat-card"><div className="stat-label">Total scans</div><div className="stat-value blue">{STATS.totalScans.toLocaleString()}</div><div className="stat-sub">Last 30 days</div></div>
-              <div className="stat-card"><div className="stat-label">Authentic</div><div className="stat-value green">{STATS.authentic.toLocaleString()}</div><div className="stat-sub">{((STATS.authentic / STATS.totalScans) * 100).toFixed(1)}% of scans</div></div>
-              <div className="stat-card"><div className="stat-label">Manipulated</div><div className="stat-value red">{STATS.manipulated.toLocaleString()}</div><div className="stat-sub">{((STATS.manipulated / STATS.totalScans) * 100).toFixed(1)}% of scans</div></div>
-              <div className="stat-card"><div className="stat-label">Uncertain</div><div className="stat-value amber">{STATS.uncertain.toLocaleString()}</div><div className="stat-sub">{((STATS.uncertain / STATS.totalScans) * 100).toFixed(1)}% of scans</div></div>
-            </div>
-
-            <div className="table-wrap">
-              <div className="table-head-bar">
-                <strong>Recent scans</strong>
-                {/* TODO: replace with live total count */}
-                <span>Showing {SCANS.length} of {STATS.totalScans.toLocaleString()}</span>
+            {SCANS.length === 0 ? (
+              <div className="empty-state">
+                <div className="empty-icon">
+                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                    <circle cx="11" cy="11" r="8" stroke="#009FE3" strokeWidth="1.5"/>
+                    <circle cx="11" cy="11" r="3.5" stroke="#009FE3" strokeWidth="1.5"/>
+                    <circle cx="11" cy="11" r="1" fill="#009FE3"/>
+                  </svg>
+                </div>
+                <h3>No scans yet</h3>
+                <p>
+                  Complete the Quick start flow and run your first scan. Results will appear here once your integration sends a request to RealAPI.
+                </p>
               </div>
-              <table>
-                <thead>
-                  <tr>
-                    <th>File</th><th>Type</th><th>Product</th>
-                    <th>Verdict</th><th>Confidence</th><th>Time</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {SCANS.map((s, i) => {
-                    const fillCls = s.verdict === "manipulated" ? " r" : s.verdict === "uncertain" ? " a" : "";
-                    return (
-                      <tr key={i}>
-                        <td><span className="scan-fname">{s.file}</span></td>
-                        <td><span className="type-pill">{s.type}</span></td>
-                        <td style={{ fontSize: 13, color: "var(--text-2)" }}>{s.product}</td>
-                        <td><span className={`v-pill ${s.verdict}`}>{s.verdict}</span></td>
-                        <td>
-                          <div className="conf-wrap">
-                            <div className="conf-bg">
-                              <div className={`conf-fill${fillCls}`} style={{ width: `${Math.round(s.conf * 100)}%` }} />
-                            </div>
-                            <span className="conf-pct">{Math.round(s.conf * 100)}%</span>
-                          </div>
-                        </td>
-                        <td style={{ color: "var(--text-3)", fontSize: 12, whiteSpace: "nowrap" }}>{s.time}</td>
+            ) : (
+              <>
+                <div className="stat-grid">
+                  <div className="stat-card"><div className="stat-label">Total scans</div><div className="stat-value blue">{SCANS.length.toLocaleString()}</div><div className="stat-sub">Last 30 days</div></div>
+                  <div className="stat-card"><div className="stat-label">Authentic</div><div className="stat-value green">{SCANS.filter((scan) => scan.verdict === "authentic").length.toLocaleString()}</div><div className="stat-sub">of scans</div></div>
+                  <div className="stat-card"><div className="stat-label">Manipulated</div><div className="stat-value red">{SCANS.filter((scan) => scan.verdict === "manipulated").length.toLocaleString()}</div><div className="stat-sub">of scans</div></div>
+                  <div className="stat-card"><div className="stat-label">Uncertain</div><div className="stat-value amber">{SCANS.filter((scan) => scan.verdict === "uncertain").length.toLocaleString()}</div><div className="stat-sub">of scans</div></div>
+                </div>
+
+                <div className="table-wrap">
+                  <div className="table-head-bar">
+                    <strong>Recent scans</strong>
+                    <span>Showing {SCANS.length} of {SCANS.length}</span>
+                  </div>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>File</th><th>Type</th><th>Product</th>
+                        <th>Verdict</th><th>Confidence</th><th>Time</th>
                       </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
+                    </thead>
+                    <tbody>
+                      {SCANS.map((s, i) => {
+                        const fillCls = s.verdict === "manipulated" ? " r" : s.verdict === "uncertain" ? " a" : "";
+                        return (
+                          <tr key={i}>
+                            <td><span className="scan-fname">{s.file}</span></td>
+                            <td><span className="type-pill">{s.type}</span></td>
+                            <td style={{ fontSize: 13, color: "var(--text-2)" }}>{s.product}</td>
+                            <td><span className={`v-pill ${s.verdict}`}>{s.verdict}</span></td>
+                            <td>
+                              <div className="conf-wrap">
+                                <div className="conf-bg">
+                                  <div className={`conf-fill${fillCls}`} style={{ width: `${Math.round(s.conf * 100)}%` }} />
+                                </div>
+                                <span className="conf-pct">{Math.round(s.conf * 100)}%</span>
+                              </div>
+                            </td>
+                            <td style={{ color: "var(--text-3)", fontSize: 12, whiteSpace: "nowrap" }}>{s.time}</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </>
+            )}
           </div>
         )}
 
@@ -769,43 +772,56 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
             <div className="page-tag">RealAPI · Usage</div>
             <h1 className="page-title" style={{ marginBottom: 20 }}>Usage &amp; limits</h1>
 
-            {/* TODO: replace BILLING values with live API data */}
+            {usageError && (
+              <div style={{ marginBottom: 16, color: "var(--red)", fontSize: 13 }}>
+                {usageError}
+              </div>
+            )}
+
             <div className="stat-grid" style={{ gridTemplateColumns: "repeat(3, minmax(0, 1fr))" }}>
-              <div className="stat-card"><div className="stat-label">Scans used</div><div className="stat-value blue">{BILLING.scansUsed}</div><div className="stat-sub">of {BILLING.scansLimit.toLocaleString()} this month</div></div>
-              <div className="stat-card"><div className="stat-label">Remaining</div><div className="stat-value green">{BILLING.remaining}</div><div className="stat-sub">Resets {BILLING.resetsOn}</div></div>
-              <div className="stat-card"><div className="stat-label">Avg response</div><div className="stat-value">{BILLING.avgResponse}</div><div className="stat-sub">Last 7 days</div></div>
+              <div className="stat-card"><div className="stat-label">Scans used</div><div className="stat-value blue">{usageData?.total_scans ?? "—"}</div><div className="stat-sub">of {usageData ? "your plan" : "—"} this month</div></div>
+              <div className="stat-card"><div className="stat-label">Remaining</div><div className="stat-value green">{usageData ? "n/a" : "—"}</div><div className="stat-sub">Plan detail unavailable</div></div>
+              <div className="stat-card"><div className="stat-label">Avg response</div><div className="stat-value">{usageData ? "n/a" : "—"}</div><div className="stat-sub">Last 7 days</div></div>
             </div>
 
             <div className="table-wrap" style={{ marginTop: 0 }}>
               <div className="table-head-bar">
-                <strong>Usage by product</strong>
-                <span>Current billing period</span>
+                <strong>API keys</strong>
+                <span>Tracked by client</span>
               </div>
               <table>
                 <thead>
-                  <tr><th>Product</th><th>Scans</th><th>% of total</th><th>Avg confidence</th></tr>
+                  <tr><th>Key preview</th><th>Scans used</th><th>Status</th><th>Created</th><th>Plan</th><th>Actions</th></tr>
                 </thead>
                 <tbody>
-                  {/* TODO: replace USAGE_BY_PRODUCT with live API data */}
-                  {USAGE_BY_PRODUCT.map((row) => (
-                    <tr key={row.product}>
-                      <td><strong>{row.product}</strong></td>
-                      <td>{row.scans}</td>
+                  {keyRows.length ? keyRows.map((key) => (
+                    <tr key={key.api_key_preview}>
+                      <td><span className="scan-fname">{key.api_key_preview}</span></td>
+                      <td>{key.scans_used}</td>
+                      <td>{key.status}</td>
+                      <td>{key.created_at}</td>
+                      <td>{key.plan}</td>
                       <td>
-                        <div className="conf-wrap">
-                          <div className="conf-bg">
-                            <div className="conf-fill" style={{ width: `${row.pct}%` }} />
-                          </div>
-                          <span className="conf-pct">{row.pct}%</span>
-                        </div>
-                      </td>
-                      <td>
-                        <span style={{ fontFamily: "var(--mono)", fontSize: 12, color: "var(--blue-primary)", fontWeight: 700 }}>
-                          {row.avgConf.toFixed(2)}
-                        </span>
+                        {key.status === "revoked" ? (
+                          <span style={{ color: "var(--text-3)", fontSize: 13 }}>Revoked</span>
+                        ) : (
+                          <button
+                            className="copy-btn"
+                            onClick={() => handleRevoke(key.api_key_preview)}
+                            disabled={revoking !== null}
+                          >
+                            {revoking === key.api_key_preview ? "Revoking..." : "Revoke"}
+                          </button>
+                        )}
                       </td>
                     </tr>
-                  ))}
+                  )) : (
+                    <tr>
+                      <td colSpan={6} style={{ textAlign: "center", color: "var(--text-3)", padding: 20, fontSize: 13 }}>
+                        No API keys found. Generate a key in Quick start to begin tracking usage.
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>
@@ -967,6 +983,9 @@ export default function ConsolePage() {
         .copy-btn:hover { border-color: var(--blue-primary); color: var(--blue-primary); }
         .copy-btn.ok { color: var(--green); border-color: #A7F3D0; }
         .code-body { padding: 16px 18px; font-size: 12.5px; font-family: var(--mono); line-height: 1.8; overflow-x: auto; white-space: pre; color: #374151; margin: 0; }
+        .endpoint-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 12px; }
+        .endpoint-row span { font-size: 12.5px; color: var(--text-3); font-weight: 600; }
+        .endpoint-row code { background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-size: 12px; color: var(--text-1); }
 
         /* INSTALL ROW */
         .install-row { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }

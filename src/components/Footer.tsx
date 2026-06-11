@@ -15,7 +15,7 @@ export default function FinalCTASection({ isGlobal = false }: FooterProps) {
     return null;
   }
 
-  if (pathname?.startsWith("/portal")) {
+  if (pathname?.startsWith("/portal") || pathname?.startsWith("/console")) {
     return null;
   }
 

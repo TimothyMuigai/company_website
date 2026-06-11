@@ -38,7 +38,7 @@ export default function NACHAChecklistPage() {
               </p>
               <div className="flex flex-col gap-4 sm:flex-row">
                 <Link
-                  href="mailto:info@deeptrack.io?subject=Request%20NACHA%202026%20Checklist"
+                  href="mailto:bryan@deeptrack.io?subject=Request%20NACHA%202026%20Checklist"
                   className="inline-flex items-center justify-center rounded-full bg-cyan-500 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-400"
                 >
                   Request the Checklist
