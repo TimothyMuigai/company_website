@@ -13,8 +13,6 @@
 // TODO: re-enable Clerk once keys are configured
 // import { useUser, useClerk, useSignIn } from "@clerk/nextjs";
 import React, { useState, useEffect, useCallback } from "react";
-import ApiKeysTab from "@/components/admin/ApiKeysTab";
-
 // ─────────────────────────────────────────
 // Types
 // ─────────────────────────────────────────
@@ -58,8 +56,12 @@ interface KeyUsage {
 }
 
 interface UsageResponse {
-  keys: KeyUsage[];
-  total_scans: number;
+  plan?: string;
+  scan_count?: number;
+  monthly_limit?: number;
+  active?: boolean;
+  keys?: KeyUsage[];
+  total_scans?: number;
 }
 
 // ─────────────────────────────────────────
@@ -75,6 +77,17 @@ const USAGE_BY_PRODUCT: UsageStat[] = [];
 // ─────────────────────────────────────────
 // Code snippets (Step 01)
 // ─────────────────────────────────────────
+
+const DEEPTRACK_API_BASE =
+  process.env.NEXT_PUBLIC_DEEPTRACK_API_BASE_URL ||
+  "https://fridep38xb.execute-api.us-east-1.amazonaws.com/prod";
+
+// Use local Next.js API routes as a server-side proxy to avoid CORS
+const LOCAL_KEY_API = {
+  generate: `/api/generate-key`,
+  usage: `/api/usage`,
+  revoke: `/api/revoke-key`,
+} as const;
 
 const GOTHAM_ENDPOINT = process.env.NEXT_PUBLIC_GOTHAM_ENDPOINT || "https://gotham.deeptrack.io/scan";
 
@@ -137,16 +150,7 @@ const PRODUCTS = [
       </svg>
     ),
   },
-  {
-    name: "Atlas",
-    desc: "News fact-checking",
-    icon: (
-      <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
-        <circle cx="7" cy="7" r="5.5" stroke="#009FE3" strokeWidth="1.3" />
-        <circle cx="7" cy="7" r="2"   stroke="#009FE3" strokeWidth="1.3" />
-      </svg>
-    ),
-  },
+
   {
     name: "Foundry",
     desc: "Insurance fraud detection",
@@ -241,12 +245,11 @@ function AuthGate({ onSignIn }: { onSignIn: (user: DemoUser) => void }) {
       <div className="auth-card fade-up">
         {/* Logo */}
         <div className="auth-logo-wrap">
-          <svg width="200" height="44" viewBox="0 0 200 44" fill="none">
-            <text x="0" y="32" fontFamily="'Space Grotesk', sans-serif" fontSize="28" fontWeight="600" fill="#111827" letterSpacing="-0.5">deeptrack</text>
-            <rect x="166" y="8"  width="9"  height="28" rx="1.5" fill="#7EC8E3" />
-            <rect x="178" y="4"  width="9"  height="32" rx="1.5" fill="#4DB8E0" />
-            <rect x="190" y="0"  width="10" height="36" rx="1.5" fill="#009FE3" />
-          </svg>
+          <img
+            src="/logos/deeptrack-high-resolution-logo-transparent.png"
+            alt="Deeptrack"
+            className="auth-logo-img"
+          />
         </div>
 
         <h1 className="auth-headline">Sign in to RealAPI Console</h1>
@@ -329,6 +332,7 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
   const [activeTab, setActiveTab]     = useState<Tab>("quickstart");
   const [activeLang, setActiveLang]   = useState<Lang>("ts");
   const [apiKey, setApiKey]           = useState<string | null>(null);
+  const [apiKeyCreatedAt, setApiKeyCreatedAt] = useState<string | null>(null);
   const [isGeneratingKey, setIsGeneratingKey] = useState(false);
   const [generateKeyError, setGenerateKeyError] = useState<string | null>(null);
   const [usageData, setUsageData] = useState<UsageResponse | null>(null);
@@ -347,32 +351,42 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
   async function handleGenKey() {
     setIsGeneratingKey(true);
     setGenerateKeyError(null);
+    setUsageError(null);
 
     try {
-      const response = await fetch("/api/generate-key", {
+      const clientId = name.includes("@") ? name : "test-client";
+      const response = await fetch(LOCAL_KEY_API.generate, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          clientId: name,
+          clientId,
           clientName: name,
         }),
       });
 
       const payload = await response.json();
       if (!response.ok) {
-        throw new Error(payload?.error || "Failed to generate key");
+        throw new Error(payload?.error || payload?.message || "Failed to generate key");
       }
 
       const rawKey = payload?.api_key;
       if (!rawKey || typeof rawKey !== "string") {
-        throw new Error("Key not returned by /api/generate-key");
+        throw new Error("Key not returned by key generation endpoint");
       }
 
       setApiKey(rawKey);
+      setApiKeyCreatedAt(
+        new Date().toLocaleDateString(undefined, {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        }),
+      );
       sessionStorage.setItem("dt_api_key", rawKey);
-      await fetchUsage();
+      // Fetch usage from local usage endpoint by clientId
+      await fetchUsageForClient(clientId, rawKey);
     } catch (error) {
       setGenerateKeyError(error instanceof Error ? error.message : "Failed to generate key");
     } finally {
@@ -380,33 +394,55 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
     }
   }
 
-  async function fetchUsage() {
+  // Fetch usage for a given clientId using the local proxy
+  async function fetchUsageForClient(clientId?: string, key?: string) {
     try {
       setUsageError(null);
-      const response = await fetch(`/api/usage?clientId=${encodeURIComponent(name)}`, { cache: "no-store" });
+      const cid = clientId ?? (name.includes("@") ? name : "test-client");
+      if (!cid) return;
+
+      const response = await fetch(`${LOCAL_KEY_API.usage}?clientId=${encodeURIComponent(cid)}`, { cache: "no-store" });
       const payload = await response.json();
       if (!response.ok) {
-        throw new Error(payload?.error || "Failed to load usage data");
+        throw new Error(payload?.error || payload?.message || "Failed to load usage data");
       }
-      setUsageData(payload);
+
+      // Local /api/usage returns { keys: KeyUsage[], total_scans }
+      // Convert to the UsageResponse shape used by the UI
+      const keys = Array.isArray(payload.keys) ? payload.keys : [];
+      const first = keys[0];
+      const result = {
+        plan: first?.plan ?? "basic",
+        scan_count: first?.scans_used ?? payload.total_scans ?? 0,
+        monthly_limit: first?.monthly_limit ?? 0,
+        active: first ? first.status === "active" : true,
+        keys,
+        total_scans: payload.total_scans ?? 0,
+      } as UsageResponse;
+
+      setUsageData(result);
     } catch (error) {
       setUsageError(error instanceof Error ? error.message : "Failed to load usage");
     }
   }
 
-  async function handleRevoke(apiKeyPreview: string) {
+  async function handleRevoke() {
+    if (!apiKey) return;
     if (!confirm("Revoke this API key? This cannot be undone.")) return;
     try {
-      setRevoking(apiKeyPreview);
+      setRevoking(apiKey);
       setUsageError(null);
-      const response = await fetch("/api/revoke-key", {
+      const response = await fetch(LOCAL_KEY_API.revoke, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ api_key_preview: apiKeyPreview }),
+        body: JSON.stringify({ api_key: apiKey, api_key_preview: apiKey.slice(0, 12) + "..." }),
       });
       const payload = await response.json();
-      if (!response.ok) throw new Error(payload?.error || "Failed to revoke key");
-      await fetchUsage();
+      if (!response.ok) throw new Error(payload?.error || payload?.message || "Failed to revoke key");
+      setApiKey(null);
+      setUsageData(null);
+      setApiKeyCreatedAt(null);
+      sessionStorage.removeItem("dt_api_key");
     } catch (err) {
       setUsageError(err instanceof Error ? err.message : "Failed to revoke key");
     } finally {
@@ -416,7 +452,12 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
 
   useEffect(() => {
     if (!name) return;
-    void fetchUsage();
+    const storedKey = typeof window !== "undefined" ? sessionStorage.getItem("dt_api_key") : null;
+    if (storedKey) {
+      setApiKey(storedKey);
+      const clientId = name.includes("@") ? name : "test-client";
+      void fetchUsageForClient(clientId, storedKey);
+    }
   }, [name]);
 
   const handleCopy = useCallback(async (id: string, text: string) => {
@@ -430,19 +471,18 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
     .replace(/%ENDPOINT%/g, GOTHAM_ENDPOINT)
     .replace(/%KEY%/g, apiKey || "dt_live_••••••••••••••••");
 
-  const keyRows = usageData?.keys ?? [];
+  const currentKeyPreview = apiKey ? `${apiKey.slice(0, 12)}...` : null;
 
   return (
     <div id="app" className="visible">
       {/* ── SIDEBAR ── */}
       <aside className="sidebar">
         <div className="logo-area">
-          <svg width="140" height="28" viewBox="0 0 140 28" fill="none">
-            <text x="0" y="21" fontFamily="'Space Grotesk', sans-serif" fontSize="18" fontWeight="600" fill="#111827" letterSpacing="-0.3">deeptrack</text>
-            <rect x="107" y="5" width="6" height="18" rx="1" fill="#7EC8E3" />
-            <rect x="115" y="2" width="6" height="21" rx="1" fill="#4DB8E0" />
-            <rect x="123" y="0" width="7" height="24" rx="1" fill="#009FE3" />
-          </svg>
+          <img
+            src="/logos/deeptrack-high-resolution-logo-transparent.png"
+            alt="Deeptrack"
+            className="sidebar-logo-img"
+          />
           <span className="api-badge">RealAPI</span>
         </div>
 
@@ -497,7 +537,83 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
           <div className="tab-panel active fade-up">
             <div className="page-tag">RealAPI · API keys</div>
             <h1 className="page-title" style={{ marginBottom: 20 }}>API key management</h1>
-            <ApiKeysTab />
+            <p className="page-desc">
+              Generate and revoke keys from the Deeptrack gateway. Use your active key to authenticate requests.
+            </p>
+
+            {usageError && (
+              <div style={{ marginBottom: 16, color: "var(--red)", fontSize: 13 }}>
+                {usageError}
+              </div>
+            )}
+
+            {apiKey ? (
+              <>
+                <div className="api-key-card" style={{ marginBottom: 20 }}>
+                  <div>
+                    <strong>Active API key</strong>
+                    <p>Keep this key secret. Revoke it if it is compromised.</p>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+                    <div className="code-block" style={{ minWidth: 0, flex: 1 }}>
+                      <div className="code-header">
+                        <div className="code-dots"><span /><span /><span /></div>
+                        <span className="code-fname" style={{ color: "var(--amber)" }}>
+                          Key preview
+                        </span>
+                        <button
+                          className={`copy-btn${copied === "api-key" ? " ok" : ""}`}
+                          onClick={() => handleCopy("api-key", apiKey)}
+                        >
+                          {copied === "api-key" ? "Copied!" : "Copy"}
+                        </button>
+                      </div>
+                      <div className="code-body" style={{ color: "var(--blue-primary)", fontWeight: 700 }}>
+                        {`${apiKey.slice(0, 12)}...`}
+                      </div>
+                    </div>
+                    <button className="generate-btn" onClick={handleRevoke} disabled={revoking !== null}>
+                      {revoking !== null ? "Revoking..." : "Revoke key"}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="table-wrap">
+                  <div className="table-head-bar">
+                    <strong>Key details</strong>
+                    <span>Live from Deeptrack</span>
+                  </div>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Plan</th><th>Scans used</th><th>Limit</th><th>Status</th><th>Created</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>{usageData?.plan ?? "basic"}</td>
+                        <td>{usageData?.scan_count ?? "—"}</td>
+                        <td>{usageData?.monthly_limit?.toLocaleString() ?? "—"}</td>
+                        <td>{usageData ? (usageData.active ? "active" : "revoked") : "—"}</td>
+                        <td>{apiKeyCreatedAt ?? "just now"}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </>
+            ) : (
+              <div className="empty-state">
+                <div className="empty-icon">
+                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                    <circle cx="11" cy="11" r="8" stroke="#009FE3" strokeWidth="1.5"/>
+                    <circle cx="11" cy="11" r="3.5" stroke="#009FE3" strokeWidth="1.5"/>
+                    <circle cx="11" cy="11" r="1" fill="#009FE3"/>
+                  </svg>
+                </div>
+                <h3>No API key yet</h3>
+                <p>Generate a key in Quick start to manage it here and view usage.</p>
+              </div>
+            )}
           </div>
         )}
 
@@ -778,53 +894,48 @@ function AppShell({ onSignOut, userName }: { onSignOut: () => void; userName: st
               </div>
             )}
 
-            <div className="stat-grid" style={{ gridTemplateColumns: "repeat(3, minmax(0, 1fr))" }}>
-              <div className="stat-card"><div className="stat-label">Scans used</div><div className="stat-value blue">{usageData?.total_scans ?? "—"}</div><div className="stat-sub">of {usageData ? "your plan" : "—"} this month</div></div>
-              <div className="stat-card"><div className="stat-label">Remaining</div><div className="stat-value green">{usageData ? "n/a" : "—"}</div><div className="stat-sub">Plan detail unavailable</div></div>
-              <div className="stat-card"><div className="stat-label">Avg response</div><div className="stat-value">{usageData ? "n/a" : "—"}</div><div className="stat-sub">Last 7 days</div></div>
-            </div>
-
-            <div className="table-wrap" style={{ marginTop: 0 }}>
-              <div className="table-head-bar">
-                <strong>API keys</strong>
-                <span>Tracked by client</span>
+            {!apiKey ? (
+              <div className="empty-state">
+                <div className="empty-icon">
+                  <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                    <circle cx="11" cy="11" r="8" stroke="#009FE3" strokeWidth="1.5"/>
+                    <circle cx="11" cy="11" r="3.5" stroke="#009FE3" strokeWidth="1.5"/>
+                    <circle cx="11" cy="11" r="1" fill="#009FE3"/>
+                  </svg>
+                </div>
+                <h3>No API key connected</h3>
+                <p>Generate a key in the Quick start tab to view usage and limits.</p>
               </div>
-              <table>
-                <thead>
-                  <tr><th>Key preview</th><th>Scans used</th><th>Status</th><th>Created</th><th>Plan</th><th>Actions</th></tr>
-                </thead>
-                <tbody>
-                  {keyRows.length ? keyRows.map((key) => (
-                    <tr key={key.api_key_preview}>
-                      <td><span className="scan-fname">{key.api_key_preview}</span></td>
-                      <td>{key.scans_used}</td>
-                      <td>{key.status}</td>
-                      <td>{key.created_at}</td>
-                      <td>{key.plan}</td>
-                      <td>
-                        {key.status === "revoked" ? (
-                          <span style={{ color: "var(--text-3)", fontSize: 13 }}>Revoked</span>
-                        ) : (
-                          <button
-                            className="copy-btn"
-                            onClick={() => handleRevoke(key.api_key_preview)}
-                            disabled={revoking !== null}
-                          >
-                            {revoking === key.api_key_preview ? "Revoking..." : "Revoke"}
-                          </button>
-                        )}
-                      </td>
-                    </tr>
-                  )) : (
-                    <tr>
-                      <td colSpan={6} style={{ textAlign: "center", color: "var(--text-3)", padding: 20, fontSize: 13 }}>
-                        No API keys found. Generate a key in Quick start to begin tracking usage.
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
+            ) : (
+              <>
+                <div className="stat-grid" style={{ gridTemplateColumns: "repeat(3, minmax(0, 1fr))" }}>
+                  <div className="stat-card"><div className="stat-label">Scans used</div><div className="stat-value blue">{usageData?.scan_count ?? "—"}</div><div className="stat-sub">of {usageData?.monthly_limit?.toLocaleString() ?? "—"} this month</div></div>
+                  <div className="stat-card"><div className="stat-label">Remaining</div><div className="stat-value green">{usageData ? Math.max(0, (usageData.monthly_limit ?? 0) - (usageData.scan_count ?? 0)).toLocaleString() : "—"}</div><div className="stat-sub">Resets monthly</div></div>
+                  <div className="stat-card"><div className="stat-label">Status</div><div className={`stat-value ${usageData?.active ? "green" : "red"}`}>{usageData ? (usageData.active ? "Active" : "Revoked") : "—"}</div><div className="stat-sub">API key status</div></div>
+                </div>
+
+                <div className="table-wrap" style={{ marginTop: 0 }}>
+                  <div className="table-head-bar">
+                    <strong>Current key</strong>
+                    <span>Usage details</span>
+                  </div>
+                  <table>
+                    <thead>
+                      <tr><th>Key</th><th>Plan</th><th>Monthly limit</th><th>Used</th><th>Status</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><span className="scan-fname">{currentKeyPreview}</span></td>
+                        <td>{usageData?.plan ?? "basic"}</td>
+                        <td>{usageData?.monthly_limit?.toLocaleString() ?? "—"}</td>
+                        <td>{usageData?.scan_count ?? "—"}</td>
+                        <td>{usageData ? (usageData.active ? "active" : "revoked") : "—"}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </>
+            )}
           </div>
         )}
       </main>
@@ -886,6 +997,8 @@ export default function ConsolePage() {
         #auth-gate::after  { content: ''; position: absolute; top: 30%; left: 50%; transform: translate(-50%,-50%); width: 700px; height: 500px; background: radial-gradient(ellipse, #009FE320 0%, transparent 65%); pointer-events: none; }
         .auth-card { position: relative; z-index: 1; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 44px 48px; width: 100%; max-width: 440px; box-shadow: 0 4px 24px rgba(0,159,227,0.08), 0 1px 4px rgba(0,0,0,0.06); text-align: center; }
         .auth-logo-wrap { display: flex; align-items: center; justify-content: center; margin-bottom: 32px; }
+        .auth-logo-img { max-width: 220px; width: 100%; height: auto; }
+        .sidebar-logo-img { height: 24px; width: auto; display: block; }
         .auth-headline { font-size: 22px; font-weight: 700; color: var(--text-1); letter-spacing: -0.4px; margin-bottom: 8px; }
         .auth-sub { font-size: 14px; color: var(--text-2); line-height: 1.65; margin-bottom: 32px; }
         .auth-sub a { color: var(--blue-primary); text-decoration: none; font-weight: 500; }
