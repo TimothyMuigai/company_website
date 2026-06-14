@@ -53,23 +53,27 @@ Tracked automatically:
 
 ## Step 3 — Sentry keys
 
-1. Log in at https://sentry.io
-2. Create a project → platform **Next.js**
-3. Copy the **DSN** (looks like `https://xxx@xxx.ingest.sentry.io/xxx`)
+Your org: **deeptrack** — projects list: https://deeptrack.sentry.io/projects/
+
+1. Open the link above (log in if asked)
+2. Create or open project **`deeptrack-website`** → platform **Next.js**
+3. Go to **Settings → Client Keys (DSN)** and copy the DSN
 4. Paste into `.env.local`:
 
 ```
-NEXT_PUBLIC_SENTRY_DSN=https://your-dsn@sentry.io/project-id
-SENTRY_DSN=https://your-dsn@sentry.io/project-id
+NEXT_PUBLIC_SENTRY_DSN=https://your-dsn@o....ingest.us.sentry.io/...
+SENTRY_DSN=https://your-dsn@o....ingest.us.sentry.io/...
+SENTRY_ORG=deeptrack
+SENTRY_PROJECT=deeptrack-website
 ```
 
 Optional (for production source maps on Vercel):
 
 ```
-SENTRY_ORG=your-org-slug
-SENTRY_PROJECT=your-project-slug
 SENTRY_AUTH_TOKEN=your-auth-token
 ```
+
+Create token: https://sentry.io/settings/account/api/auth-tokens/ (scopes: `project:releases`, `org:read`)
 
 Get auth token: Sentry → Settings → Auth Tokens → Create (scopes: `project:releases`, `org:read`).
 
