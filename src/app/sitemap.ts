@@ -1,7 +1,6 @@
 import { MetadataRoute } from 'next'
 
 import { features } from '@/data/blog'
-import { jobs } from '@/data/jobs'
 
 const BASE_URL = 'https://www.deeptrack.io'
 const now = new Date()
@@ -78,12 +77,6 @@ const staticPages: MetadataRoute.Sitemap = [
     lastModified: now,
     changeFrequency: 'monthly',
     priority: 0.7,
-  },
-  {
-    url: `${BASE_URL}/career`,
-    lastModified: now,
-    changeFrequency: 'monthly',
-    priority: 0.6,
   },
   {
     url: `${BASE_URL}/legal`,

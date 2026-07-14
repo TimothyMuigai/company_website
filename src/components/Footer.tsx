@@ -96,7 +96,6 @@ export default function FinalCTASection({ isGlobal = false }: FooterProps) {
                 <Link href="/">Home</Link>
                 <Link href="/#industries">Use cases</Link>
                 <Link href="/about">About Us</Link>
-                <Link href="/career">Careers</Link>
                 <Link href="/contact">Contact</Link>
               </div>
               <div className="flex flex-wrap gap-x-6 gap-y-2">

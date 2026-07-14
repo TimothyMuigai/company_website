@@ -1,16 +1,11 @@
 "use client";
 
-import JobList from "@/components/careers/JobList";
 import { Navbar } from "@/components/landingPage/navs/navBar";
-import { jobs } from "@/data/jobs";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import FinalCTASection from "@/components/Footer";
 
 export default function Careers() {
-  const router = useRouter();
-
   return (
     <div className="space-y-6">
       <Navbar />
@@ -23,7 +18,7 @@ export default function Careers() {
             <p className="mt-4 text-lg leading-relaxed max-w-2xl text-gray-800">
               Our mission continues: we build tools to verify media and protect truth. Browse open roles below and apply online.
             </p>
-            <div className="flex gap-4 mt-6" onClick={() => router.back()}>
+            <div className="flex gap-4 mt-6">
               <Link
                 href="/"
                 className="border border-gray-700 bg-gray-300 text-gray-800 tracking-wide px-4 py-2 rounded hover:bg-white transition"
@@ -44,52 +39,6 @@ export default function Careers() {
         </div>
       </section>
 
-      {/* Featured internship banner */}
-      {(() => {
-        const featured = jobs.find((j) => j.slug === 'deepfakes-synthetic-media-research-intern');
-        if (!featured) return null;
-        return (
-          <section className="max-w-7xl mx-auto px-4">
-            <div className="border border-gray-700 text-black rounded-lg p-6 flex flex-col md:flex-row items-center gap-6 shadow-md">
-              
-              <div className="flex-1">
-                <h3 className="text-2xl text-gray-900">
-                  Media Research Intern
-                </h3>
-                <p className="text-gray-800 mt-2">
-                  {featured.title} — {featured.summary}
-                </p>
-                <div className="mt-4 flex gap-3">
-                  <Link 
-                    href={`/career/${featured.slug}`} 
-                    className="border border-gray-700 bg-gray-300 text-gray-800 tracking-wide px-4 py-2 rounded hover:bg-white transition">
-                      View role
-                  </Link>
-                  {featured.docUrl && (
-                    <a 
-                      href={featured.docUrl} download 
-                    className="border border-gray-700 bg-gray-300 text-gray-800 tracking-wide px-4 py-2 rounded hover:bg-white transition">                      
-                    Download JD
-                    </a>
-                  )}
-                </div>
-              </div>
-
-              <div className="w-40 h-40 rounded-lg flex items-center justify-center overflow-hidden">
-                <Image 
-                  src="/careers/Rectangle 30.png" 
-                  alt="Internship" 
-                  width={160} 
-                  height={160} 
-                  className="object-cover" 
-                />
-              </div>
-            </div>
-          </section>
-        );
-      })()}
-
-      <JobList />
       <FinalCTASection />
     </div>
   );
