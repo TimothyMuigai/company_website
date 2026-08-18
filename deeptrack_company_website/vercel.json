@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/docs",
+      "destination": "https://deeptrack.mintlify.dev/docs"
+    },
+    {
+      "source": "/docs/:match*",
+      "destination": "https://deeptrack.mintlify.dev/docs/:match*"
+    }
+  ]
+}
