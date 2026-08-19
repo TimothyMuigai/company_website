@@ -5,7 +5,10 @@ const MONGODB_URI = process.env.MONGODB_URI!;
 const MONGODB_DB = process.env.MONGODB_DB!;
 const MONGODB_TIMEOUT = 5000; // 5 second timeout
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+function getResend() {
+  const apiKey = process.env.RESEND_API_KEY;
+  return apiKey ? new Resend(apiKey) : null;
+}
 const FROM_EMAIL = "noreply@deeptrack.io";
 const ADMIN_EMAIL = "people@deeptrack.io";
 
@@ -176,6 +179,9 @@ export async function POST(req: Request) {
         </div>
       </div>
     `;
+
+    const resend = getResend();
+    if (-not ) { return new Response(JSON.stringify({ error: 'Email service is not configured' }), { status: 503 }); }
 
     // Send email to admin
     try {

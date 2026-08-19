@@ -2,7 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import clientPromise from "@/lib/mongoDB";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+function getResend() {
+  const apiKey = process.env.RESEND_API_KEY;
+  return apiKey ? new Resend(apiKey) : null;
+}
 const FROM_EMAIL = "noreply@deeptrack.io";
 const ADMIN_EMAIL = "bryan@deeptrack.io";
 
@@ -157,6 +160,9 @@ export async function POST(req: NextRequest) {
         </div>
       </div>
     `;
+
+    const resend = getResend();
+    if (-not ) { return NextResponse.json({ message: 'Email service is not configured' }, { status: 503 }); }
 
     // Send email to admin
     await resend.emails.send({
