@@ -1,0 +1,12 @@
+/** Deeptrack enterprise due-diligence design: visible, factual FAQ content paired with route-specific structured data. */
+const faqs = [
+  ["What does Deeptrack do?", "Deeptrack helps teams assess identity, media, documents, and AI-generated evidence before it enters a consequential workflow."],
+  ["Does Deeptrack replace human review?", "No. Deeptrack supports an owned review process with evidence context, escalation points, and a documented decision record."],
+  ["Which sectors does Deeptrack support?", "Deeptrack focuses on financial services, insurance, media, government, and flexible-workspace operations where digital evidence affects a consequential decision."],
+  ["Can Deeptrack fit an existing workflow?", "Yes. An engagement begins by mapping the evidence, decision owner, review steps, escalation path, and operational systems relevant to one workflow."],
+];
+
+export default function EnterpriseFaqSection() {
+  const structuredData = { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(([question, answer]) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })) };
+  return <section className="bg-[#F2F9FD]"><div className="mx-auto grid max-w-[1440px] gap-10 px-5 py-20 lg:grid-cols-[.8fr_1.2fr] lg:px-10 lg:py-28"><div><p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#0191DA]">Frequently asked questions</p><h2 className="mt-4 font-[family-name:var(--font-space-grotesk)] text-4xl font-medium tracking-[-0.05em]">Start with the decision, not a generic verdict.</h2><p className="mt-5 max-w-md text-base leading-7 text-[#808080]">These answers describe the enterprise due-diligence model used across the public site.</p></div><div className="border-t border-[#99D3F0]">{faqs.map(([question, answer]) => <details key={question} className="group border-b border-[#99D3F0] py-6"><summary className="flex cursor-pointer list-none items-start justify-between gap-6 font-[family-name:var(--font-space-grotesk)] text-xl font-medium text-[#333333] marker:content-none"><span>{question}</span><span className="text-[#0191DA] group-open:hidden">+</span><span className="hidden text-[#0191DA] group-open:block">−</span></summary><p className="max-w-2xl pt-4 text-sm leading-7 text-[#808080]">{answer}</p></details>)}</div></div><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} /></section>;
+}

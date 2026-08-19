@@ -1,0 +1,78 @@
+001: DEEPTRACK API CONSOLE - INTEGRATION DOCS
+002: ==========================================
+003: Prepared for: Ian
+004: Date: June 13, 2026
+005: 
+006: BASE URL
+007: --------
+008: https://fridep38xb.execute-api.us-east-1.amazonaws.com/prod
+009: 
+010: 
+011: 1. GENERATE API KEY
+012: -------------------
+013: Endpoint: POST /keys/generate
+014: Call when: User clicks "Generate Key" button
+015: 
+016: Request Body:
+017: {
+018:   "client_id": "user@email.com",
+019:   "plan": "basic"
+020: }
+021: 
+022: Response:
+023: {
+024:   "api_key": "dtk_xxxxxxxxxxxx",
+025:   "plan": "basic",
+026:   "monthly_limit": 1000
+027: }
+028: 
+029: Plans available:
+030: - "basic"      → 1000 scans/month
+031: - "enterprise" → unlimited scans
+032: 
+033: 
+034: 2. CHECK USAGE
+035: --------------
+036: Endpoint: GET /keys/usage?api_key=dtk_xxxxxxxxxxxx
+037: Call when: User loads dashboard to show stats
+038: 
+039: Response:
+040: {
+041:   "client_id": "user@email.com",
+042:   "plan": "basic",
+043:   "scan_count": 45,
+044:   "monthly_limit": 1000,
+045:   "active": true
+046: }
+047: 
+048: 
+049: 3. REVOKE API KEY
+050: -----------------
+051: Endpoint: DELETE /keys/revoke
+052: Call when: User clicks "Revoke Key" button
+053: 
+054: Request Body:
+055: {
+056:   "api_key": "dtk_xxxxxxxxxxxx"
+057: }
+058: 
+059: Response:
+060: {
+061:   "message": "Key revoked"
+062: }
+063: 
+064: 
+065: IMPORTANT NOTES FOR IAN
+066: ------------------------
+067: - Use the logged-in user's email as client_id (from Auth0/Google)
+068: - All requests need header: Content-Type: application/json
+069: - CORS is enabled - calls can be made directly from the browser
+070: - "active": false means key has been revoked
+071: - scan_count resets monthly (implement reset logic on your end)
+072: 
+073: 
+074: TEST KEY (for development only - delete after testing)
+075: ------------------------------------------------------
+076: api_key: dtk_536432e57f80349445e26372da96a61e749ddc341618469b9b7d6a0effcad19e
+077: client_id: test-client
+078: plan: basic

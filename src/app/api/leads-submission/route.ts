@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import clientPromise from "@/lib/mongoDB";
@@ -189,4 +190,9 @@ export async function POST(req: NextRequest) {
       { status: 500 }
     );
   }
+=======
+import { NextResponse } from 'next/server'
+export async function POST() {
+  return NextResponse.json({ message: 'Not implemented' }, { status: 501 })
+>>>>>>> origin/full-site-migration
 }

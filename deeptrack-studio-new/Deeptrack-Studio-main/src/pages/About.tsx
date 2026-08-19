@@ -1,0 +1,16 @@
+/** Design intent: Founder and parent-company credibility in a precise, evidence-led editorial layout. */
+import { ArrowUpRight } from "lucide-react";
+import { Seo } from "@/components/Seo";
+import { PageHeader, SiteLayout } from "@/components/SiteLayout";
+import { bookCallUrl } from "@/lib/content";
+
+export default function About() {
+  return (
+    <SiteLayout>
+      <Seo title="About Deeptrack Studio | Applied AI Engineering & Consulting" description="Meet the applied engineering and consulting arm of Deeptrack Inc., based in Nairobi and working with organizations globally." path="/about" schema={{ "@context": "https://schema.org", "@type": "AboutPage", name: "About Deeptrack Studio" }} />
+      <PageHeader eyebrow="About Deeptrack Studio" title="Built by people who ship AI systems, not just talk about them." summary="Deeptrack Studio is the applied engineering and consulting arm of Deeptrack Inc. The studio stays intentionally close to the technical work and the decisions that shape it." />
+      <section className="section section--open"><div className="content-shell about-grid"><article className="profile-card"><span className="profile-card__initial">B</span><p className="micro-label">Founder &amp; Senior Technical Engineer</p><h2>Bryan Koyundi</h2><p>Bryan is Founder and Senior Technical Engineer at Deeptrack Studio. He leads the studio’s technical direction and delivery across applied AI engineering, product, and trust-system work.</p><a className="text-link" href="https://www.linkedin.com/in/bryan-koyundi" target="_blank" rel="noreferrer">View Bryan’s LinkedIn <ArrowUpRight size={16} /></a></article><article className="profile-card"><span className="profile-card__initial">T</span><p className="micro-label">Lead AI Researcher</p><h2>Tauil Abd Elilah, PhD</h2><p>Tauil is Lead AI Researcher at Deeptrack Studio and holds a PhD in deep learning. His research spans artificial intelligence, data science, computer vision, natural language processing, and generative models.</p><a className="text-link" href="https://www.linkedin.com/in/tauil-abd-elilah-07696717" target="_blank" rel="noreferrer">View Tauil’s LinkedIn <ArrowUpRight size={16} /></a></article></div></section>
+      <section className="section section--tint"><div className="content-shell parent-story"><div><p className="micro-label">Why the studio exists</p><h2>Deeptrack Inc. builds trust infrastructure. Deeptrack Studio brings that technical rigor into client engagements.</h2></div><div><p>Deeptrack Inc. focuses on deepfake detection, synthetic-media verification, and identity assurance for financial institutions, media organizations, and governments. Deeptrack Studio applies that same seriousness to engineering, strategy, product, executive training, and research work for clients facing hard applied-AI questions.</p><p>That relationship keeps the Studio connected to active technical questions while giving clients a partner that can frame and deliver work around their actual operating constraints.</p><a className="text-link" href="https://deeptrack.io" target="_blank" rel="noreferrer">Explore Deeptrack Inc. <ArrowUpRight size={16} /></a></div></div></section>
+    </SiteLayout>
+  );
+}
