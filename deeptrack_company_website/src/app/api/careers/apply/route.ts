@@ -181,7 +181,7 @@ export async function POST(req: Request) {
     `;
 
     const resend = getResend();
-    if (-not ) { return new Response(JSON.stringify({ error: 'Email service is not configured' }), { status: 503 }); }
+    if (!resend) { return new Response(JSON.stringify({ error: 'Email service is not configured' }), { status: 503 }); }
 
     // Send email to admin
     try {

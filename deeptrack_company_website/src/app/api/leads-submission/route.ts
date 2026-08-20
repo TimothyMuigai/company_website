@@ -162,7 +162,7 @@ export async function POST(req: NextRequest) {
     `;
 
     const resend = getResend();
-    if (-not ) { return NextResponse.json({ message: 'Email service is not configured' }, { status: 503 }); }
+    if (!resend) { return NextResponse.json({ message: 'Email service is not configured' }, { status: 503 }); }
 
     // Send email to admin
     await resend.emails.send({
