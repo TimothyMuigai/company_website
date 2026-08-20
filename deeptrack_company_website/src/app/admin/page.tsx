@@ -430,6 +430,10 @@ function NotificationsTab({ partners }: { partners: any[] }) {
 }
 
 export default function AdminPage() {
+  if (!process.env.NEXT_PUBLIC_CONVEX_URL) {
+    return <main className="grid min-h-screen place-items-center bg-[#F2F9FD] px-5 text-center text-[#333333]"><div className="max-w-md"><p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#0191DA]">Admin console</p><h1 className="mt-4 font-[family-name:var(--font-space-grotesk)] text-4xl font-medium">Admin access is not configured for this preview.</h1><p className="mt-4 text-sm leading-6 text-[#808080]">Connect the production Convex environment to use the private admin console.</p></div></main>;
+  }
+
   const leads = useQuery(api.leads.getAllLeads);
   const partners = useQuery(api.users.getAllPartners);
   const router = useRouter();

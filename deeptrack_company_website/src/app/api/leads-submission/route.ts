@@ -162,7 +162,9 @@ export async function POST(req: NextRequest) {
     `;
 
     const resend = getResend();
-    if (!resend) { return NextResponse.json({ message: 'Email service is not configured' }, { status: 503 }); }
+    if (!resend) {
+      return NextResponse.json({ message: "Email service is not configured" }, { status: 503 });
+    }
 
     // Send email to admin
     await resend.emails.send({
@@ -188,9 +190,9 @@ export async function POST(req: NextRequest) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     console.error("Leads submission error:", errorMessage);
     console.error("Full error:", error);
-    
+
     return NextResponse.json(
-      { 
+      {
         message: "Something went wrong. Please try again.",
         details: process.env.NODE_ENV === "development" ? errorMessage : undefined
       },

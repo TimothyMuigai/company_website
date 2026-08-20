@@ -9,7 +9,7 @@ const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space
 /** Deeptrack enterprise due-diligence design: accurate organization metadata without unverified regulatory or performance claims. */
 export const dynamic = "force-dynamic";
 const socialImage = { url: "/seo/deeptrack-enterprise-due-diligence-social.jpg", width: 1600, height: 840, alt: "Enterprise workspace representing evidence-led due diligence" };
-export const metadata: Metadata = { metadataBase: new URL("https://www.deeptrack.io"), title: { default: "Enterprise AI, Identity & Media Due Diligence | Deeptrack", template: "%s | Deeptrack" }, description: "Enterprise due diligence for identity, media, documents, and AI-generated evidence.", alternates: { canonical: "/" }, openGraph: { type: "website", siteName: "Deeptrack", title: "Enterprise AI, Identity & Media Due Diligence | Deeptrack", description: "Assess the evidence behind high-consequence digital decisions.", images: [socialImage] }, twitter: { card: "summary_large_image", site: "@deeptrck", creator: "@deeptrck", title: "Enterprise AI, Identity & Media Due Diligence | Deeptrack", description: "Assess the evidence behind high-consequence digital decisions.", images: [socialImage.url] }, robots: { index: true, follow: true } };
+export const metadata: Metadata = { metadataBase: new URL("https://www.deeptrack.io"), icons: { icon: "/deeptrack-favicon.ico", shortcut: "/deeptrack-favicon.ico", apple: "/deeptrack-favicon.ico" }, title: { default: "Enterprise AI, Identity & Media Due Diligence | Deeptrack", template: "%s | Deeptrack" }, description: "Enterprise due diligence for identity, media, documents, and AI-generated evidence.", alternates: { canonical: "/" }, openGraph: { type: "website", siteName: "Deeptrack", title: "Enterprise AI, Identity & Media Due Diligence | Deeptrack", description: "Assess the evidence behind high-consequence digital decisions.", images: [socialImage] }, twitter: { card: "summary_large_image", site: "@deeptrck", creator: "@deeptrck", title: "Enterprise AI, Identity & Media Due Diligence | Deeptrack", description: "Assess the evidence behind high-consequence digital decisions.", images: [socialImage.url] }, robots: { index: true, follow: true } };
 
 export default function RootLayout({
   children,
@@ -54,7 +54,7 @@ export default function RootLayout({
             }),
           }}
         />
-        {hasConvexConfiguration ? <ConfiguredApplicationProviders useClerk={hasClerkConfiguration}>{children}</ConfiguredApplicationProviders> : children}
+        <ConfiguredApplicationProviders useClerk={hasClerkConfiguration}>{children}</ConfiguredApplicationProviders>
       </body>
     </html>
   );

@@ -62,8 +62,8 @@ export async function POST(request: Request) {
         }
 
         return new Response(
-            JSON.stringify({ 
-                message: "Submission successful", 
+            JSON.stringify({
+                message: "Submission successful",
                 accessToken,
                 accessGranted: true
             }),
