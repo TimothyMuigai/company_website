@@ -1,5 +1,6 @@
 import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
+
 const nextConfig: NextConfig = {
   output: "standalone",
   logging: {
@@ -22,9 +23,6 @@ const nextConfig: NextConfig = {
     ]
   },
 };
-<<<<<<< HEAD
-export default nextConfig;
-=======
 
 export default withSentryConfig(nextConfig, {
   org: process.env.SENTRY_ORG,
@@ -34,4 +32,3 @@ export default withSentryConfig(nextConfig, {
   disableLogger: true,
   automaticVercelMonitors: true,
 });
->>>>>>> origin/full-site-migration
