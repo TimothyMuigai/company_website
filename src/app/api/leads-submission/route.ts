@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
 import clientPromise from "@/lib/mongoDB";
@@ -147,7 +146,7 @@ export async function POST(req: NextRequest) {
           </div>
 
           <p style="margin: 15px 0 0 0; color: #666; line-height: 1.6;">
-            Questions? Contact us at <a href="bryan@deeptrack.io" style="color: #185FA5; text-decoration: none;">bryan@deeptrack.io</a>
+            Questions? Contact us at <a href="mailto:bryan@deeptrack.io" style="color: #185FA5; text-decoration: none;">bryan@deeptrack.io</a>
           </p>
         </div>
 
@@ -157,21 +156,29 @@ export async function POST(req: NextRequest) {
       </div>
     `;
 
-    // Send email to admin
-    await resend.emails.send({
-      from: FROM_EMAIL,
-      to: ADMIN_EMAIL,
-      subject: `New Lead: ${orgName} (${industry})`,
-      html: adminEmailHtml,
-    });
+    // Send email to admin (don't fail the submission if this fails)
+    try {
+      await resend.emails.send({
+        from: FROM_EMAIL,
+        to: ADMIN_EMAIL,
+        subject: `New Lead: ${orgName} (${industry})`,
+        html: adminEmailHtml,
+      });
+    } catch (emailError) {
+      console.error("Failed to send admin email:", emailError);
+    }
 
-    // Send confirmation email to partner
-    await resend.emails.send({
-      from: FROM_EMAIL,
-      to: partnerEmail,
-      subject: "Lead Submission Confirmed - Deeptrack Channel Partner Portal",
-      html: partnerEmailHtml,
-    });
+    // Send confirmation email to partner (don't fail the submission if this fails)
+    try {
+      await resend.emails.send({
+        from: FROM_EMAIL,
+        to: partnerEmail,
+        subject: "Lead Submission Confirmed - Deeptrack Channel Partner Portal",
+        html: partnerEmailHtml,
+      });
+    } catch (emailError) {
+      console.error("Failed to send partner confirmation email:", emailError);
+    }
 
     return NextResponse.json(
       { message: "Lead submitted successfully. Check your email for confirmation." },
@@ -181,18 +188,13 @@ export async function POST(req: NextRequest) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     console.error("Leads submission error:", errorMessage);
     console.error("Full error:", error);
-    
+
     return NextResponse.json(
-      { 
+      {
         message: "Something went wrong. Please try again.",
         details: process.env.NODE_ENV === "development" ? errorMessage : undefined
       },
       { status: 500 }
     );
   }
-=======
-import { NextResponse } from 'next/server'
-export async function POST() {
-  return NextResponse.json({ message: 'Not implemented' }, { status: 501 })
->>>>>>> origin/full-site-migration
 }
